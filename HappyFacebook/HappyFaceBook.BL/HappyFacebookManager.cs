@@ -11,7 +11,7 @@ namespace HappyFaceBook.BL
 {
     public class HappyFacebookManager
     {
-        private User m_LoggedInUser;
+        public User m_LoggedInUser;
 
         public HappyFacebookManager()
         {

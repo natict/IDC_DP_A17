@@ -38,8 +38,8 @@ namespace BasicFacebookFeatures
 
         private void buttonSetStatus_Click(object sender, EventArgs e)
         {
-            string id = m_HappyFacebookManager
-            Status postedStatus = m_LoggedInUser.PostStatus(textBoxStatus.Text);
+            //string id = m_HappyFacebookManager
+            Status postedStatus = m_HappyFacebookManager.m_LoggedInUser.PostStatus(textBoxStatus.Text);
             MessageBox.Show($"Status Posted successfully!");
 
         }
@@ -51,7 +51,7 @@ namespace BasicFacebookFeatures
 
         private void fetchPosts()
         {
-            foreach (Post post in m_LoggedInUser.Posts)
+            foreach (Post post in m_HappyFacebookManager.m_LoggedInUser.Posts)
             {
                 if (post.Message != null)
                 {
@@ -67,7 +67,7 @@ namespace BasicFacebookFeatures
                 }
             }
 
-            if (m_LoggedInUser.Posts.Count == 0)
+            if (m_HappyFacebookManager.m_LoggedInUser.Posts.Count == 0)
             {
                 MessageBox.Show("No Posts to retrieve :(");
             }
@@ -82,13 +82,13 @@ namespace BasicFacebookFeatures
         {
             listBoxFriends.Items.Clear();
             listBoxFriends.DisplayMember = "Name";
-            foreach (User friend in m_LoggedInUser.Friends)
+            foreach (User friend in m_HappyFacebookManager.m_LoggedInUser.Friends)
             {
                 listBoxFriends.Items.Add(friend);
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
-            if (m_LoggedInUser.Friends.Count == 0)
+            if (m_HappyFacebookManager.m_LoggedInUser.Friends.Count == 0)
             {
                 MessageBox.Show("No Friends to retrieve :(");
             }
@@ -124,12 +124,12 @@ namespace BasicFacebookFeatures
         {
             listBoxEvents.Items.Clear();
             listBoxEvents.DisplayMember = "Name";
-            foreach (Event fbEvent in m_LoggedInUser.Events)
+            foreach (Event fbEvent in m_HappyFacebookManager.m_LoggedInUser.Events)
             {
                 listBoxEvents.Items.Add(fbEvent);
             }
 
-            if (m_LoggedInUser.Events.Count == 0)
+            if (m_HappyFacebookManager.m_LoggedInUser.Events.Count == 0)
             {
                 MessageBox.Show("No Events to retrieve :(");
             }
@@ -151,12 +151,12 @@ namespace BasicFacebookFeatures
 
         private void fetchCheckins()
         {
-            foreach (Checkin checkin in m_LoggedInUser.Checkins)
+            foreach (Checkin checkin in m_HappyFacebookManager.m_LoggedInUser.Checkins)
             {
                 listBoxCheckins.Items.Add(checkin.Place.Name);
             }
 
-            if (m_LoggedInUser.Checkins.Count == 0)
+            if (m_HappyFacebookManager.m_LoggedInUser.Checkins.Count == 0)
             {
                 MessageBox.Show("No Checkins to retrieve :(");
             }
@@ -172,12 +172,12 @@ namespace BasicFacebookFeatures
             listBoxPages.Items.Clear();
             listBoxPages.DisplayMember = "Name";
 
-            foreach (Page page in m_LoggedInUser.LikedPages)
+            foreach (Page page in m_HappyFacebookManager.m_LoggedInUser.LikedPages)
             {
                 listBoxPages.Items.Add(page);
             }
 
-            if (m_LoggedInUser.LikedPages.Count == 0)
+            if (m_HappyFacebookManager.m_LoggedInUser.LikedPages.Count == 0)
             {
                 MessageBox.Show("No liked pages to retrieve :(");
             }
