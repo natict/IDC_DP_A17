@@ -199,5 +199,12 @@ namespace BasicFacebookFeatures
             dynamic actionsData = FacebookService.GetDynamicData(actionType);
             dataGridViewActions.DataSource = actions;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GiphyClient giphyClient = new GiphyClient();
+            string url = giphyClient.Translate(textBox1.Text);
+            pictureBox1.LoadAsync(url);
+        }
     }
 }
