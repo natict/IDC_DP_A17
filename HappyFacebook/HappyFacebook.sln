@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFaceBook.UI", "FBBasicFacebookFeatures\HappyFaceBook.UI.csproj", "{AF90A25E-B4FB-434C-9260-C02B56C2AA9D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFacebook.UI", "FBBasicFacebookFeatures\HappyFacebook.UI.csproj", "{AF90A25E-B4FB-434C-9260-C02B56C2AA9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFaceBook.BL", "HappyFaceBook.BL\HappyFaceBook.BL.csproj", "{18D7582C-7C02-4C30-8AAD-BAD418FF1CA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFacebook.BL", "HappyFaceBook.BL\HappyFacebook.BL.csproj", "{18D7582C-7C02-4C30-8AAD-BAD418FF1CA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
