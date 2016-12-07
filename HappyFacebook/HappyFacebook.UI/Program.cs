@@ -15,10 +15,9 @@ namespace BasicFacebookFeatures
         static void Main()
         {
             Clipboard.SetText("designpatterns");
-            FacebookService.s_UseForamttedToStrings = true;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new FormMain());
         }
     }
 }

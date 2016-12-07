@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Facebook">
+      <HintPath>..\FBApi\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="FbGraphApiWrapper">
+      <HintPath>..\FBApi\FbGraphApiWrapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\FacebookLoginException.cs" />
+    <Compile Include="Exceptions\NegativeSentimentException.cs" />
+    <Compile Include="HappyFacebookManager.cs" />
     <Compile Include="SentimentClient.cs" />
     <Compile Include="GiphyClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

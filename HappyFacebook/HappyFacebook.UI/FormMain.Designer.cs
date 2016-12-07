@@ -1,6 +1,6 @@
 ﻿namespace BasicFacebookFeatures
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         /// Required designer variable.
@@ -48,18 +48,18 @@
             this.pictureBoxPage = new System.Windows.Forms.PictureBox();
             this.listBoxPages = new System.Windows.Forms.ListBox();
             this.linkPages = new System.Windows.Forms.LinkLabel();
-            this.linkUserActions = new System.Windows.Forms.LinkLabel();
-            this.dataGridViewActions = new System.Windows.Forms.DataGridView();
-            this.comboBoxActionType = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.comboBoxActionType = new System.Windows.Forms.ComboBox();
+            this.dataGridViewActions = new System.Windows.Forms.DataGridView();
+            this.linkUserActions = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture_smallPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxEvent)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewActions)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewActions)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBoxFriend
@@ -107,7 +107,7 @@
             this.listBoxEvents.FormattingEnabled = true;
             this.listBoxEvents.Location = new System.Drawing.Point(358, 242);
             this.listBoxEvents.Name = "listBoxEvents";
-            this.listBoxEvents.Size = new System.Drawing.Size(466, 147);
+            this.listBoxEvents.Size = new System.Drawing.Size(881, 147);
             this.listBoxEvents.TabIndex = 40;
             this.listBoxEvents.SelectedIndexChanged += new System.EventHandler(this.listBoxEvents_SelectedIndexChanged);
             // 
@@ -126,13 +126,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxStatus.Location = new System.Drawing.Point(283, 8);
             this.textBoxStatus.Name = "textBoxStatus";
-            this.textBoxStatus.Size = new System.Drawing.Size(271, 20);
+            this.textBoxStatus.Size = new System.Drawing.Size(686, 20);
             this.textBoxStatus.TabIndex = 45;
             // 
             // buttonSetStatus
             // 
             this.buttonSetStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSetStatus.Location = new System.Drawing.Point(560, 6);
+            this.buttonSetStatus.Location = new System.Drawing.Point(975, 6);
             this.buttonSetStatus.Name = "buttonSetStatus";
             this.buttonSetStatus.Size = new System.Drawing.Size(75, 23);
             this.buttonSetStatus.TabIndex = 46;
@@ -150,12 +150,12 @@
             this.listBoxPosts.ItemHeight = 19;
             this.listBoxPosts.Location = new System.Drawing.Point(216, 51);
             this.listBoxPosts.Name = "listBoxPosts";
-            this.listBoxPosts.Size = new System.Drawing.Size(608, 156);
+            this.listBoxPosts.Size = new System.Drawing.Size(1023, 156);
             this.listBoxPosts.TabIndex = 40;
             // 
             // pictureBoxEvent
             // 
-            this.pictureBoxEvent.Location = new System.Drawing.Point(750, 213);
+            this.pictureBoxEvent.Location = new System.Drawing.Point(1165, 209);
             this.pictureBoxEvent.Name = "pictureBoxEvent";
             this.pictureBoxEvent.Size = new System.Drawing.Size(74, 68);
             this.pictureBoxEvent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -221,7 +221,7 @@
             this.listBoxCheckins.FormattingEnabled = true;
             this.listBoxCheckins.Location = new System.Drawing.Point(8, 435);
             this.listBoxCheckins.Name = "listBoxCheckins";
-            this.listBoxCheckins.Size = new System.Drawing.Size(331, 173);
+            this.listBoxCheckins.Size = new System.Drawing.Size(331, 225);
             this.listBoxCheckins.TabIndex = 40;
             this.listBoxCheckins.SelectedIndexChanged += new System.EventHandler(this.listBoxEvents_SelectedIndexChanged);
             // 
@@ -233,7 +233,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(842, 649);
+            this.tabControl1.Size = new System.Drawing.Size(1257, 706);
             this.tabControl1.TabIndex = 51;
             // 
             // tabPage1
@@ -259,14 +259,14 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(834, 623);
+            this.tabPage1.Size = new System.Drawing.Size(1249, 680);
             this.tabPage1.TabIndex = 1;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // pictureBoxPage
             // 
-            this.pictureBoxPage.Location = new System.Drawing.Point(750, 406);
+            this.pictureBoxPage.Location = new System.Drawing.Point(1169, 395);
             this.pictureBoxPage.Name = "pictureBoxPage";
             this.pictureBoxPage.Size = new System.Drawing.Size(74, 68);
             this.pictureBoxPage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -281,7 +281,7 @@
             this.listBoxPages.FormattingEnabled = true;
             this.listBoxPages.Location = new System.Drawing.Point(358, 435);
             this.listBoxPages.Name = "listBoxPages";
-            this.listBoxPages.Size = new System.Drawing.Size(466, 173);
+            this.listBoxPages.Size = new System.Drawing.Size(881, 173);
             this.listBoxPages.TabIndex = 40;
             this.listBoxPages.SelectedIndexChanged += new System.EventHandler(this.listBoxPages_SelectedIndexChanged);
             // 
@@ -298,31 +298,18 @@
             this.linkPages.UseCompatibleTextRendering = true;
             this.linkPages.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkPages_LinkClicked);
             // 
-            // linkUserActions
+            // tabPage2
             // 
-            this.linkUserActions.AutoSize = true;
-            this.linkUserActions.Location = new System.Drawing.Point(8, 9);
-            this.linkUserActions.Name = "linkUserActions";
-            this.linkUserActions.Size = new System.Drawing.Size(97, 13);
-            this.linkUserActions.TabIndex = 14;
-            this.linkUserActions.TabStop = true;
-            this.linkUserActions.Text = "Fetch User Actions";
-            this.linkUserActions.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkUserActions_LinkClicked);
-            // 
-            // dataGridViewActions
-            // 
-            this.dataGridViewActions.AllowUserToAddRows = false;
-            this.dataGridViewActions.AllowUserToDeleteRows = false;
-            this.dataGridViewActions.AllowUserToOrderColumns = true;
-            this.dataGridViewActions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewActions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewActions.Location = new System.Drawing.Point(11, 33);
-            this.dataGridViewActions.Name = "dataGridViewActions";
-            this.dataGridViewActions.ReadOnly = true;
-            this.dataGridViewActions.Size = new System.Drawing.Size(815, 571);
-            this.dataGridViewActions.TabIndex = 22;
+            this.tabPage2.Controls.Add(this.comboBoxActionType);
+            this.tabPage2.Controls.Add(this.dataGridViewActions);
+            this.tabPage2.Controls.Add(this.linkUserActions);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(834, 623);
+            this.tabPage2.TabIndex = 2;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // comboBoxActionType
             // 
@@ -351,24 +338,37 @@
             this.comboBoxActionType.Size = new System.Drawing.Size(165, 21);
             this.comboBoxActionType.TabIndex = 23;
             // 
-            // tabPage2
+            // dataGridViewActions
             // 
-            this.tabPage2.Controls.Add(this.comboBoxActionType);
-            this.tabPage2.Controls.Add(this.dataGridViewActions);
-            this.tabPage2.Controls.Add(this.linkUserActions);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(834, 623);
-            this.tabPage2.TabIndex = 2;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.dataGridViewActions.AllowUserToAddRows = false;
+            this.dataGridViewActions.AllowUserToDeleteRows = false;
+            this.dataGridViewActions.AllowUserToOrderColumns = true;
+            this.dataGridViewActions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewActions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewActions.Location = new System.Drawing.Point(11, 33);
+            this.dataGridViewActions.Name = "dataGridViewActions";
+            this.dataGridViewActions.ReadOnly = true;
+            this.dataGridViewActions.Size = new System.Drawing.Size(815, 571);
+            this.dataGridViewActions.TabIndex = 22;
+            // 
+            // linkUserActions
+            // 
+            this.linkUserActions.AutoSize = true;
+            this.linkUserActions.Location = new System.Drawing.Point(8, 9);
+            this.linkUserActions.Name = "linkUserActions";
+            this.linkUserActions.Size = new System.Drawing.Size(97, 13);
+            this.linkUserActions.TabIndex = 14;
+            this.linkUserActions.TabStop = true;
+            this.linkUserActions.Text = "Fetch User Actions";
+            this.linkUserActions.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkUserActions_LinkClicked);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(842, 649);
+            this.ClientSize = new System.Drawing.Size(1257, 706);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -379,9 +379,9 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewActions)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewActions)).EndInit();
             this.ResumeLayout(false);
 
         }
