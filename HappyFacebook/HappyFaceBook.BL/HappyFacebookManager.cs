@@ -11,7 +11,7 @@ namespace HappyFaceBook.BL
 {
     public class HappyFacebookManager
     {
-        public User m_LoggedInUser;
+        private User m_LoggedInUser;
 
         public HappyFacebookManager()
         {
@@ -89,9 +89,61 @@ namespace HappyFaceBook.BL
             return m_LoggedInUser.PictureNormalURL;
         }
 
-        public List<string> GetUserMessagePosts()
+        public List<string> GetUserPostMessages()
         {
             return m_LoggedInUser.Posts.Select(post => post.Message).ToList();
+        }
+
+        public List<string> GetUserPosts()
+        {
+            List<string> postsList = new List<string>();
+
+            foreach (Post post in m_LoggedInUser.Posts)
+            {
+                if (post.Message != null)
+                {
+                    postsList.Add(post.Message);
+                }
+                else if (post.Caption != null)
+                {
+                    postsList.Add(post.Caption);
+                }
+                else
+                {
+                    postsList.Add(($"[{post.Type}]"));
+                }
+            }
+
+            return postsList;
+        }
+
+        public void PostStatus(string statusText)
+        {
+            m_LoggedInUser.PostStatus(statusText);
+        }
+
+        public List<FacebookEntity> GetFriends()
+        {
+            List<FacebookEntity> friends = new List<FacebookEntity>();
+            foreach (User friend in m_LoggedInUser.Friends)
+            {
+                friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
+                friends.Add(new FacebookEntity() {Name = friend.Name, PictureUrl = friend.PictureNormalURL};
+            }
+
+            return friends;
+        }
+
+        public List<FacebookEntity> GetEvents()
+        {
+            List<FacebookEntity> friends = new List<FacebookEntity>();
+            foreach (User friend in m_LoggedInUser.Friends)
+            {
+                friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
+                friends.Add(new FacebookEntity() { Name = friend.Name, PictureUrl = friend.PictureNormalURL };
+            }
+
+            return friends;
         }
     }
 }

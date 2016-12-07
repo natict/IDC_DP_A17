@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\FacebookLoginException.cs" />
     <Compile Include="Exceptions\NegativeSentimentException.cs" />
+    <Compile Include="FacebookEntity.cs" />
     <Compile Include="HappyFacebookManager.cs" />
     <Compile Include="SentimentClient.cs" />
     <Compile Include="GiphyClient.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
@@ -24,7 +25,7 @@ namespace BasicFacebookFeatures
             {
                 m_HappyFacebookManager.LoginAndInit();
                 picture_smallPictureBox.LoadAsync(m_HappyFacebookManager.GetLoggedInUserPictureUrl());
-                textBoxStatus.Text = m_HappyFacebookManager.GetUserMessagePosts().FirstOrDefault();
+                textBoxStatus.Text = m_HappyFacebookManager.GetUserPostMessages().FirstOrDefault();
             }
             catch (FacebookLoginException ex)
             {
@@ -39,35 +40,27 @@ namespace BasicFacebookFeatures
         private void buttonSetStatus_Click(object sender, EventArgs e)
         {
             //string id = m_HappyFacebookManager
-            Status postedStatus = m_HappyFacebookManager.m_LoggedInUser.PostStatus(textBoxStatus.Text);
-            MessageBox.Show($"Status Posted successfully!");
+            try
+            {
+                m_HappyFacebookManager.PostStatus(textBoxStatus.Text);
+                MessageBox.Show("Status Posted successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Status Post Failed!\n {ex.Message}");
+            }
 
         }
 
         private void linkPosts_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            fetchPosts();
-        }
-
-        private void fetchPosts()
-        {
-            foreach (Post post in m_HappyFacebookManager.m_LoggedInUser.Posts)
+            listBoxPosts.Items.Clear();
+            foreach (string post in m_HappyFacebookManager.GetUserPosts())
             {
-                if (post.Message != null)
-                {
-                    listBoxPosts.Items.Add(post.Message);
-                }
-                else if (post.Caption != null)
-                {
-                    listBoxPosts.Items.Add(post.Caption);
-                }
-                else
-                {
-                    listBoxPosts.Items.Add(string.Format("[{0}]", post.Type));
-                }
+                listBoxPosts.Items.Add(post);
             }
 
-            if (m_HappyFacebookManager.m_LoggedInUser.Posts.Count == 0)
+            if (listBoxPosts.Items.Count == 0)
             {
                 MessageBox.Show("No Posts to retrieve :(");
             }
@@ -75,20 +68,14 @@ namespace BasicFacebookFeatures
 
         private void linkFriends_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            fetchFriends();
-        }
-
-        private void fetchFriends()
-        {
             listBoxFriends.Items.Clear();
             listBoxFriends.DisplayMember = "Name";
-            foreach (User friend in m_HappyFacebookManager.m_LoggedInUser.Friends)
+            foreach (FacebookEntity friend in m_HappyFacebookManager.GetFriends())
             {
                 listBoxFriends.Items.Add(friend);
-                friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
-            if (m_HappyFacebookManager.m_LoggedInUser.Friends.Count == 0)
+            if (listBoxFriends.Items.Count == 0)
             {
                 MessageBox.Show("No Friends to retrieve :(");
             }
@@ -96,17 +83,12 @@ namespace BasicFacebookFeatures
 
         private void listBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
         {
-            displaySelectedFriend();
-        }
-
-        private void displaySelectedFriend()
-        {
             if (listBoxFriends.SelectedItems.Count == 1)
             {
-                User selectedFriend = listBoxFriends.SelectedItem as User;
-                if (selectedFriend.PictureNormalURL != null)
+                FacebookEntity selectedFriend = listBoxFriends.SelectedItem as FacebookEntity;
+                if (selectedFriend.PictureUrl != null)
                 {
-                    pictureBoxFriend.LoadAsync(selectedFriend.PictureNormalURL);
+                    pictureBoxFriend.LoadAsync(selectedFriend.PictureUrl);
                 }
                 else
                 {
