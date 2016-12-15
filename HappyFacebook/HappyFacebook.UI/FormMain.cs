@@ -178,5 +178,12 @@ namespace BasicFacebookFeatures
             string url = giphyClient.Translate(textBox1.Text);
             pictureBox1.LoadAsync(url);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SentimentClient sentimentClient = new SentimentClient();
+            eSentiment sentiment = sentimentClient.GetSentiment(textBox2.Text);
+            MessageBox.Show(sentiment.ToString());
+        }
     }
 }
