@@ -128,7 +128,7 @@ namespace HappyFaceBook.BL
             foreach (User friend in m_LoggedInUser.Friends)
             {
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
-                friends.Add(new FacebookEntity() {Name = friend.Name, PictureUrl = friend.PictureNormalURL};
+                friends.Add(new FacebookEntity() {Name = friend.Name, PictureUrl = friend.PictureNormalURL});
             }
 
             return friends;
@@ -136,14 +136,35 @@ namespace HappyFaceBook.BL
 
         public List<FacebookEntity> GetEvents()
         {
-            List<FacebookEntity> friends = new List<FacebookEntity>();
-            foreach (User friend in m_LoggedInUser.Friends)
+            List<FacebookEntity> events = new List<FacebookEntity>();
+            foreach (Event evnt in m_LoggedInUser.Events)
             {
-                friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
-                friends.Add(new FacebookEntity() { Name = friend.Name, PictureUrl = friend.PictureNormalURL };
+                events.Add(new FacebookEntity() { Name = evnt.Name, PictureUrl = evnt.PictureNormalURL});
             }
 
-            return friends;
+            return events;
+        }
+
+        public List<FacebookEntity> GetCheckins()
+        {
+            List<FacebookEntity> checkins = new List<FacebookEntity>();
+            foreach (Checkin checkin in m_LoggedInUser.Checkins)
+            {
+                checkins.Add(new FacebookEntity() { Name = checkin.Place.Name });
+            }
+
+            return checkins;
+        }
+
+        public List<FacebookEntity> GetLikedPagesPages()
+        {
+            List<FacebookEntity> pages = new List<FacebookEntity>();
+            foreach (Page page in m_LoggedInUser.LikedPages)
+            {
+                pages.Add(new FacebookEntity() { Name = page.Name});
+            }
+
+            return pages;
         }
     }
 }

@@ -99,19 +99,14 @@ namespace BasicFacebookFeatures
 
         private void labelEvents_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            fetchEvents();
-        }
-
-        private void fetchEvents()
-        {
             listBoxEvents.Items.Clear();
             listBoxEvents.DisplayMember = "Name";
-            foreach (Event fbEvent in m_HappyFacebookManager.m_LoggedInUser.Events)
+            foreach (FacebookEntity fbEvent in m_HappyFacebookManager.GetEvents())
             {
                 listBoxEvents.Items.Add(fbEvent);
             }
 
-            if (m_HappyFacebookManager.m_LoggedInUser.Events.Count == 0)
+            if (listBoxEvents.Items.Count == 0)
             {
                 MessageBox.Show("No Events to retrieve :(");
             }
@@ -128,17 +123,14 @@ namespace BasicFacebookFeatures
 
         private void linkCheckins_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            fetchCheckins();
-        }
-
-        private void fetchCheckins()
-        {
-            foreach (Checkin checkin in m_HappyFacebookManager.m_LoggedInUser.Checkins)
+            listBoxCheckins.Items.Clear();
+            listBoxCheckins.DisplayMember = "Name";
+            foreach (FacebookEntity fbCheckin in m_HappyFacebookManager.GetCheckins())
             {
-                listBoxCheckins.Items.Add(checkin.Place.Name);
+                listBoxCheckins.Items.Add(fbCheckin);
             }
 
-            if (m_HappyFacebookManager.m_LoggedInUser.Checkins.Count == 0)
+            if (listBoxCheckins.Items.Count == 0)
             {
                 MessageBox.Show("No Checkins to retrieve :(");
             }
@@ -146,20 +138,15 @@ namespace BasicFacebookFeatures
 
         private void linkPages_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            fetchPages();
-        }
-
-        private void fetchPages()
-        {
             listBoxPages.Items.Clear();
             listBoxPages.DisplayMember = "Name";
 
-            foreach (Page page in m_HappyFacebookManager.m_LoggedInUser.LikedPages)
+            foreach (FacebookEntity fbPage in m_HappyFacebookManager.GetLikedPagesPages())
             {
-                listBoxPages.Items.Add(page);
+                listBoxPages.Items.Add(fbPage);
             }
 
-            if (m_HappyFacebookManager.m_LoggedInUser.LikedPages.Count == 0)
+            if (listBoxPages.Items.Count == 0)
             {
                 MessageBox.Show("No liked pages to retrieve :(");
             }
@@ -169,8 +156,11 @@ namespace BasicFacebookFeatures
         {
             if (listBoxPages.SelectedItems.Count == 1)
             {
-                Page selectedPage = listBoxPages.SelectedItem as Page;
-                pictureBoxPage.LoadAsync(selectedPage.PictureNormalURL);
+                FacebookEntity selectedPage = listBoxPages.SelectedItem as FacebookEntity;
+                if (selectedPage != null)
+                {
+                    pictureBoxPage.LoadAsync(selectedPage.PictureUrl);
+                }
             }
         }
 
