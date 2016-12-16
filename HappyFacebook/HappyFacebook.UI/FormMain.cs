@@ -176,7 +176,14 @@ namespace BasicFacebookFeatures
         {
             GiphyClient giphyClient = new GiphyClient();
             string url = giphyClient.Translate(textBox1.Text);
-            pictureBox1.LoadAsync(url);
+            pictureBox1.Load(url);
+
+            DialogResult res = MessageBox.Show("Do you want to post it?", "Interesting...", MessageBoxButtons.YesNo);
+            if (res == DialogResult.Yes)
+            {
+                //m_HappyFacebookManager.PostPicture(url, "Enjoy the pic!");
+                m_HappyFacebookManager.PostStatus(url);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

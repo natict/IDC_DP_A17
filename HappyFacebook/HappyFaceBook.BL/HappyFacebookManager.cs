@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using FacebookWrapper;
@@ -120,6 +122,14 @@ namespace HappyFaceBook.BL
         public void PostStatus(string statusText)
         {
             m_LoggedInUser.PostStatus(statusText);
+        }
+
+        public void PostPicture(string i_PicturePath, string i_PictureTitle)
+        {
+            var webClient = new WebClient();
+            byte[] imageBytes = webClient.DownloadData(i_PicturePath);
+
+            m_LoggedInUser.PostPhoto(imageBytes, i_PictureTitle);
         }
 
         public List<FacebookEntity> GetFriends()
