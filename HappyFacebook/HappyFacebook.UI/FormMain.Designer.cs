@@ -231,7 +231,6 @@
             this.listBoxCheckins.Name = "listBoxCheckins";
             this.listBoxCheckins.Size = new System.Drawing.Size(331, 225);
             this.listBoxCheckins.TabIndex = 40;
-            this.listBoxCheckins.SelectedIndexChanged += new System.EventHandler(this.listBoxEvents_SelectedIndexChanged);
             // 
             // tabControl1
             // 

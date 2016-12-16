@@ -116,8 +116,8 @@ namespace BasicFacebookFeatures
         {
             if (listBoxEvents.SelectedItems.Count == 1)
             {
-                Event selectedEvent = listBoxEvents.SelectedItem as Event;
-                pictureBoxEvent.LoadAsync(selectedEvent.PictureNormalURL);
+                FacebookEntity selectedEvent = listBoxEvents.SelectedItem as FacebookEntity;
+                pictureBoxEvent.LoadAsync(selectedEvent.PictureUrl);
             }
         }
 
