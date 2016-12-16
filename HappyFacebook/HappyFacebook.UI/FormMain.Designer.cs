@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.pictureBoxFriend = new System.Windows.Forms.PictureBox();
-            this.picture_smallPictureBox = new System.Windows.Forms.PictureBox();
             this.listBoxFriends = new System.Windows.Forms.ListBox();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.listBoxEvents = new System.Windows.Forms.ListBox();
@@ -53,13 +52,13 @@
             this.dataGridViewActions = new System.Windows.Forms.DataGridView();
             this.linkUserActions = new System.Windows.Forms.LinkLabel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.picture_smallPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriend)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picture_smallPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxEvent)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -68,6 +67,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewActions)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picture_smallPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBoxFriend
@@ -78,15 +78,6 @@
             this.pictureBoxFriend.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBoxFriend.TabIndex = 42;
             this.pictureBoxFriend.TabStop = false;
-            // 
-            // picture_smallPictureBox
-            // 
-            this.picture_smallPictureBox.Location = new System.Drawing.Point(8, 51);
-            this.picture_smallPictureBox.Name = "picture_smallPictureBox";
-            this.picture_smallPictureBox.Size = new System.Drawing.Size(200, 156);
-            this.picture_smallPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picture_smallPictureBox.TabIndex = 41;
-            this.picture_smallPictureBox.TabStop = false;
             // 
             // listBoxFriends
             // 
@@ -115,7 +106,7 @@
             this.listBoxEvents.FormattingEnabled = true;
             this.listBoxEvents.Location = new System.Drawing.Point(358, 242);
             this.listBoxEvents.Name = "listBoxEvents";
-            this.listBoxEvents.Size = new System.Drawing.Size(881, 147);
+            this.listBoxEvents.Size = new System.Drawing.Size(1068, 147);
             this.listBoxEvents.TabIndex = 40;
             this.listBoxEvents.SelectedIndexChanged += new System.EventHandler(this.listBoxEvents_SelectedIndexChanged);
             // 
@@ -134,13 +125,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxStatus.Location = new System.Drawing.Point(283, 8);
             this.textBoxStatus.Name = "textBoxStatus";
-            this.textBoxStatus.Size = new System.Drawing.Size(686, 20);
+            this.textBoxStatus.Size = new System.Drawing.Size(873, 20);
             this.textBoxStatus.TabIndex = 45;
             // 
             // buttonSetStatus
             // 
             this.buttonSetStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSetStatus.Location = new System.Drawing.Point(975, 6);
+            this.buttonSetStatus.Location = new System.Drawing.Point(1162, 6);
             this.buttonSetStatus.Name = "buttonSetStatus";
             this.buttonSetStatus.Size = new System.Drawing.Size(75, 23);
             this.buttonSetStatus.TabIndex = 46;
@@ -158,7 +149,7 @@
             this.listBoxPosts.ItemHeight = 19;
             this.listBoxPosts.Location = new System.Drawing.Point(216, 51);
             this.listBoxPosts.Name = "listBoxPosts";
-            this.listBoxPosts.Size = new System.Drawing.Size(1023, 156);
+            this.listBoxPosts.Size = new System.Drawing.Size(1210, 156);
             this.listBoxPosts.TabIndex = 40;
             // 
             // pictureBoxEvent
@@ -229,7 +220,7 @@
             this.listBoxCheckins.FormattingEnabled = true;
             this.listBoxCheckins.Location = new System.Drawing.Point(8, 435);
             this.listBoxCheckins.Name = "listBoxCheckins";
-            this.listBoxCheckins.Size = new System.Drawing.Size(331, 225);
+            this.listBoxCheckins.Size = new System.Drawing.Size(331, 303);
             this.listBoxCheckins.TabIndex = 40;
             // 
             // tabControl1
@@ -241,7 +232,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1257, 706);
+            this.tabControl1.Size = new System.Drawing.Size(1444, 793);
             this.tabControl1.TabIndex = 51;
             // 
             // tabPage1
@@ -267,14 +258,14 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1249, 680);
+            this.tabPage1.Size = new System.Drawing.Size(1436, 767);
             this.tabPage1.TabIndex = 1;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // pictureBoxPage
             // 
-            this.pictureBoxPage.Location = new System.Drawing.Point(1169, 395);
+            this.pictureBoxPage.Location = new System.Drawing.Point(1300, 416);
             this.pictureBoxPage.Name = "pictureBoxPage";
             this.pictureBoxPage.Size = new System.Drawing.Size(74, 68);
             this.pictureBoxPage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -287,9 +278,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxPages.DisplayMember = "name";
             this.listBoxPages.FormattingEnabled = true;
-            this.listBoxPages.Location = new System.Drawing.Point(358, 435);
+            this.listBoxPages.Location = new System.Drawing.Point(358, 527);
             this.listBoxPages.Name = "listBoxPages";
-            this.listBoxPages.Size = new System.Drawing.Size(881, 173);
+            this.listBoxPages.Size = new System.Drawing.Size(1068, 173);
             this.listBoxPages.TabIndex = 40;
             this.listBoxPages.SelectedIndexChanged += new System.EventHandler(this.listBoxPages_SelectedIndexChanged);
             // 
@@ -386,31 +377,6 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(359, 110);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(61, 110);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(292, 20);
-            this.textBox1.TabIndex = 1;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(61, 156);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(590, 471);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(61, 71);
@@ -428,16 +394,49 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(61, 156);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(590, 471);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(61, 110);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(292, 20);
+            this.textBox1.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(359, 110);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // picture_smallPictureBox
+            // 
+            this.picture_smallPictureBox.Location = new System.Drawing.Point(8, 51);
+            this.picture_smallPictureBox.Name = "picture_smallPictureBox";
+            this.picture_smallPictureBox.Size = new System.Drawing.Size(200, 156);
+            this.picture_smallPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picture_smallPictureBox.TabIndex = 41;
+            this.picture_smallPictureBox.TabStop = false;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1257, 706);
+            this.ClientSize = new System.Drawing.Size(1444, 793);
             this.Controls.Add(this.tabControl1);
             this.Name = "FormMain";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriend)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picture_smallPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxEvent)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -449,6 +448,7 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picture_smallPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -456,7 +456,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBoxFriend;
-        private System.Windows.Forms.PictureBox picture_smallPictureBox;
         private System.Windows.Forms.ListBox listBoxFriends;
         private System.Windows.Forms.Button buttonLogin;
         private System.Windows.Forms.ListBox listBoxEvents;
@@ -485,6 +484,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.PictureBox picture_smallPictureBox;
     }
 }
 

@@ -15,20 +15,42 @@ namespace HappyFaceBook.BL
     {
         private User m_LoggedInUser;
 
+        private static HappyFacebookManager s_Instance;
+
+        private static object lockContext = new object();
+
         public HappyFacebookManager()
         {
             FacebookService.s_UseForamttedToStrings = true;
             FacebookService.s_CollectionLimit = 200;
             FacebookService.s_FbApiVersion = 2.8f;
+        }
 
+        public static HappyFacebookManager Instance
+        {
+            get
+            {
+                if (s_Instance == null)
+                {
+                    lock (lockContext)
+                    {
+                        if (s_Instance == null)
+                        {
+                            s_Instance = new HappyFacebookManager();
+                        }
+                    }
+                }
+
+                return s_Instance;
+            }
         }
 
         public void LoginAndInit()
         {
-
             /// Use the FacebookService.Login method to display the login form to any user who wish to use this application.
             /// You can then save the result.AccessToken for future auto-connect to this user:
-            LoginResult result = FacebookService.Login("1450160541956417", /// (desig patter's "Design Patterns Course App 2.4" app)
+            //LoginResult result = FacebookService.Login("1450160541956417", /// (desig patter's "Design Patterns Course App 2.4" app)
+           LoginResult result = FacebookService.Login("1908224946078795", // Y
                 "public_profile",
                 "user_education_history",
                 "user_birthday",
@@ -119,9 +141,9 @@ namespace HappyFaceBook.BL
             return postsList;
         }
 
-        public void PostStatus(string statusText)
+        public void PostStatus(string i_StatusText)
         {
-            m_LoggedInUser.PostStatus(statusText);
+            m_LoggedInUser.PostStatus(i_StatusText);
         }
 
         public void PostPicture(string i_PicturePath, string i_PictureTitle)
