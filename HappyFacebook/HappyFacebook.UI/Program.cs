@@ -17,8 +17,8 @@ namespace BasicFacebookFeatures
             Clipboard.SetText("designpatterns");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new FormMain());
-            Application.Run(new HappyFacebookForm());
+            Application.Run(new FormMain());
+            //Application.Run(new HappyFacebookForm());
         }
     }
 }
