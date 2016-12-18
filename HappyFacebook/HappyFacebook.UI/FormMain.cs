@@ -55,7 +55,8 @@ namespace BasicFacebookFeatures
         private void linkPosts_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             listBoxPosts.Items.Clear();
-            foreach (string post in m_HappyFacebookManager.GetUserPosts())
+            listBoxFriends.DisplayMember = "Name";
+            foreach (FacebookEntity post in m_HappyFacebookManager.GetUserPosts().Result)
             {
                 listBoxPosts.Items.Add(post);
             }

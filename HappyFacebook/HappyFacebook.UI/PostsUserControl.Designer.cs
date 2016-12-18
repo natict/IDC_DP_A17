@@ -28,16 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonPostMessage = new System.Windows.Forms.Button();
             this.picture_myPictureBox = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.richTextBox_PostMessage = new System.Windows.Forms.RichTextBox();
+            this.button_ClearPostPhoto = new System.Windows.Forms.Button();
+            this.label_PostSuccess = new System.Windows.Forms.Label();
+            this.pictureBox_PostSentPhoto = new System.Windows.Forms.PictureBox();
             this.buttonAddPhoto = new System.Windows.Forms.Button();
-            this.pictureBoxPostPhoto = new System.Windows.Forms.PictureBox();
+            this.richTextBox_PostMessage = new System.Windows.Forms.RichTextBox();
             this.openFileDialogPostPhoto = new System.Windows.Forms.OpenFileDialog();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox_SelectedPostPicture = new System.Windows.Forms.PictureBox();
+            this.richTextBox_SelectedPostDetails = new System.Windows.Forms.RichTextBox();
+            this.dataGridView_MyPosts = new System.Windows.Forms.DataGridView();
+            this.timer_Posts = new System.Windows.Forms.Timer(this.components);
+            this.button_DeletePost = new System.Windows.Forms.Button();
+            this.label_PostDelete = new System.Windows.Forms.Label();
+            this.label_Likes = new System.Windows.Forms.Label();
+            this.label_LikesCount = new System.Windows.Forms.Label();
+            this.label_Comments = new System.Windows.Forms.Label();
+            this.label_CommentsCount = new System.Windows.Forms.Label();
+            this.toolTip_Likes = new System.Windows.Forms.ToolTip(this.components);
+            this.dataGridView_MostActive = new System.Windows.Forms.DataGridView();
+            this.label_ActiveFriends = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhoto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_PostSentPhoto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SelectedPostPicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_MyPosts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_MostActive)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonPostMessage
@@ -61,7 +81,9 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.pictureBoxPostPhoto);
+            this.panel1.Controls.Add(this.button_ClearPostPhoto);
+            this.panel1.Controls.Add(this.label_PostSuccess);
+            this.panel1.Controls.Add(this.pictureBox_PostSentPhoto);
             this.panel1.Controls.Add(this.buttonAddPhoto);
             this.panel1.Controls.Add(this.richTextBox_PostMessage);
             this.panel1.Controls.Add(this.buttonPostMessage);
@@ -70,17 +92,37 @@
             this.panel1.Size = new System.Drawing.Size(511, 257);
             this.panel1.TabIndex = 43;
             // 
-            // richTextBox_PostMessage
+            // button_ClearPostPhoto
             // 
-            this.richTextBox_PostMessage.Location = new System.Drawing.Point(3, 3);
-            this.richTextBox_PostMessage.Name = "richTextBox_PostMessage";
-            this.richTextBox_PostMessage.Size = new System.Drawing.Size(419, 67);
-            this.richTextBox_PostMessage.TabIndex = 1;
-            this.richTextBox_PostMessage.Text = "Write something...";
+            this.button_ClearPostPhoto.Location = new System.Drawing.Point(3, 158);
+            this.button_ClearPostPhoto.Name = "button_ClearPostPhoto";
+            this.button_ClearPostPhoto.Size = new System.Drawing.Size(81, 47);
+            this.button_ClearPostPhoto.TabIndex = 50;
+            this.button_ClearPostPhoto.Text = "Clear Photo";
+            this.button_ClearPostPhoto.UseVisualStyleBackColor = true;
+            this.button_ClearPostPhoto.Visible = false;
+            this.button_ClearPostPhoto.Click += new System.EventHandler(this.button_ClearPostPhoto_Click);
+            // 
+            // label_PostSuccess
+            // 
+            this.label_PostSuccess.AutoSize = true;
+            this.label_PostSuccess.Location = new System.Drawing.Point(3, 78);
+            this.label_PostSuccess.Name = "label_PostSuccess";
+            this.label_PostSuccess.Size = new System.Drawing.Size(0, 13);
+            this.label_PostSuccess.TabIndex = 49;
+            // 
+            // pictureBox_PostSentPhoto
+            // 
+            this.pictureBox_PostSentPhoto.Location = new System.Drawing.Point(90, 94);
+            this.pictureBox_PostSentPhoto.Name = "pictureBox_PostSentPhoto";
+            this.pictureBox_PostSentPhoto.Size = new System.Drawing.Size(310, 160);
+            this.pictureBox_PostSentPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox_PostSentPhoto.TabIndex = 44;
+            this.pictureBox_PostSentPhoto.TabStop = false;
             // 
             // buttonAddPhoto
             // 
-            this.buttonAddPhoto.Location = new System.Drawing.Point(3, 76);
+            this.buttonAddPhoto.Location = new System.Drawing.Point(3, 94);
             this.buttonAddPhoto.Name = "buttonAddPhoto";
             this.buttonAddPhoto.Size = new System.Drawing.Size(81, 47);
             this.buttonAddPhoto.TabIndex = 2;
@@ -89,14 +131,14 @@
             this.buttonAddPhoto.VisibleChanged += new System.EventHandler(this.buttonAddPhoto_VisibleChanged);
             this.buttonAddPhoto.Click += new System.EventHandler(this.buttonAddPhoto_Click);
             // 
-            // pictureBoxPostPhoto
+            // richTextBox_PostMessage
             // 
-            this.pictureBoxPostPhoto.Location = new System.Drawing.Point(90, 76);
-            this.pictureBoxPostPhoto.Name = "pictureBoxPostPhoto";
-            this.pictureBoxPostPhoto.Size = new System.Drawing.Size(310, 164);
-            this.pictureBoxPostPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxPostPhoto.TabIndex = 44;
-            this.pictureBoxPostPhoto.TabStop = false;
+            this.richTextBox_PostMessage.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox_PostMessage.Name = "richTextBox_PostMessage";
+            this.richTextBox_PostMessage.Size = new System.Drawing.Size(419, 67);
+            this.richTextBox_PostMessage.TabIndex = 1;
+            this.richTextBox_PostMessage.Text = "Write something...";
+            this.richTextBox_PostMessage.Click += new System.EventHandler(this.richTextBox_PostMessage_Click);
             // 
             // openFileDialogPostPhoto
             // 
@@ -104,18 +146,157 @@
     " *.png";
             this.openFileDialogPostPhoto.Title = "Select a photo to be posted";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 360);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 13);
+            this.label1.TabIndex = 45;
+            this.label1.Text = "My last posts";
+            // 
+            // pictureBox_SelectedPostPicture
+            // 
+            this.pictureBox_SelectedPostPicture.Location = new System.Drawing.Point(882, 511);
+            this.pictureBox_SelectedPostPicture.Name = "pictureBox_SelectedPostPicture";
+            this.pictureBox_SelectedPostPicture.Size = new System.Drawing.Size(305, 130);
+            this.pictureBox_SelectedPostPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox_SelectedPostPicture.TabIndex = 45;
+            this.pictureBox_SelectedPostPicture.TabStop = false;
+            // 
+            // richTextBox_SelectedPostDetails
+            // 
+            this.richTextBox_SelectedPostDetails.Location = new System.Drawing.Point(882, 376);
+            this.richTextBox_SelectedPostDetails.Name = "richTextBox_SelectedPostDetails";
+            this.richTextBox_SelectedPostDetails.Size = new System.Drawing.Size(305, 85);
+            this.richTextBox_SelectedPostDetails.TabIndex = 46;
+            this.richTextBox_SelectedPostDetails.Text = "Write something...";
+            // 
+            // dataGridView_MyPosts
+            // 
+            this.dataGridView_MyPosts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_MyPosts.Location = new System.Drawing.Point(26, 376);
+            this.dataGridView_MyPosts.Name = "dataGridView_MyPosts";
+            this.dataGridView_MyPosts.ReadOnly = true;
+            this.dataGridView_MyPosts.Size = new System.Drawing.Size(821, 313);
+            this.dataGridView_MyPosts.TabIndex = 48;
+            this.dataGridView_MyPosts.SelectionChanged += new System.EventHandler(this.dataGridView_MyPosts_SelectionChanged);
+            // 
+            // timer_Posts
+            // 
+            this.timer_Posts.Enabled = true;
+            this.timer_Posts.Interval = 1000;
+            this.timer_Posts.Tick += new System.EventHandler(this.timer_Posts_Tick);
+            // 
+            // button_DeletePost
+            // 
+            this.button_DeletePost.Location = new System.Drawing.Point(882, 659);
+            this.button_DeletePost.Name = "button_DeletePost";
+            this.button_DeletePost.Size = new System.Drawing.Size(92, 30);
+            this.button_DeletePost.TabIndex = 49;
+            this.button_DeletePost.Text = "Delete";
+            this.button_DeletePost.UseVisualStyleBackColor = true;
+            this.button_DeletePost.Click += new System.EventHandler(this.button_DeletePost_Click);
+            // 
+            // label_PostDelete
+            // 
+            this.label_PostDelete.AutoSize = true;
+            this.label_PostDelete.Location = new System.Drawing.Point(882, 696);
+            this.label_PostDelete.Name = "label_PostDelete";
+            this.label_PostDelete.Size = new System.Drawing.Size(0, 13);
+            this.label_PostDelete.TabIndex = 50;
+            // 
+            // label_Likes
+            // 
+            this.label_Likes.AutoSize = true;
+            this.label_Likes.Location = new System.Drawing.Point(882, 478);
+            this.label_Likes.Name = "label_Likes";
+            this.label_Likes.Size = new System.Drawing.Size(35, 13);
+            this.label_Likes.TabIndex = 51;
+            this.label_Likes.Text = "Likes:";
+            // 
+            // label_LikesCount
+            // 
+            this.label_LikesCount.AutoSize = true;
+            this.label_LikesCount.Location = new System.Drawing.Point(923, 478);
+            this.label_LikesCount.Name = "label_LikesCount";
+            this.label_LikesCount.Size = new System.Drawing.Size(13, 13);
+            this.label_LikesCount.TabIndex = 52;
+            this.label_LikesCount.Text = "0";
+            this.label_LikesCount.MouseHover += new System.EventHandler(this.label_LikesCount_MouseHover);
+            // 
+            // label_Comments
+            // 
+            this.label_Comments.AutoSize = true;
+            this.label_Comments.Location = new System.Drawing.Point(1049, 478);
+            this.label_Comments.Name = "label_Comments";
+            this.label_Comments.Size = new System.Drawing.Size(59, 13);
+            this.label_Comments.TabIndex = 53;
+            this.label_Comments.Text = "Comments:";
+            // 
+            // label_CommentsCount
+            // 
+            this.label_CommentsCount.AutoSize = true;
+            this.label_CommentsCount.Location = new System.Drawing.Point(1114, 478);
+            this.label_CommentsCount.Name = "label_CommentsCount";
+            this.label_CommentsCount.Size = new System.Drawing.Size(13, 13);
+            this.label_CommentsCount.TabIndex = 54;
+            this.label_CommentsCount.Text = "0";
+            this.label_CommentsCount.MouseHover += new System.EventHandler(this.label_CommentsCount_MouseHover);
+            // 
+            // toolTip_Likes
+            // 
+            this.toolTip_Likes.AutoPopDelay = 10000;
+            this.toolTip_Likes.InitialDelay = 500;
+            this.toolTip_Likes.ReshowDelay = 100;
+            // 
+            // dataGridView_MostActive
+            // 
+            this.dataGridView_MostActive.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_MostActive.Location = new System.Drawing.Point(873, 44);
+            this.dataGridView_MostActive.Name = "dataGridView_MostActive";
+            this.dataGridView_MostActive.ReadOnly = true;
+            this.dataGridView_MostActive.Size = new System.Drawing.Size(314, 313);
+            this.dataGridView_MostActive.TabIndex = 55;
+            // 
+            // label_ActiveFriends
+            // 
+            this.label_ActiveFriends.AutoSize = true;
+            this.label_ActiveFriends.Location = new System.Drawing.Point(870, 28);
+            this.label_ActiveFriends.Name = "label_ActiveFriends";
+            this.label_ActiveFriends.Size = new System.Drawing.Size(211, 13);
+            this.label_ActiveFriends.TabIndex = 56;
+            this.label_ActiveFriends.Text = "Most Active friends (Most comments & Likes)";
+            // 
             // PostsUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label_ActiveFriends);
+            this.Controls.Add(this.dataGridView_MostActive);
+            this.Controls.Add(this.label_CommentsCount);
+            this.Controls.Add(this.label_Comments);
+            this.Controls.Add(this.label_LikesCount);
+            this.Controls.Add(this.label_Likes);
+            this.Controls.Add(this.label_PostDelete);
+            this.Controls.Add(this.button_DeletePost);
+            this.Controls.Add(this.dataGridView_MyPosts);
+            this.Controls.Add(this.richTextBox_SelectedPostDetails);
+            this.Controls.Add(this.pictureBox_SelectedPostPicture);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.picture_myPictureBox);
             this.Name = "PostsUserControl";
-            this.Size = new System.Drawing.Size(921, 747);
+            this.Size = new System.Drawing.Size(1233, 747);
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhoto)).EndInit();
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_PostSentPhoto)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SelectedPostPicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_MyPosts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_MostActive)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -124,9 +305,25 @@
         private System.Windows.Forms.Button buttonPostMessage;
         private System.Windows.Forms.PictureBox picture_myPictureBox;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBoxPostPhoto;
+        private System.Windows.Forms.PictureBox pictureBox_PostSentPhoto;
         private System.Windows.Forms.Button buttonAddPhoto;
         private System.Windows.Forms.RichTextBox richTextBox_PostMessage;
         private System.Windows.Forms.OpenFileDialog openFileDialogPostPhoto;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox_SelectedPostPicture;
+        private System.Windows.Forms.RichTextBox richTextBox_SelectedPostDetails;
+        private System.Windows.Forms.DataGridView dataGridView_MyPosts;
+        private System.Windows.Forms.Timer timer_Posts;
+        private System.Windows.Forms.Label label_PostSuccess;
+        private System.Windows.Forms.Button button_ClearPostPhoto;
+        private System.Windows.Forms.Button button_DeletePost;
+        private System.Windows.Forms.Label label_PostDelete;
+        private System.Windows.Forms.Label label_Likes;
+        private System.Windows.Forms.Label label_LikesCount;
+        private System.Windows.Forms.Label label_Comments;
+        private System.Windows.Forms.Label label_CommentsCount;
+        private System.Windows.Forms.ToolTip toolTip_Likes;
+        private System.Windows.Forms.DataGridView dataGridView_MostActive;
+        private System.Windows.Forms.Label label_ActiveFriends;
     }
 }

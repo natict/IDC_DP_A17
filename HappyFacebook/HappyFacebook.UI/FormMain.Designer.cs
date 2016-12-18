@@ -278,7 +278,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxPages.DisplayMember = "name";
             this.listBoxPages.FormattingEnabled = true;
-            this.listBoxPages.Location = new System.Drawing.Point(358, 527);
+            this.listBoxPages.Location = new System.Drawing.Point(360, 435);
             this.listBoxPages.Name = "listBoxPages";
             this.listBoxPages.Size = new System.Drawing.Size(1068, 173);
             this.listBoxPages.TabIndex = 40;

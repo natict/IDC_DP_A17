@@ -28,24 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.postsUserControl = new BasicFacebookFeatures.PostsUserControl();
             this.loginUserControl = new BasicFacebookFeatures.LoginUserControl();
+            this.postsUserControl = new BasicFacebookFeatures.PostsUserControl();
             this.SuspendLayout();
+            // 
+            // loginUserControl
+            // 
+            this.loginUserControl.Location = new System.Drawing.Point(12, -74);
+            this.loginUserControl.Name = "loginUserControl";
+            this.loginUserControl.Size = new System.Drawing.Size(1291, 862);
+            this.loginUserControl.TabIndex = 1;
             // 
             // postsUserControl
             // 
             this.postsUserControl.Location = new System.Drawing.Point(12, 12);
-            this.postsUserControl.Name = "postsUserControl1";
-            this.postsUserControl.Size = new System.Drawing.Size(1251, 640);
+            this.postsUserControl.Name = "postsUserControl";
+            this.postsUserControl.Size = new System.Drawing.Size(1251, 769);
             this.postsUserControl.TabIndex = 0;
             this.postsUserControl.Visible = false;
-            // 
-            // loginUserControl
-            // 
-            this.loginUserControl.Location = new System.Drawing.Point(3, 1);
-            this.loginUserControl.Name = "loginUserControl1";
-            this.loginUserControl.Size = new System.Drawing.Size(1291, 674);
-            this.loginUserControl.TabIndex = 1;
             // 
             // HappyFacebookForm
             // 

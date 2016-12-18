@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
@@ -22,7 +20,7 @@ namespace HappyFaceBook.BL
         public HappyFacebookManager()
         {
             FacebookService.s_UseForamttedToStrings = true;
-            FacebookService.s_CollectionLimit = 200;
+            FacebookService.s_CollectionLimit = 100;
             FacebookService.s_FbApiVersion = 2.8f;
         }
 
@@ -97,7 +95,6 @@ namespace HappyFaceBook.BL
             // The documentation regarding facebook login and permissions can be found here: 
             // https://developers.facebook.com/docs/facebook-login/permissions#reference
 
-
             if (!string.IsNullOrEmpty(result.AccessToken))
             {
                 m_LoggedInUser = result.LoggedInUser;
@@ -118,40 +115,59 @@ namespace HappyFaceBook.BL
             return m_LoggedInUser.Posts.Select(post => post.Message).ToList();
         }
 
-        public List<string> GetUserPosts()
+        public async Task<List<FacebookEntity>> GetUserPosts()
         {
-            List<string> postsList = new List<string>();
+            List<FacebookEntity> postsList = new List<FacebookEntity>();
 
-            foreach (Post post in m_LoggedInUser.Posts)
+            FacebookObjectCollection<Post> posts = null;
+            await Task.Run(() => posts = m_LoggedInUser.Posts);
+
+            foreach (Post post in posts)
             {
+                string message = string.Empty;
                 if (post.Message != null)
                 {
-                    postsList.Add(post.Message);
+                    message = post.Message;
                 }
                 else if (post.Caption != null)
                 {
-                    postsList.Add(post.Caption);
+                    message = post.Caption;
                 }
                 else
                 {
-                    postsList.Add(($"[{post.Type}]"));
+                    message = $"[{post.Type}]";
                 }
+
+                postsList.Add(new FacebookEntity
+                {
+                    Name = message,
+                    PictureUrl = post.PictureURL,
+                    Item = post
+                });
             }
 
             return postsList;
         }
 
-        public void PostStatus(string i_StatusText)
+        public async Task PostStatus(string i_StatusText, string i_PictureTitle = null)
         {
-            m_LoggedInUser.PostStatus(i_StatusText);
+            await Task.Run(() =>
+            {
+                m_LoggedInUser.PostStatus(i_StatusText, i_PictureURL: i_PictureTitle);
+                m_LoggedInUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            });
         }
 
-        public void PostPicture(string i_PicturePath, string i_PictureTitle)
+        public async Task PostPicture(string i_PicturePath, string i_PictureTitle)
         {
-            var webClient = new WebClient();
-            byte[] imageBytes = webClient.DownloadData(i_PicturePath);
+            //`var webClient = new WebClient();
+            //byte[] imageBytes = webClient.DownloadData(i_PicturePath);
 
-            m_LoggedInUser.PostPhoto(imageBytes, i_PictureTitle);
+            await Task.Run(() =>
+            {
+                m_LoggedInUser.PostPhoto(i_PicturePath, i_PictureTitle, i_PictureTitle);
+                m_LoggedInUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            });
         }
 
         public List<FacebookEntity> GetFriends()
@@ -197,6 +213,15 @@ namespace HappyFaceBook.BL
             }
 
             return pages;
+        }
+
+        public async Task DeleteItem(PostedItem item)
+        {
+            await Task.Run(() =>
+            {
+                item.Delete();
+                m_LoggedInUser.ReFetch();
+            });
         }
     }
 }
