@@ -183,7 +183,7 @@ namespace BasicFacebookFeatures
             if (res == DialogResult.Yes)
             {
                 //m_HappyFacebookManager.PostPicture(url, "Enjoy the pic!");
-                m_HappyFacebookManager.PostStatus(url);
+                m_HappyFacebookManager.PostPictureURL(url);
             }
         }
 

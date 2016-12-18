@@ -47,6 +47,7 @@
             this.pictureBoxPage = new System.Windows.Forms.PictureBox();
             this.listBoxPages = new System.Windows.Forms.ListBox();
             this.linkPages = new System.Windows.Forms.LinkLabel();
+            this.picture_smallPictureBox = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.comboBoxActionType = new System.Windows.Forms.ComboBox();
             this.dataGridViewActions = new System.Windows.Forms.DataGridView();
@@ -57,17 +58,16 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.picture_smallPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxEvent)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picture_smallPictureBox)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewActions)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picture_smallPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBoxFriend
@@ -297,6 +297,15 @@
             this.linkPages.UseCompatibleTextRendering = true;
             this.linkPages.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkPages_LinkClicked);
             // 
+            // picture_smallPictureBox
+            // 
+            this.picture_smallPictureBox.Location = new System.Drawing.Point(8, 51);
+            this.picture_smallPictureBox.Name = "picture_smallPictureBox";
+            this.picture_smallPictureBox.Size = new System.Drawing.Size(200, 156);
+            this.picture_smallPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picture_smallPictureBox.TabIndex = 41;
+            this.picture_smallPictureBox.TabStop = false;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.comboBoxActionType);
@@ -305,7 +314,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1249, 680);
+            this.tabPage2.Size = new System.Drawing.Size(1436, 767);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -372,7 +381,7 @@
             this.tabPage3.Controls.Add(this.button1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1249, 680);
+            this.tabPage3.Size = new System.Drawing.Size(1436, 767);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -419,15 +428,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // picture_smallPictureBox
-            // 
-            this.picture_smallPictureBox.Location = new System.Drawing.Point(8, 51);
-            this.picture_smallPictureBox.Name = "picture_smallPictureBox";
-            this.picture_smallPictureBox.Size = new System.Drawing.Size(200, 156);
-            this.picture_smallPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picture_smallPictureBox.TabIndex = 41;
-            this.picture_smallPictureBox.TabStop = false;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -442,13 +442,13 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picture_smallPictureBox)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewActions)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picture_smallPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }

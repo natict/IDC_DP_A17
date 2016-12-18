@@ -47,8 +47,8 @@ namespace HappyFaceBook.BL
         {
             /// Use the FacebookService.Login method to display the login form to any user who wish to use this application.
             /// You can then save the result.AccessToken for future auto-connect to this user:
-            //LoginResult result = FacebookService.Login("1450160541956417", /// (desig patter's "Design Patterns Course App 2.4" app)
-           LoginResult result = FacebookService.Login("1908224946078795", // Y
+           LoginResult result = FacebookService.Login("120866478407900", /// (desig patter's "Design Patterns Course App 2.4" app)
+           //LoginResult result = FacebookService.Login("1908224946078795", // Y
                 "public_profile",
                 "user_education_history",
                 "user_birthday",
@@ -156,6 +156,11 @@ namespace HappyFaceBook.BL
                 m_LoggedInUser.PostStatus(i_StatusText, i_PictureURL: i_PictureTitle);
                 m_LoggedInUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
             });
+        }
+
+        public void PostPictureURL(string i_Url)
+        {
+            m_LoggedInUser.PostLink(i_Url, "");
         }
 
         public async Task PostPicture(string i_PicturePath, string i_PictureTitle)
