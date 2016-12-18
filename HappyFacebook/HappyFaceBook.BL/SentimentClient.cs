@@ -51,7 +51,7 @@ namespace HappyFaceBook.BL
         private string generateSentimentURL(string i_Text)
         {
             UriBuilder sentimentURL = new UriBuilder(k_SenitimentAnalysisUrl);
-            sentimentURL.Query = string.Join("&", string.Format("text={0}", HttpUtility.UrlEncode(i_Text)), string.Format("token={0}", r_ApiKey));
+            sentimentURL.Query = string.Join("&", string.Format("text={0}", HttpUtility.UrlEncode(i_Text)), string.Format("token={0}", r_ApiKey), "lang=en");
             return sentimentURL.ToString();
         }
     }

@@ -101,6 +101,8 @@
             // checkBox_BePositive
             // 
             this.checkBox_BePositive.AutoSize = true;
+            this.checkBox_BePositive.Checked = true;
+            this.checkBox_BePositive.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_BePositive.Location = new System.Drawing.Point(427, 78);
             this.checkBox_BePositive.Name = "checkBox_BePositive";
             this.checkBox_BePositive.Size = new System.Drawing.Size(85, 17);
