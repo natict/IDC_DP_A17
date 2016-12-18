@@ -24,10 +24,5 @@ namespace BasicFacebookFeatures
             loginUserControl.Visible = false;
             postsUserControl.Visible = true;
         }
-
-        private void button_Logout_Click(object sender, EventArgs e)
-        {
-            HappyFacebookManager.Instance.Logout();
-        }
     }
 }

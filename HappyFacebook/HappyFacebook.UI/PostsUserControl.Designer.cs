@@ -32,6 +32,7 @@
             this.buttonPostMessage = new System.Windows.Forms.Button();
             this.picture_myPictureBox = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.checkBox_BePositive = new System.Windows.Forms.CheckBox();
             this.button_ClearPostPhoto = new System.Windows.Forms.Button();
             this.label_PostSuccess = new System.Windows.Forms.Label();
             this.pictureBox_PostSentPhoto = new System.Windows.Forms.PictureBox();
@@ -52,10 +53,10 @@
             this.toolTip_Likes = new System.Windows.Forms.ToolTip(this.components);
             this.dataGridView_MostActive = new System.Windows.Forms.DataGridView();
             this.label_ActiveFriends = new System.Windows.Forms.Label();
-            this.checkBox_BePositive = new System.Windows.Forms.CheckBox();
             this.label_MyName = new System.Windows.Forms.Label();
             this.label_FriendsCount = new System.Windows.Forms.Label();
             this.label_Friends = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_PostSentPhoto)).BeginInit();
@@ -96,6 +97,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(511, 257);
             this.panel1.TabIndex = 43;
+            // 
+            // checkBox_BePositive
+            // 
+            this.checkBox_BePositive.AutoSize = true;
+            this.checkBox_BePositive.Location = new System.Drawing.Point(427, 78);
+            this.checkBox_BePositive.Name = "checkBox_BePositive";
+            this.checkBox_BePositive.Size = new System.Drawing.Size(85, 17);
+            this.checkBox_BePositive.TabIndex = 51;
+            this.checkBox_BePositive.Text = "Be Positive?";
+            this.checkBox_BePositive.UseVisualStyleBackColor = true;
             // 
             // button_ClearPostPhoto
             // 
@@ -273,16 +284,6 @@
             this.label_ActiveFriends.TabIndex = 56;
             this.label_ActiveFriends.Text = "Most Active friends (Most comments & Likes)";
             // 
-            // checkBox_BePositive
-            // 
-            this.checkBox_BePositive.AutoSize = true;
-            this.checkBox_BePositive.Location = new System.Drawing.Point(427, 78);
-            this.checkBox_BePositive.Name = "checkBox_BePositive";
-            this.checkBox_BePositive.Size = new System.Drawing.Size(85, 17);
-            this.checkBox_BePositive.TabIndex = 51;
-            this.checkBox_BePositive.Text = "Be Positive?";
-            this.checkBox_BePositive.UseVisualStyleBackColor = true;
-            // 
             // label_MyName
             // 
             this.label_MyName.AutoSize = true;
@@ -310,10 +311,20 @@
             this.label_Friends.TabIndex = 58;
             this.label_Friends.Text = "Friends:";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(26, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(92, 30);
+            this.button1.TabIndex = 60;
+            this.button1.Text = "Delete";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // PostsUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label_FriendsCount);
             this.Controls.Add(this.label_Friends);
             this.Controls.Add(this.label_MyName);
@@ -374,5 +385,6 @@
         private System.Windows.Forms.Label label_MyName;
         private System.Windows.Forms.Label label_FriendsCount;
         private System.Windows.Forms.Label label_Friends;
+        private System.Windows.Forms.Button button1;
     }
 }

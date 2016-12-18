@@ -42,7 +42,7 @@ namespace BasicFacebookFeatures
             picture_myPictureBox.LoadAsync(url);
             label_MyName.Text = HappyFacebookManager.Instance.GetLoggedInUserName();
             label_FriendsCount.Text = HappyFacebookManager.Instance.GetFriends().Count.ToString();
-
+            
             // Load my posts
             LoadMyPosts();
         }
