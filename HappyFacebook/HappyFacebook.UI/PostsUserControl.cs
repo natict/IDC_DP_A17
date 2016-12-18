@@ -137,9 +137,9 @@ namespace BasicFacebookFeatures
                     }
                 }
 
-                if (richTextBox_PostMessage.Text.StartsWith(@"\giffy"))
+                if (richTextBox_PostMessage.Text.StartsWith(@"\giphy"))
                 {
-                    string searchFor = richTextBox_PostMessage.Text.Substring(@"\giffy".Length);
+                    string searchFor = richTextBox_PostMessage.Text.Substring(@"\giphy".Length);
                     string url = m_GiphyClient.Translate(searchFor);
                     pictureBox_PostSentPhoto.Load(url);
 
@@ -147,7 +147,7 @@ namespace BasicFacebookFeatures
                     if (res == DialogResult.Yes)
                     {
                         await HappyFacebookManager.Instance.PostPictureURL(url, searchFor);
-                        label_PostSuccess.Text = "Giffy Posted successfully!";
+                        label_PostSuccess.Text = "Gif Posted successfully!";
                     }
                 }
                 else if (openFileDialogPostPhoto.FileName != String.Empty)
