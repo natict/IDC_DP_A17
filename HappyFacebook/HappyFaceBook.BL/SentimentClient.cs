@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using HappyFaceBook.BL.Exceptions;
 
 namespace HappyFaceBook.BL
 {

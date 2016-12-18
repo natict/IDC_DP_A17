@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace HappyFaceBook.BL
+namespace HappyFaceBook.BL.Exceptions
 {
     [Serializable]
     internal class SentimentAnalysisException : Exception
