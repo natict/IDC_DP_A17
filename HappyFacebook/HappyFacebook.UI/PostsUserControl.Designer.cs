@@ -52,6 +52,10 @@
             this.toolTip_Likes = new System.Windows.Forms.ToolTip(this.components);
             this.dataGridView_MostActive = new System.Windows.Forms.DataGridView();
             this.label_ActiveFriends = new System.Windows.Forms.Label();
+            this.checkBox_BePositive = new System.Windows.Forms.CheckBox();
+            this.label_MyName = new System.Windows.Forms.Label();
+            this.label_FriendsCount = new System.Windows.Forms.Label();
+            this.label_Friends = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_PostSentPhoto)).BeginInit();
@@ -81,6 +85,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.checkBox_BePositive);
             this.panel1.Controls.Add(this.button_ClearPostPhoto);
             this.panel1.Controls.Add(this.label_PostSuccess);
             this.panel1.Controls.Add(this.pictureBox_PostSentPhoto);
@@ -268,10 +273,50 @@
             this.label_ActiveFriends.TabIndex = 56;
             this.label_ActiveFriends.Text = "Most Active friends (Most comments & Likes)";
             // 
+            // checkBox_BePositive
+            // 
+            this.checkBox_BePositive.AutoSize = true;
+            this.checkBox_BePositive.Location = new System.Drawing.Point(427, 78);
+            this.checkBox_BePositive.Name = "checkBox_BePositive";
+            this.checkBox_BePositive.Size = new System.Drawing.Size(85, 17);
+            this.checkBox_BePositive.TabIndex = 51;
+            this.checkBox_BePositive.Text = "Be Positive?";
+            this.checkBox_BePositive.UseVisualStyleBackColor = true;
+            // 
+            // label_MyName
+            // 
+            this.label_MyName.AutoSize = true;
+            this.label_MyName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_MyName.Location = new System.Drawing.Point(25, 28);
+            this.label_MyName.Name = "label_MyName";
+            this.label_MyName.Size = new System.Drawing.Size(0, 24);
+            this.label_MyName.TabIndex = 57;
+            // 
+            // label_FriendsCount
+            // 
+            this.label_FriendsCount.AutoSize = true;
+            this.label_FriendsCount.Location = new System.Drawing.Point(76, 237);
+            this.label_FriendsCount.Name = "label_FriendsCount";
+            this.label_FriendsCount.Size = new System.Drawing.Size(13, 13);
+            this.label_FriendsCount.TabIndex = 59;
+            this.label_FriendsCount.Text = "0";
+            // 
+            // label_Friends
+            // 
+            this.label_Friends.AutoSize = true;
+            this.label_Friends.Location = new System.Drawing.Point(35, 237);
+            this.label_Friends.Name = "label_Friends";
+            this.label_Friends.Size = new System.Drawing.Size(44, 13);
+            this.label_Friends.TabIndex = 58;
+            this.label_Friends.Text = "Friends:";
+            // 
             // PostsUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label_FriendsCount);
+            this.Controls.Add(this.label_Friends);
+            this.Controls.Add(this.label_MyName);
             this.Controls.Add(this.label_ActiveFriends);
             this.Controls.Add(this.dataGridView_MostActive);
             this.Controls.Add(this.label_CommentsCount);
@@ -325,5 +370,9 @@
         private System.Windows.Forms.ToolTip toolTip_Likes;
         private System.Windows.Forms.DataGridView dataGridView_MostActive;
         private System.Windows.Forms.Label label_ActiveFriends;
+        private System.Windows.Forms.CheckBox checkBox_BePositive;
+        private System.Windows.Forms.Label label_MyName;
+        private System.Windows.Forms.Label label_FriendsCount;
+        private System.Windows.Forms.Label label_Friends;
     }
 }

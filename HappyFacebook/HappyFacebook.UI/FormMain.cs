@@ -11,21 +11,18 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
-        private readonly HappyFacebookManager m_HappyFacebookManager;
-
         public FormMain()
         {
             InitializeComponent();
-            m_HappyFacebookManager = new HappyFacebookManager();
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             try
             {
-                m_HappyFacebookManager.LoginAndInit();
-                picture_smallPictureBox.LoadAsync(m_HappyFacebookManager.GetLoggedInUserPictureUrl());
-                textBoxStatus.Text = m_HappyFacebookManager.GetUserPostMessages().FirstOrDefault();
+                HappyFacebookManager.Instance.LoginAndInit();
+                picture_smallPictureBox.LoadAsync(HappyFacebookManager.Instance.GetLoggedInUserPictureUrl());
+                textBoxStatus.Text = HappyFacebookManager.Instance.GetUserPostMessages().FirstOrDefault();
             }
             catch (FacebookLoginException ex)
             {
@@ -42,7 +39,7 @@ namespace BasicFacebookFeatures
             //string id = m_HappyFacebookManager
             try
             {
-                m_HappyFacebookManager.PostStatus(textBoxStatus.Text);
+                HappyFacebookManager.Instance.PostStatus(textBoxStatus.Text);
                 MessageBox.Show("Status Posted successfully!");
             }
             catch (Exception ex)
@@ -56,7 +53,7 @@ namespace BasicFacebookFeatures
         {
             listBoxPosts.Items.Clear();
             listBoxFriends.DisplayMember = "Name";
-            foreach (FacebookEntity post in m_HappyFacebookManager.GetUserPosts().Result)
+            foreach (FacebookEntity post in HappyFacebookManager.Instance.GetUserPosts().Result)
             {
                 listBoxPosts.Items.Add(post);
             }
@@ -71,7 +68,7 @@ namespace BasicFacebookFeatures
         {
             listBoxFriends.Items.Clear();
             listBoxFriends.DisplayMember = "Name";
-            foreach (FacebookEntity friend in m_HappyFacebookManager.GetFriends())
+            foreach (FacebookEntity friend in HappyFacebookManager.Instance.GetFriends())
             {
                 listBoxFriends.Items.Add(friend);
             }
@@ -102,7 +99,7 @@ namespace BasicFacebookFeatures
         {
             listBoxEvents.Items.Clear();
             listBoxEvents.DisplayMember = "Name";
-            foreach (FacebookEntity fbEvent in m_HappyFacebookManager.GetEvents())
+            foreach (FacebookEntity fbEvent in HappyFacebookManager.Instance.GetEvents())
             {
                 listBoxEvents.Items.Add(fbEvent);
             }
@@ -126,7 +123,7 @@ namespace BasicFacebookFeatures
         {
             listBoxCheckins.Items.Clear();
             listBoxCheckins.DisplayMember = "Name";
-            foreach (FacebookEntity fbCheckin in m_HappyFacebookManager.GetCheckins())
+            foreach (FacebookEntity fbCheckin in HappyFacebookManager.Instance.GetCheckins())
             {
                 listBoxCheckins.Items.Add(fbCheckin);
             }
@@ -142,7 +139,7 @@ namespace BasicFacebookFeatures
             listBoxPages.Items.Clear();
             listBoxPages.DisplayMember = "Name";
 
-            foreach (FacebookEntity fbPage in m_HappyFacebookManager.GetLikedPagesPages())
+            foreach (FacebookEntity fbPage in HappyFacebookManager.Instance.GetLikedPagesPages())
             {
                 listBoxPages.Items.Add(fbPage);
             }
@@ -183,7 +180,7 @@ namespace BasicFacebookFeatures
             if (res == DialogResult.Yes)
             {
                 //m_HappyFacebookManager.PostPicture(url, "Enjoy the pic!");
-                m_HappyFacebookManager.PostPictureURL(url);
+                HappyFacebookManager.Instance.PostPictureURL(url, "");
             }
         }
 

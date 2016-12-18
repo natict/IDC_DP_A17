@@ -17,7 +17,7 @@ namespace HappyFaceBook.BL
 
         private static object lockContext = new object();
 
-        public HappyFacebookManager()
+        private HappyFacebookManager()
         {
             FacebookService.s_UseForamttedToStrings = true;
             FacebookService.s_CollectionLimit = 100;
@@ -110,6 +110,11 @@ namespace HappyFaceBook.BL
             return m_LoggedInUser.PictureNormalURL;
         }
 
+        public string GetLoggedInUserName()
+        {
+            return m_LoggedInUser.Name;
+        }
+
         public List<string> GetUserPostMessages()
         {
             return m_LoggedInUser.Posts.Select(post => post.Message).ToList();
@@ -138,10 +143,21 @@ namespace HappyFaceBook.BL
                     message = $"[{post.Type}]";
                 }
 
+                string pictureUrl = string.Empty;
+                if (post.PictureURL != null && !post.PictureURL.Contains(@"/safe_image"))
+                {
+                    pictureUrl = post.PictureURL;
+
+                }
+                else
+                {
+                    pictureUrl = post.Link;
+                }
+
                 postsList.Add(new FacebookEntity
                 {
                     Name = message,
-                    PictureUrl = post.PictureURL,
+                    PictureUrl = pictureUrl,
                     Item = post
                 });
             }
@@ -158,16 +174,17 @@ namespace HappyFaceBook.BL
             });
         }
 
-        public void PostPictureURL(string i_Url)
+        public async Task PostPictureURL(string i_Url, string i_Caption)
         {
-            m_LoggedInUser.PostLink(i_Url, "");
+            await Task.Run(() =>
+            {
+                m_LoggedInUser.PostLink(i_Url, i_Caption);
+                m_LoggedInUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            });
         }
 
         public async Task PostPicture(string i_PicturePath, string i_PictureTitle)
         {
-            //`var webClient = new WebClient();
-            //byte[] imageBytes = webClient.DownloadData(i_PicturePath);
-
             await Task.Run(() =>
             {
                 m_LoggedInUser.PostPhoto(i_PicturePath, i_PictureTitle, i_PictureTitle);
@@ -227,6 +244,11 @@ namespace HappyFaceBook.BL
                 item.Delete();
                 m_LoggedInUser.ReFetch();
             });
+        }
+
+        public void Logout()
+        {
+            FacebookService.Logout(() => { });
         }
     }
 }

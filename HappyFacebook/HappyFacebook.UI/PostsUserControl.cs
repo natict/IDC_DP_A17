@@ -15,9 +15,14 @@ namespace BasicFacebookFeatures
 {
     public partial class PostsUserControl : UserControl
     {
+        private GiphyClient m_GiphyClient;
+        private SentimentClient m_SentimentClient;
+
         public PostsUserControl()
         {
             InitializeComponent();
+            m_GiphyClient = new GiphyClient();
+            m_SentimentClient = new SentimentClient();
         }
 
         private async void buttonAddPhoto_Click(object sender, EventArgs e)
@@ -32,9 +37,11 @@ namespace BasicFacebookFeatures
 
         private void buttonAddPhoto_VisibleChanged(object sender, EventArgs e)
         {
-            // Load my picture
+            // Load my picture and detials
             string url = HappyFacebookManager.Instance.GetLoggedInUserPictureUrl();
             picture_myPictureBox.LoadAsync(url);
+            label_MyName.Text = HappyFacebookManager.Instance.GetLoggedInUserName();
+            label_FriendsCount.Text = HappyFacebookManager.Instance.GetFriends().Count.ToString();
 
             // Load my posts
             LoadMyPosts();
@@ -120,7 +127,30 @@ namespace BasicFacebookFeatures
             label_PostSuccess.Text = "Posting...";
             try
             {
-                if (openFileDialogPostPhoto.FileName != String.Empty)
+                if (checkBox_BePositive.Checked)
+                {
+                    eSentiment sentiment = m_SentimentClient.GetSentiment(richTextBox_PostMessage.Text);
+                    if (sentiment == eSentiment.Negative)
+                    {
+                        MessageBox.Show("Be more positive and try again!");
+                        return;
+                    }
+                }
+
+                if (richTextBox_PostMessage.Text.StartsWith(@"\giffy"))
+                {
+                    string searchFor = richTextBox_PostMessage.Text.Substring(@"\giffy".Length);
+                    string url = m_GiphyClient.Translate(searchFor);
+                    pictureBox_PostSentPhoto.Load(url);
+
+                    DialogResult res = MessageBox.Show("Do you want to post it?", "Interesting...", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        await HappyFacebookManager.Instance.PostPictureURL(url, searchFor);
+                        label_PostSuccess.Text = "Giffy Posted successfully!";
+                    }
+                }
+                else if (openFileDialogPostPhoto.FileName != String.Empty)
                 {
                     await HappyFacebookManager.Instance.PostPicture(openFileDialogPostPhoto.FileName, richTextBox_PostMessage.Text);
                     label_PostSuccess.Text = "Picture Posted successfully!";
@@ -131,6 +161,9 @@ namespace BasicFacebookFeatures
                     label_PostSuccess.Text = "Message Posted successfully!";
                 }
 
+                openFileDialogPostPhoto.FileName = String.Empty;
+                richTextBox_PostMessage.Text = "Write something...";
+                pictureBox_PostSentPhoto.Image = null;
                 LoadMyPosts();
             }
             catch (Exception ex)
@@ -158,10 +191,11 @@ namespace BasicFacebookFeatures
 
                 label_LikesCount.Text = selectedPost.Likes.ToString();
                 label_CommentsCount.Text = selectedPost.Comments.ToString();
+                label_PostDelete.Text = string.Empty;
             }
-            catch
+            catch (Exception ex)
             {
-                richTextBox_SelectedPostDetails.Text = "Error loading message";
+                richTextBox_SelectedPostDetails.Text = $"Error loading message: {ex.Message}";
             }
         }
 
@@ -186,11 +220,15 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                label_PostDelete.Text = "Deleting...";
-                FacebookEntity selectedPost = dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
-                await HappyFacebookManager.Instance.DeleteItem(selectedPost?.Item);
-                LoadMyPosts();
-                label_PostDelete.Text = $"Post deleted successfully";
+                DialogResult res = MessageBox.Show("Are you sure you want to delete?", "Warning", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    label_PostDelete.Text = "Deleting...";
+                    FacebookEntity selectedPost = dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
+                    await HappyFacebookManager.Instance.DeleteItem(selectedPost?.Item);
+                    LoadMyPosts();
+                    label_PostDelete.Text = $"Post deleted successfully";
+                }
             }
             catch (Exception ex)
             {
