@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
@@ -15,14 +11,134 @@ namespace BasicFacebookFeatures
 {
     public partial class PostsUserControl : UserControl
     {
+        /// <summary>
+        /// Retreives a random gif which suites your phrase
+        /// </summary>
         private GiphyClient m_GiphyClient;
+
+        /// <summary>
+        /// Analyzes the sentiment context of your post, and can help you keep positive
+        /// </summary>
         private SentimentClient m_SentimentClient;
+
+        private const string GiphyPrefix = @"\giphy";
 
         public PostsUserControl()
         {
             InitializeComponent();
             m_GiphyClient = new GiphyClient();
             m_SentimentClient = new SentimentClient();
+        }
+
+        /// <summary>
+        /// Initialize posts user control
+        /// </summary>
+        public async Task Initialize()
+        {
+            // Load my picture and detials
+            string url = HappyFacebookManager.Instance.GetLoggedInUserPictureUrl();
+            picture_myPictureBox.LoadAsync(url);
+            label_MyName.Text = HappyFacebookManager.Instance.GetLoggedInUserName();
+            label_FriendsCount.Text = HappyFacebookManager.Instance.GetFriends().Count.ToString();
+
+            // Load my post
+            List<FacebookEntity> posts = await loadMyPosts();
+
+            // Load my active friends
+            await setActiveFriends(posts);
+        }
+
+        /// <summary>
+        /// Load posts to data grid
+        /// </summary>
+        /// <returns></returns>
+        private async Task<List<FacebookEntity>> loadMyPosts()
+        {
+            List<FacebookEntity> posts = await HappyFacebookManager.Instance.GetUserPosts();
+            dataGridView_MyPosts.DataSource = posts;
+            dataGridView_MyPosts.Columns[0].Width = 120;
+            dataGridView_MyPosts.Columns[1].Width = 70;
+            dataGridView_MyPosts.Columns[2].Width = 70;
+            dataGridView_MyPosts.Columns[3].Width = 120;
+            dataGridView_MyPosts.Columns[4].Width = 400;
+
+            return posts;
+        }
+
+        /// <summary>
+        /// Calculted the number of activities (likes\comments) for each friend on my wall
+        /// </summary>
+        /// <param name="i_Posts">The list of my posts</param>
+        private async Task setActiveFriends(List<FacebookEntity> i_Posts)
+        {
+            label_ActiveFriends.Text = "Calculating friends activity on your wall...";
+            ConcurrentDictionary<string, int> likesDictionary = new ConcurrentDictionary<string, int>();
+            await Task.Run(() =>
+            {
+                // for all posts
+                Parallel.ForEach(i_Posts, (post) =>
+                {
+                    // All likes on post
+                    Parallel.ForEach(post.Item.LikedBy, (like) =>
+                    {
+                        updateImpactCount(like, likesDictionary);
+                    });
+
+                    // All comments in post
+                    Parallel.ForEach(post.Item.Comments, (comment) =>
+                    {
+                        updateImpactCount(comment.From, likesDictionary);
+
+                        // All likes for comment
+                        Parallel.ForEach(comment.LikedBy, (commentLike) =>
+                        {
+                            updateImpactCount(commentLike, likesDictionary);
+                        });
+
+                        // All comments for comment
+                        Parallel.ForEach(comment.Comments, (innerComment) =>
+                        {
+                            updateImpactCount(innerComment.From, likesDictionary);
+
+                            // All likes for coment in comment
+                            foreach (var innerCommentLike in innerComment.LikedBy)
+                            {
+                                updateImpactCount(innerCommentLike, likesDictionary);
+                            }
+                        });
+                    });
+                });
+            });
+
+            // Sort and set to data grid.
+            List<KeyValuePair<string, int>> friendsActivityList = likesDictionary.Select(kv => new KeyValuePair<string, int>(kv.Key.GetUserName(), kv.Value)).ToList();
+            friendsActivityList.Sort((pair1, pair2) => -pair1.Value.CompareTo(pair2.Value));
+            dataGridView_MostActive.DataSource = friendsActivityList;
+
+            label_ActiveFriends.Text = "Most active Friends on your wall:";
+        }
+
+        /// <summary>
+        /// Thread safe update of friend activity count on my wall.
+        /// </summary>
+        /// <param name="i_User">The user which performed an activity on my wall</param>
+        /// <param name="i_FriendsActivityDictionary">Dictionary which contains the activity count of my friend on my wall</param>
+        private void updateImpactCount(User i_User, ConcurrentDictionary<string, int> i_FriendsActivityDictionary)
+        {
+            var userId = i_User.GetUserId();
+
+            if (!i_FriendsActivityDictionary.ContainsKey(userId))
+            {
+                lock (i_FriendsActivityDictionary)
+                {
+                    if (!i_FriendsActivityDictionary.ContainsKey(userId))
+                    {
+                        i_FriendsActivityDictionary[userId] = 0;
+                    }
+                }
+            }
+
+            i_FriendsActivityDictionary[userId] += 1;
         }
 
         private async void buttonAddPhoto_Click(object sender, EventArgs e)
@@ -35,98 +151,13 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void buttonAddPhoto_VisibleChanged(object sender, EventArgs e)
-        {
-            // Load my picture and detials
-            string url = HappyFacebookManager.Instance.GetLoggedInUserPictureUrl();
-            picture_myPictureBox.LoadAsync(url);
-            label_MyName.Text = HappyFacebookManager.Instance.GetLoggedInUserName();
-            label_FriendsCount.Text = HappyFacebookManager.Instance.GetFriends().Count.ToString();
-            
-            // Load my posts
-            LoadMyPosts();
-        }
-
-        private async void LoadMyPosts()
-        {
-            List<FacebookEntity> posts = await HappyFacebookManager.Instance.GetUserPosts();
-            dataGridView_MyPosts.DataSource = posts;
-            dataGridView_MyPosts.Columns[0].Width = 120;
-            dataGridView_MyPosts.Columns[1].Width = 70;
-            dataGridView_MyPosts.Columns[2].Width = 70;
-            dataGridView_MyPosts.Columns[3].Width = 120;
-            dataGridView_MyPosts.Columns[4].Width = 400;
-
-            await SetActiveFriends(posts);
-        }
-
-        private async Task SetActiveFriends(List<FacebookEntity> posts)
-        {
-            label_ActiveFriends.Text = "Calculating friends activity on your wall...";
-            ConcurrentDictionary<string, int> likesDictionary = new ConcurrentDictionary<string, int>();
-            await Task.Run(() =>
-            {
-                Parallel.ForEach(posts, (post) =>
-                {
-                    Parallel.ForEach(post.Item.LikedBy, (like) =>
-                    {
-                        UpdateImpactCount(like, likesDictionary);
-                    });
-
-                    Parallel.ForEach(post.Item.Comments, (comment) =>
-                    {
-                        UpdateImpactCount(comment.From, likesDictionary);
-
-                        Parallel.ForEach(comment.LikedBy, (commentLike) =>
-                        {
-                            UpdateImpactCount(commentLike, likesDictionary);
-                        });
-
-                        Parallel.ForEach(comment.Comments, (innerComment) =>
-                        {
-                            UpdateImpactCount(innerComment.From, likesDictionary);
-
-                            foreach (var innerCommentLike in innerComment.LikedBy)
-                            {
-                                UpdateImpactCount(innerCommentLike, likesDictionary);
-                            }
-                        });
-                    });
-                });
-            });
-
-            List<KeyValuePair<string, int>> friendsActivityList = likesDictionary.Select(kv => new KeyValuePair<string, int>(kv.Key.GetUserName(), kv.Value)).ToList();
-
-            friendsActivityList.Sort((pair1, pair2) => -pair1.Value.CompareTo(pair2.Value));
-
-            dataGridView_MostActive.DataSource = friendsActivityList;
-
-            label_ActiveFriends.Text = "Most active Friends on your wall:";
-        }
-
-        private static void UpdateImpactCount(User user, ConcurrentDictionary<string, int> likesDictionary)
-        {
-            var userId = user.GetUserId();
-
-            if (!likesDictionary.ContainsKey(userId))
-            {
-                lock (likesDictionary)
-                {
-                    if (!likesDictionary.ContainsKey(userId))
-                    {
-                        likesDictionary[userId] = 0;
-                    }
-                }
-            }
-
-            likesDictionary[userId] += 1;
-        }
-
         private async void buttonPostMessage_Click(object sender, EventArgs e)
         {
             label_PostSuccess.Text = "Posting...";
+
             try
             {
+                // Check post sentiment
                 if (checkBox_BePositive.Checked)
                 {
                     eSentiment sentiment = m_SentimentClient.GetSentiment(richTextBox_PostMessage.Text);
@@ -137,9 +168,10 @@ namespace BasicFacebookFeatures
                     }
                 }
 
-                if (richTextBox_PostMessage.Text.StartsWith(@"\giphy"))
+                // Search for Gif
+                if (richTextBox_PostMessage.Text.ToLower().StartsWith(GiphyPrefix))
                 {
-                    string searchFor = richTextBox_PostMessage.Text.Substring(@"\giphy".Length);
+                    string searchFor = richTextBox_PostMessage.Text.Substring(GiphyPrefix.Length);
                     string url = m_GiphyClient.Translate(searchFor);
                     pictureBox_PostSentPhoto.Load(url);
 
@@ -162,9 +194,9 @@ namespace BasicFacebookFeatures
                 }
 
                 openFileDialogPostPhoto.FileName = String.Empty;
-                richTextBox_PostMessage.Text = "Write something...";
+                richTextBox_PostMessage.Text = $"Write something... {Environment.NewLine}{Environment.NewLine}Use \"{GiphyPrefix}\" prefix to match a gif to ypour post";
                 pictureBox_PostSentPhoto.Image = null;
-                LoadMyPosts();
+                await loadMyPosts();
             }
             catch (Exception ex)
             {
@@ -176,6 +208,7 @@ namespace BasicFacebookFeatures
         {
             try
             {
+                pictureBox_SelectedPostPicture.Image = null;
                 var row = dataGridView_MyPosts.CurrentRow.DataBoundItem;
                 FacebookEntity selectedPost = row as FacebookEntity;
                 richTextBox_SelectedPostDetails.Text = selectedPost.Name;
@@ -183,10 +216,6 @@ namespace BasicFacebookFeatures
                 if (selectedPost.PictureUrl != null)
                 {
                     pictureBox_SelectedPostPicture.LoadAsync(selectedPost.PictureUrl);
-                }
-                else
-                {
-                    pictureBox_SelectedPostPicture.Image = null;
                 }
 
                 label_LikesCount.Text = selectedPost.Likes.ToString();
@@ -226,7 +255,7 @@ namespace BasicFacebookFeatures
                     label_PostDelete.Text = "Deleting...";
                     FacebookEntity selectedPost = dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
                     await HappyFacebookManager.Instance.DeleteItem(selectedPost?.Item);
-                    LoadMyPosts();
+                    await loadMyPosts();
                     label_PostDelete.Text = $"Post deleted successfully";
                 }
             }
@@ -248,6 +277,11 @@ namespace BasicFacebookFeatures
             //FacebookEntity selectedPost = dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
 
             //toolTip_Likes.Show(string.Join(Environment.NewLine, selectedPost?.Item.Comments[0].Comments[0].Comments.LikedBy.Select(l => l.Name)), label_LikesCount);
+        }
+
+        private void button_Logout_Click(object sender, EventArgs e)
+        {
+            HappyFacebookManager.Instance.Logout();
         }
     }
 }

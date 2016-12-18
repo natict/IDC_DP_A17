@@ -11,18 +11,17 @@ namespace BasicFacebookFeatures
 {
     public partial class HappyFacebookForm : Form
     {
-        private readonly HappyFacebookManager m_HappyFacebookManager;
-
         public HappyFacebookForm()
         {
             InitializeComponent();
             loginUserControl.LoginCompletedSucceffully += LoginUserControlOnLoginCompletedSucceffully;
         }
 
-        private void LoginUserControlOnLoginCompletedSucceffully(object sender, EventArgs eventArgs)
+        private async void LoginUserControlOnLoginCompletedSucceffully(object sender, EventArgs eventArgs)
         {
             loginUserControl.Visible = false;
             postsUserControl.Visible = true;
+            await postsUserControl.Initialize();
         }
     }
 }

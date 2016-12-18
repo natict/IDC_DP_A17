@@ -32,11 +32,11 @@ namespace BasicFacebookFeatures
             }
             catch (FacebookLoginException ex)
             {
-                MessageBox.Show("Unable to connect. Try again");
+                MessageBox.Show($"Unable to connect. Try again:{Environment.NewLine}{ex.Message}");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Unexpected error:\n {ex.Message}");
+                MessageBox.Show($"Unexpected error:{Environment.NewLine}{ex.Message}");
             }
         }
 

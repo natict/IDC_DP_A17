@@ -39,7 +39,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(266, 90);
+            this.label1.Location = new System.Drawing.Point(285, 74);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(665, 55);
             this.label1.TabIndex = 0;
@@ -48,7 +48,7 @@
             // button_Login
             // 
             this.button_Login.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_Login.Location = new System.Drawing.Point(462, 260);
+            this.button_Login.Location = new System.Drawing.Point(478, 289);
             this.button_Login.Name = "button_Login";
             this.button_Login.Size = new System.Drawing.Size(278, 147);
             this.button_Login.TabIndex = 1;
@@ -60,7 +60,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(323, 180);
+            this.label2.Location = new System.Drawing.Point(353, 180);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(529, 39);
             this.label2.TabIndex = 2;
@@ -68,7 +68,7 @@
             // 
             // pictureBox_Welcome
             // 
-            this.pictureBox_Welcome.Location = new System.Drawing.Point(384, 447);
+            this.pictureBox_Welcome.Location = new System.Drawing.Point(398, 490);
             this.pictureBox_Welcome.Name = "pictureBox_Welcome";
             this.pictureBox_Welcome.Size = new System.Drawing.Size(439, 184);
             this.pictureBox_Welcome.TabIndex = 3;

@@ -34,16 +34,16 @@
             // 
             // loginUserControl
             // 
-            this.loginUserControl.Location = new System.Drawing.Point(0, 0);
+            this.loginUserControl.Location = new System.Drawing.Point(-8, -10);
             this.loginUserControl.Name = "loginUserControl";
-            this.loginUserControl.Size = new System.Drawing.Size(1291, 862);
+            this.loginUserControl.Size = new System.Drawing.Size(1233, 770);
             this.loginUserControl.TabIndex = 1;
             // 
             // postsUserControl
             // 
-            this.postsUserControl.Location = new System.Drawing.Point(12, 12);
+            this.postsUserControl.Location = new System.Drawing.Point(-8, -10);
             this.postsUserControl.Name = "postsUserControl";
-            this.postsUserControl.Size = new System.Drawing.Size(1251, 769);
+            this.postsUserControl.Size = new System.Drawing.Size(1224, 770);
             this.postsUserControl.TabIndex = 0;
             this.postsUserControl.Visible = false;
             // 
@@ -51,7 +51,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1217, 708);
+            this.ClientSize = new System.Drawing.Size(1217, 761);
             this.Controls.Add(this.loginUserControl);
             this.Controls.Add(this.postsUserControl);
             this.Name = "HappyFacebookForm";

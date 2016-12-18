@@ -26,20 +26,19 @@ namespace BasicFacebookFeatures
             }
             catch (FacebookLoginException ex)
             {
-                MessageBox.Show("Unable to connect. Try again");
+                MessageBox.Show($"Unable to connect. Try again:{Environment.NewLine}{ex.Message}");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Unexpected error:\n {ex.Message}");
+                MessageBox.Show($"Unexpected error:{Environment.NewLine}{ex.Message}");
             }
         }
 
         private void buttonSetStatus_Click(object sender, EventArgs e)
         {
-            //string id = m_HappyFacebookManager
             try
             {
-                HappyFacebookManager.Instance.PostStatus(textBoxStatus.Text);
+                HappyFacebookManager.Instance.PostStatus(textBoxStatus.Text).GetAwaiter().GetResult();
                 MessageBox.Show("Status Posted successfully!");
             }
             catch (Exception ex)
@@ -180,7 +179,7 @@ namespace BasicFacebookFeatures
             if (res == DialogResult.Yes)
             {
                 //m_HappyFacebookManager.PostPicture(url, "Enjoy the pic!");
-                HappyFacebookManager.Instance.PostPictureURL(url, "");
+                HappyFacebookManager.Instance.PostPictureURL(url, "").GetAwaiter().GetResult();
             }
         }
 

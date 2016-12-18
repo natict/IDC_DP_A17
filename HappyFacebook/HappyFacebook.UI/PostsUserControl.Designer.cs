@@ -56,7 +56,7 @@
             this.label_MyName = new System.Windows.Forms.Label();
             this.label_FriendsCount = new System.Windows.Forms.Label();
             this.label_Friends = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_Logout = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_PostSentPhoto)).BeginInit();
@@ -77,7 +77,7 @@
             // 
             // picture_myPictureBox
             // 
-            this.picture_myPictureBox.Location = new System.Drawing.Point(26, 62);
+            this.picture_myPictureBox.Location = new System.Drawing.Point(26, 98);
             this.picture_myPictureBox.Name = "picture_myPictureBox";
             this.picture_myPictureBox.Size = new System.Drawing.Size(200, 156);
             this.picture_myPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -93,7 +93,7 @@
             this.panel1.Controls.Add(this.buttonAddPhoto);
             this.panel1.Controls.Add(this.richTextBox_PostMessage);
             this.panel1.Controls.Add(this.buttonPostMessage);
-            this.panel1.Location = new System.Drawing.Point(261, 62);
+            this.panel1.Location = new System.Drawing.Point(261, 98);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(511, 257);
             this.panel1.TabIndex = 43;
@@ -146,7 +146,6 @@
             this.buttonAddPhoto.TabIndex = 2;
             this.buttonAddPhoto.Text = "Add Photo";
             this.buttonAddPhoto.UseVisualStyleBackColor = true;
-            this.buttonAddPhoto.VisibleChanged += new System.EventHandler(this.buttonAddPhoto_VisibleChanged);
             this.buttonAddPhoto.Click += new System.EventHandler(this.buttonAddPhoto_Click);
             // 
             // richTextBox_PostMessage
@@ -155,7 +154,7 @@
             this.richTextBox_PostMessage.Name = "richTextBox_PostMessage";
             this.richTextBox_PostMessage.Size = new System.Drawing.Size(419, 67);
             this.richTextBox_PostMessage.TabIndex = 1;
-            this.richTextBox_PostMessage.Text = "Write something...";
+            this.richTextBox_PostMessage.Text = "Write something... \n\nUse \"\\giphy\" prefix to match a gif to ypour post";
             this.richTextBox_PostMessage.Click += new System.EventHandler(this.richTextBox_PostMessage_Click);
             // 
             // openFileDialogPostPhoto
@@ -167,7 +166,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 360);
+            this.label1.Location = new System.Drawing.Point(26, 396);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 13);
             this.label1.TabIndex = 45;
@@ -175,7 +174,7 @@
             // 
             // pictureBox_SelectedPostPicture
             // 
-            this.pictureBox_SelectedPostPicture.Location = new System.Drawing.Point(882, 511);
+            this.pictureBox_SelectedPostPicture.Location = new System.Drawing.Point(882, 547);
             this.pictureBox_SelectedPostPicture.Name = "pictureBox_SelectedPostPicture";
             this.pictureBox_SelectedPostPicture.Size = new System.Drawing.Size(305, 130);
             this.pictureBox_SelectedPostPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -184,7 +183,7 @@
             // 
             // richTextBox_SelectedPostDetails
             // 
-            this.richTextBox_SelectedPostDetails.Location = new System.Drawing.Point(882, 376);
+            this.richTextBox_SelectedPostDetails.Location = new System.Drawing.Point(882, 412);
             this.richTextBox_SelectedPostDetails.Name = "richTextBox_SelectedPostDetails";
             this.richTextBox_SelectedPostDetails.Size = new System.Drawing.Size(305, 85);
             this.richTextBox_SelectedPostDetails.TabIndex = 46;
@@ -193,7 +192,7 @@
             // dataGridView_MyPosts
             // 
             this.dataGridView_MyPosts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_MyPosts.Location = new System.Drawing.Point(26, 376);
+            this.dataGridView_MyPosts.Location = new System.Drawing.Point(26, 412);
             this.dataGridView_MyPosts.Name = "dataGridView_MyPosts";
             this.dataGridView_MyPosts.ReadOnly = true;
             this.dataGridView_MyPosts.Size = new System.Drawing.Size(821, 313);
@@ -208,7 +207,7 @@
             // 
             // button_DeletePost
             // 
-            this.button_DeletePost.Location = new System.Drawing.Point(882, 659);
+            this.button_DeletePost.Location = new System.Drawing.Point(882, 695);
             this.button_DeletePost.Name = "button_DeletePost";
             this.button_DeletePost.Size = new System.Drawing.Size(92, 30);
             this.button_DeletePost.TabIndex = 49;
@@ -219,7 +218,7 @@
             // label_PostDelete
             // 
             this.label_PostDelete.AutoSize = true;
-            this.label_PostDelete.Location = new System.Drawing.Point(882, 696);
+            this.label_PostDelete.Location = new System.Drawing.Point(882, 732);
             this.label_PostDelete.Name = "label_PostDelete";
             this.label_PostDelete.Size = new System.Drawing.Size(0, 13);
             this.label_PostDelete.TabIndex = 50;
@@ -227,7 +226,7 @@
             // label_Likes
             // 
             this.label_Likes.AutoSize = true;
-            this.label_Likes.Location = new System.Drawing.Point(882, 478);
+            this.label_Likes.Location = new System.Drawing.Point(882, 514);
             this.label_Likes.Name = "label_Likes";
             this.label_Likes.Size = new System.Drawing.Size(35, 13);
             this.label_Likes.TabIndex = 51;
@@ -236,7 +235,7 @@
             // label_LikesCount
             // 
             this.label_LikesCount.AutoSize = true;
-            this.label_LikesCount.Location = new System.Drawing.Point(923, 478);
+            this.label_LikesCount.Location = new System.Drawing.Point(923, 514);
             this.label_LikesCount.Name = "label_LikesCount";
             this.label_LikesCount.Size = new System.Drawing.Size(13, 13);
             this.label_LikesCount.TabIndex = 52;
@@ -246,7 +245,7 @@
             // label_Comments
             // 
             this.label_Comments.AutoSize = true;
-            this.label_Comments.Location = new System.Drawing.Point(1049, 478);
+            this.label_Comments.Location = new System.Drawing.Point(1049, 514);
             this.label_Comments.Name = "label_Comments";
             this.label_Comments.Size = new System.Drawing.Size(59, 13);
             this.label_Comments.TabIndex = 53;
@@ -255,7 +254,7 @@
             // label_CommentsCount
             // 
             this.label_CommentsCount.AutoSize = true;
-            this.label_CommentsCount.Location = new System.Drawing.Point(1114, 478);
+            this.label_CommentsCount.Location = new System.Drawing.Point(1114, 514);
             this.label_CommentsCount.Name = "label_CommentsCount";
             this.label_CommentsCount.Size = new System.Drawing.Size(13, 13);
             this.label_CommentsCount.TabIndex = 54;
@@ -271,7 +270,7 @@
             // dataGridView_MostActive
             // 
             this.dataGridView_MostActive.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_MostActive.Location = new System.Drawing.Point(873, 44);
+            this.dataGridView_MostActive.Location = new System.Drawing.Point(873, 80);
             this.dataGridView_MostActive.Name = "dataGridView_MostActive";
             this.dataGridView_MostActive.ReadOnly = true;
             this.dataGridView_MostActive.Size = new System.Drawing.Size(314, 313);
@@ -280,7 +279,7 @@
             // label_ActiveFriends
             // 
             this.label_ActiveFriends.AutoSize = true;
-            this.label_ActiveFriends.Location = new System.Drawing.Point(870, 28);
+            this.label_ActiveFriends.Location = new System.Drawing.Point(870, 64);
             this.label_ActiveFriends.Name = "label_ActiveFriends";
             this.label_ActiveFriends.Size = new System.Drawing.Size(211, 13);
             this.label_ActiveFriends.TabIndex = 56;
@@ -290,7 +289,7 @@
             // 
             this.label_MyName.AutoSize = true;
             this.label_MyName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_MyName.Location = new System.Drawing.Point(25, 28);
+            this.label_MyName.Location = new System.Drawing.Point(25, 64);
             this.label_MyName.Name = "label_MyName";
             this.label_MyName.Size = new System.Drawing.Size(0, 24);
             this.label_MyName.TabIndex = 57;
@@ -298,7 +297,7 @@
             // label_FriendsCount
             // 
             this.label_FriendsCount.AutoSize = true;
-            this.label_FriendsCount.Location = new System.Drawing.Point(76, 237);
+            this.label_FriendsCount.Location = new System.Drawing.Point(76, 273);
             this.label_FriendsCount.Name = "label_FriendsCount";
             this.label_FriendsCount.Size = new System.Drawing.Size(13, 13);
             this.label_FriendsCount.TabIndex = 59;
@@ -307,26 +306,27 @@
             // label_Friends
             // 
             this.label_Friends.AutoSize = true;
-            this.label_Friends.Location = new System.Drawing.Point(35, 237);
+            this.label_Friends.Location = new System.Drawing.Point(35, 273);
             this.label_Friends.Name = "label_Friends";
             this.label_Friends.Size = new System.Drawing.Size(44, 13);
             this.label_Friends.TabIndex = 58;
             this.label_Friends.Text = "Friends:";
             // 
-            // button1
+            // button_Logout
             // 
-            this.button1.Location = new System.Drawing.Point(26, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(92, 30);
-            this.button1.TabIndex = 60;
-            this.button1.Text = "Delete";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button_Logout.Location = new System.Drawing.Point(26, 14);
+            this.button_Logout.Name = "button_Logout";
+            this.button_Logout.Size = new System.Drawing.Size(92, 30);
+            this.button_Logout.TabIndex = 60;
+            this.button_Logout.Text = "Logout";
+            this.button_Logout.UseVisualStyleBackColor = true;
+            this.button_Logout.Click += new System.EventHandler(this.button_Logout_Click);
             // 
             // PostsUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button_Logout);
             this.Controls.Add(this.label_FriendsCount);
             this.Controls.Add(this.label_Friends);
             this.Controls.Add(this.label_MyName);
@@ -387,6 +387,6 @@
         private System.Windows.Forms.Label label_MyName;
         private System.Windows.Forms.Label label_FriendsCount;
         private System.Windows.Forms.Label label_Friends;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_Logout;
     }
 }
