@@ -50,10 +50,13 @@
   <ItemGroup>
     <Compile Include="eSentiment.cs" />
     <Compile Include="Exceptions\FacebookLoginException.cs" />
+    <Compile Include="IFacebookApiClient .cs" />
     <Compile Include="FacebookApiExtensions.cs" />
     <Compile Include="FacebookEntity.cs" />
     <Compile Include="Exceptions\GiphyTranslateException.cs" />
-    <Compile Include="HappyFacebookManager.cs" />
+    <Compile Include="FacebookApiClient.cs" />
+    <Compile Include="ISentimentClient.cs" />
+    <Compile Include="IGiphyClient.cs" />
     <Compile Include="RestUtility.cs" />
     <Compile Include="Exceptions\SentimentAnalysisException.cs" />
     <Compile Include="SentimentClient.cs" />

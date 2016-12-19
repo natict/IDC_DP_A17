@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using HappyFaceBook.BL;
 using HappyFaceBook.BL.Exceptions;
@@ -16,6 +7,8 @@ namespace BasicFacebookFeatures
 {
     public partial class LoginUserControl : UserControl
     {
+        private IFacebookApiClient m_FacebookApiClient;
+
         public event EventHandler LoginCompletedSucceffully;
 
         public LoginUserControl()
@@ -23,11 +16,20 @@ namespace BasicFacebookFeatures
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Initialize login user control asynchronously
+        /// </summary>
+        public void Initialize(IFacebookApiClient i_FacebookApiClient)
+        {
+            // Set facebook client API
+            m_FacebookApiClient = i_FacebookApiClient;
+        }
+
         private void button_Login_Click(object sender, EventArgs e)
         {
             try
             {
-                HappyFacebookManager.Instance.LoginAndInit();
+                m_FacebookApiClient.LoginAndInit();
                 LoginCompletedSucceffully?.Invoke(this, EventArgs.Empty);
             }
             catch (FacebookLoginException ex)

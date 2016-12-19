@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using HappyFaceBook.BL;
 using System.Collections.Concurrent;
-using System.Runtime.CompilerServices;
 
 namespace BasicFacebookFeatures
 {
@@ -15,12 +14,17 @@ namespace BasicFacebookFeatures
         /// <summary>
         /// Retreives a random gif which suites your phrase
         /// </summary>
-        private GiphyClient m_GiphyClient;
+        private IGiphyClient m_GiphyClient;
 
         /// <summary>
         /// Analyzes the sentiment context of your post, and can help you keep positive
         /// </summary>
-        private SentimentClient m_SentimentClient;
+        private ISentimentClient m_SentimentClient;
+
+        /// <summary>
+        /// Facebook API client
+        /// </summary>
+        private IFacebookApiClient m_FacebookApiClient;
 
         /// <summary>
         /// Use this prefix to randomly search for Gifs 
@@ -32,21 +36,22 @@ namespace BasicFacebookFeatures
         public PostsUserControl()
         {
             InitializeComponent();
-            m_GiphyClient = new GiphyClient();
-            m_SentimentClient = new SentimentClient();
         }
 
         /// <summary>
         /// Initialize posts user control asynchronously
         /// </summary>
-        public async Task Initialize()
+        public async Task Initialize(IGiphyClient i_GiffyClient, ISentimentClient i_SentimentClient, IFacebookApiClient i_FacebookApiClient)
         {
             // Load my picture and detials
-            string url = await HappyFacebookManager.Instance.GetLoggedInUserPictureUrlAsync();
+            m_GiphyClient = i_GiffyClient;
+            m_SentimentClient = i_SentimentClient;
+            m_FacebookApiClient = i_FacebookApiClient;
+            string url = await m_FacebookApiClient.GetLoggedInUserPictureUrlAsync();
             picture_myPictureBox.LoadAsync(url);
-            label_MyName.Text = await HappyFacebookManager.Instance.GetLoggedInUserNameAsync();
-            label_FriendsCount.Text = (await HappyFacebookManager.Instance.GetFriendsAsync()).Count.ToString();
-            label_EventsCount.Text = (await HappyFacebookManager.Instance.GetEventsAsync()).Count.ToString();
+            label_MyName.Text = await m_FacebookApiClient.GetLoggedInUserNameAsync();
+            label_FriendsCount.Text = (await m_FacebookApiClient.GetFriendsAsync()).Count.ToString();
+            label_EventsCount.Text = (await m_FacebookApiClient.GetEventsAsync()).Count.ToString();
 
             // Load my post
             List<FacebookEntity> posts = await loadMyPosts();
@@ -60,7 +65,7 @@ namespace BasicFacebookFeatures
         
         private async Task loadEventsText()
         {
-            List<FacebookEntity> events = await HappyFacebookManager.Instance.GetEventsAsync();
+            List<FacebookEntity> events = await m_FacebookApiClient.GetEventsAsync();
             if (events != null)
             {
                 m_EventsText = string.Join(Environment.NewLine, events.Select(l => l.Name));
@@ -73,7 +78,7 @@ namespace BasicFacebookFeatures
         /// <returns></returns>
         private async Task<List<FacebookEntity>> loadMyPosts()
         {
-            List<FacebookEntity> posts = await HappyFacebookManager.Instance.GetUserPostsAsync();
+            List<FacebookEntity> posts = await m_FacebookApiClient.GetUserPostsAsync();
             dataGridView_MyPosts.DataSource = posts;
             dataGridView_MyPosts.Columns[0].Width = 120;
             dataGridView_MyPosts.Columns[1].Width = 70;
@@ -197,18 +202,18 @@ namespace BasicFacebookFeatures
                     DialogResult res = MessageBox.Show("Do you want to post it?", "Interesting...", MessageBoxButtons.YesNo);
                     if (res == DialogResult.Yes)
                     {
-                        await HappyFacebookManager.Instance.PostPictureURLAsync(url, searchFor);
+                        await m_FacebookApiClient.PostPictureURLAsync(url, searchFor);
                         label_PostSuccess.Text = "Gif Posted successfully!";
                     }
                 }
                 else if (openFileDialogPostPhoto.FileName != String.Empty)
                 {
-                    await HappyFacebookManager.Instance.PostPictureAsync(openFileDialogPostPhoto.FileName, richTextBox_PostMessage.Text);
+                    await m_FacebookApiClient.PostPictureAsync(openFileDialogPostPhoto.FileName, richTextBox_PostMessage.Text);
                     label_PostSuccess.Text = "Picture Posted successfully!";
                 }
                 else
                 {
-                    await HappyFacebookManager.Instance.PostStatusAsync(richTextBox_PostMessage.Text);
+                    await m_FacebookApiClient.PostStatusAsync(richTextBox_PostMessage.Text);
                     label_PostSuccess.Text = "Message Posted successfully!";
                 }
 
@@ -272,7 +277,7 @@ namespace BasicFacebookFeatures
                 {
                     label_PostDelete.Text = "Deleting...";
                     FacebookEntity selectedPost = getCurrentRow();
-                    await HappyFacebookManager.Instance.DeleteItemAsync(selectedPost?.Item);
+                    await m_FacebookApiClient.DeleteItemAsync(selectedPost?.Item);
                     await loadMyPosts();
                     label_PostDelete.Text = $"Post deleted successfully";
                 }
@@ -290,7 +295,7 @@ namespace BasicFacebookFeatures
 
         private void button_Logout_Click(object sender, EventArgs e)
         {
-            HappyFacebookManager.Instance.Logout();
+            m_FacebookApiClient.Logout();
         }
 
         private async void label_EventsCount_MouseHover(object sender, EventArgs e)
@@ -314,7 +319,6 @@ namespace BasicFacebookFeatures
         {
             displayPostTooltip(selectedPost => string.Join(Environment.NewLine, selectedPost?.Item.Comments.Select(c => $"{c.From.Name}  {c.Message}")), label_CommentsCount);
         }
-
 
         private void displayPostTooltip(Func<FacebookEntity, string> getText, IWin32Window element)
         {

@@ -9,8 +9,10 @@ namespace HappyFaceBook.BL
 {
     public static class RestUtility
     {
-        // HTTP GET an i_Url, and extract an i_XPath from the returned json
-        public static string getResponseXPath(string i_Url, string i_XPath)
+        /// <summary>
+        /// HTTP GET an i_Url, and extract an i_XPath from the returned json
+        /// </summary>
+        public static string GetResponseXPath(string i_Url, string i_XPath)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(i_Url);
             request.Method = WebRequestMethods.Http.Get;

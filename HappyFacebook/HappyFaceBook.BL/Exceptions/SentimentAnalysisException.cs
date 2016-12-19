@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace HappyFaceBook.BL.Exceptions
 {
-    [Serializable]
     internal class SentimentAnalysisException : Exception
     {
         public SentimentAnalysisException()
@@ -15,10 +13,6 @@ namespace HappyFaceBook.BL.Exceptions
         }
 
         public SentimentAnalysisException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected SentimentAnalysisException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

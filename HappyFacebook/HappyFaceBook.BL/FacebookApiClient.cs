@@ -9,7 +9,7 @@ using HappyFaceBook.BL.Exceptions;
 
 namespace HappyFaceBook.BL
 {
-    public class HappyFacebookManager
+    public class FacebookApiClient: IFacebookApiClient
     {
         /// <summary>
         /// Current logged in user.
@@ -17,16 +17,16 @@ namespace HappyFaceBook.BL
         private User m_LoggedInUser;
 
         /// <summary>
-        /// 
+        /// Instance of the manager
         /// </summary>
-        private static HappyFacebookManager s_Instance;
+        private static FacebookApiClient s_Instance;
 
         /// <summary>
-        /// An object to
+        /// An object to allow locking the instance creation
         /// </summary>
         private static object s_LockContext = new object();
 
-        private HappyFacebookManager()
+        private FacebookApiClient()
         {
             FacebookService.s_UseForamttedToStrings = true;
             FacebookService.s_CollectionLimit = 100;
@@ -36,7 +36,7 @@ namespace HappyFaceBook.BL
         /// <summary>
         /// Singleton Instance of the manager
         /// </summary>
-        public static HappyFacebookManager Instance
+        public static FacebookApiClient Instance
         {
             get
             {
@@ -46,7 +46,7 @@ namespace HappyFaceBook.BL
                     {
                         if (s_Instance == null)
                         {
-                            s_Instance = new HappyFacebookManager();
+                            s_Instance = new FacebookApiClient();
                         }
                     }
                 }
@@ -55,6 +55,9 @@ namespace HappyFaceBook.BL
             }
         }
 
+        /// <summary>
+        /// Login to facebook
+        /// </summary>
         public void LoginAndInit()
         {
            LoginResult result = FacebookService.Login("120866478407900", /// (desig patter's)
@@ -110,25 +113,41 @@ namespace HappyFaceBook.BL
             }
             else
             {
-                throw new FacebookLoginException();
+                throw new FacebookLoginException("Didn't get an access token");
             }
         }
 
+        /// <summary>
+        /// Get the logged in user profile picture asynce
+        /// </summary>
+        /// <returns>Picture Url</returns>
         public async Task<string> GetLoggedInUserPictureUrlAsync()
         {
             return await Task.Run(() => m_LoggedInUser.PictureNormalURL);
         }
 
+        /// <summary>
+        /// Get the logged in user name asynce
+        /// </summary>
+        /// <returns>User's Name</returns>
         public async Task<string> GetLoggedInUserNameAsync()
         {
             return await Task.Run(() => m_LoggedInUser.Name);
         }
 
+        /// <summary>
+        /// Get the logged in user list of posts text
+        /// </summary>
+        /// <returns>List of posts text</returns>
         public async Task<List<string>> GetUserPostMessagesAsync()
         {
             return await Task.Run(() => m_LoggedInUser.Posts.Select(post => post.Message).ToList());
         }
 
+        /// <summary>
+        /// Get the logged in user list of posts
+        /// </summary>
+        /// <returns>List of posts on the users wall</returns>
         public async Task<List<FacebookEntity>> GetUserPostsAsync()
         {
             List<FacebookEntity> postsList = new List<FacebookEntity>();
@@ -156,7 +175,6 @@ namespace HappyFaceBook.BL
                 if (post.PictureURL != null && !post.PictureURL.Contains(@"/safe_image"))
                 {
                     pictureUrl = post.PictureURL;
-
                 }
                 else
                 {
@@ -217,6 +235,10 @@ namespace HappyFaceBook.BL
             });
         }
 
+        /// <summary>
+        /// Get the logged in user's friends list async
+        /// </summary>
+        /// <returns>List of friends</returns>
         public async Task<List<FacebookEntity>> GetFriendsAsync()
         {
             List<FacebookEntity> friends = new List<FacebookEntity>();
@@ -224,7 +246,7 @@ namespace HappyFaceBook.BL
             {
                 foreach (User friend in m_LoggedInUser.Friends)
                 {
-                    //friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
+                    friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
                     friends.Add(new FacebookEntity() {Name = friend.Name, PictureUrl = friend.PictureNormalURL});
                 }
             });
@@ -232,6 +254,10 @@ namespace HappyFaceBook.BL
             return friends;
         }
 
+        /// <summary>
+        /// Get the logged in user's events list async
+        /// </summary>
+        /// <returns>Events list</returns>
         public async Task<List<FacebookEntity>> GetEventsAsync()
         {
             List<FacebookEntity> events = new List<FacebookEntity>();
@@ -246,6 +272,10 @@ namespace HappyFaceBook.BL
             return events;
         }
 
+        /// <summary>
+        /// Get the logged in user's checkins list async
+        /// </summary>
+        /// <returns>Checkins list</returns>
         public List<FacebookEntity> GetCheckins()
         {
             List<FacebookEntity> checkins = new List<FacebookEntity>();
@@ -257,6 +287,10 @@ namespace HappyFaceBook.BL
             return checkins;
         }
 
+        /// <summary>
+        /// Get the logged in user's liked pages list async
+        /// </summary>
+        /// <returns>Liked pages list</returns>
         public List<FacebookEntity> GetLikedPages()
         {
             List<FacebookEntity> pages = new List<FacebookEntity>();
@@ -268,6 +302,10 @@ namespace HappyFaceBook.BL
             return pages;
         }
 
+        /// <summary>
+        /// Delete a posted item aync.
+        /// </summary>
+        /// <param name="item">Item to delete</param>
         public async Task DeleteItemAsync(PostedItem item)
         {
             await Task.Run(() =>
@@ -277,6 +315,9 @@ namespace HappyFaceBook.BL
             });
         }
 
+        /// <summary>
+        /// Logout of facebbok
+        /// </summary>
         public void Logout()
         {
             FacebookService.Logout(() => { });
