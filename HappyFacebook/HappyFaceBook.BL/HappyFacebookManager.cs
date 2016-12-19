@@ -11,11 +11,20 @@ namespace HappyFaceBook.BL
 {
     public class HappyFacebookManager
     {
+        /// <summary>
+        /// Current logged in user.
+        /// </summary>
         private User m_LoggedInUser;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static HappyFacebookManager s_Instance;
 
-        private static object lockContext = new object();
+        /// <summary>
+        /// An object to
+        /// </summary>
+        private static object s_LockContext = new object();
 
         private HappyFacebookManager()
         {
@@ -24,13 +33,16 @@ namespace HappyFaceBook.BL
             FacebookService.s_FbApiVersion = 2.8f;
         }
 
+        /// <summary>
+        /// Singleton Instance of the manager
+        /// </summary>
         public static HappyFacebookManager Instance
         {
             get
             {
                 if (s_Instance == null)
                 {
-                    lock (lockContext)
+                    lock (s_LockContext)
                     {
                         if (s_Instance == null)
                         {
@@ -45,10 +57,7 @@ namespace HappyFaceBook.BL
 
         public void LoginAndInit()
         {
-            /// Use the FacebookService.Login method to display the login form to any user who wish to use this application.
-            /// You can then save the result.AccessToken for future auto-connect to this user:
-           LoginResult result = FacebookService.Login("120866478407900", /// (desig patter's "Design Patterns Course App 2.4" app)
-           //LoginResult result = FacebookService.Login("1908224946078795", // Y
+           LoginResult result = FacebookService.Login("120866478407900", /// (desig patter's)
                 "public_profile",
                 "user_education_history",
                 "user_birthday",
@@ -105,22 +114,22 @@ namespace HappyFaceBook.BL
             }
         }
 
-        public string GetLoggedInUserPictureUrl()
+        public async Task<string> GetLoggedInUserPictureUrlAsync()
         {
-            return m_LoggedInUser.PictureNormalURL;
+            return await Task.Run(() => m_LoggedInUser.PictureNormalURL);
         }
 
-        public string GetLoggedInUserName()
+        public async Task<string> GetLoggedInUserNameAsync()
         {
-            return m_LoggedInUser.Name;
+            return await Task.Run(() => m_LoggedInUser.Name);
         }
 
-        public List<string> GetUserPostMessages()
+        public async Task<List<string>> GetUserPostMessagesAsync()
         {
-            return m_LoggedInUser.Posts.Select(post => post.Message).ToList();
+            return await Task.Run(() => m_LoggedInUser.Posts.Select(post => post.Message).ToList());
         }
 
-        public async Task<List<FacebookEntity>> GetUserPosts()
+        public async Task<List<FacebookEntity>> GetUserPostsAsync()
         {
             List<FacebookEntity> postsList = new List<FacebookEntity>();
 
@@ -165,7 +174,13 @@ namespace HappyFaceBook.BL
             return postsList;
         }
 
-        public async Task PostStatus(string i_StatusText, string i_PictureTitle = null)
+        /// <summary>
+        /// Posts a status async
+        /// </summary>
+        /// <param name="i_Url">Picture to post url</param>
+        /// <param name="i_Caption">PiPicture to post textparam>
+        /// <returns></returns>
+        public async Task PostStatusAsync(string i_StatusText, string i_PictureTitle = null)
         {
             await Task.Run(() =>
             {
@@ -174,7 +189,12 @@ namespace HappyFaceBook.BL
             });
         }
 
-        public async Task PostPictureURL(string i_Url, string i_Caption)
+        /// <summary>
+        /// Posts a picture URL async, and refreshes the posts list
+        /// </summary>
+        /// <param name="i_Url">Picture to post url</param>
+        /// <param name="i_Caption">PiPicture to post textparam>
+        public async Task PostPictureURLAsync(string i_Url, string i_Caption)
         {
             await Task.Run(() =>
             {
@@ -183,7 +203,12 @@ namespace HappyFaceBook.BL
             });
         }
 
-        public async Task PostPicture(string i_PicturePath, string i_PictureTitle)
+        /// <summary>
+        /// Posts a picture async, and refreshes the posts list
+        /// </summary>
+        /// <param name="i_PicturePath">Picture to post path</param>
+        /// <param name="i_PictureTitle">Picture to post text</param>
+        public async Task PostPictureAsync(string i_PicturePath, string i_PictureTitle)
         {
             await Task.Run(() =>
             {
@@ -192,25 +217,31 @@ namespace HappyFaceBook.BL
             });
         }
 
-        public List<FacebookEntity> GetFriends()
+        public async Task<List<FacebookEntity>> GetFriendsAsync()
         {
             List<FacebookEntity> friends = new List<FacebookEntity>();
-            foreach (User friend in m_LoggedInUser.Friends)
+            await Task.Run(() =>
             {
-                friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
-                friends.Add(new FacebookEntity() {Name = friend.Name, PictureUrl = friend.PictureNormalURL});
-            }
+                foreach (User friend in m_LoggedInUser.Friends)
+                {
+                    //friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
+                    friends.Add(new FacebookEntity() {Name = friend.Name, PictureUrl = friend.PictureNormalURL});
+                }
+            });
 
             return friends;
         }
 
-        public List<FacebookEntity> GetEvents()
+        public async Task<List<FacebookEntity>> GetEventsAsync()
         {
             List<FacebookEntity> events = new List<FacebookEntity>();
-            foreach (Event evnt in m_LoggedInUser.Events)
+            await Task.Run(() =>
             {
-                events.Add(new FacebookEntity() { Name = evnt.Name, PictureUrl = evnt.PictureNormalURL});
-            }
+                foreach (Event evnt in m_LoggedInUser.Events)
+                {
+                    events.Add(new FacebookEntity() { Name = $"{evnt.StartTime}     {evnt.Owner}        {evnt.Location}     {evnt.Name}", PictureUrl = evnt.PictureNormalURL });
+                }
+            });
 
             return events;
         }
@@ -226,7 +257,7 @@ namespace HappyFaceBook.BL
             return checkins;
         }
 
-        public List<FacebookEntity> GetLikedPagesPages()
+        public List<FacebookEntity> GetLikedPages()
         {
             List<FacebookEntity> pages = new List<FacebookEntity>();
             foreach (Page page in m_LoggedInUser.LikedPages)
@@ -237,7 +268,7 @@ namespace HappyFaceBook.BL
             return pages;
         }
 
-        public async Task DeleteItem(PostedItem item)
+        public async Task DeleteItemAsync(PostedItem item)
         {
             await Task.Run(() =>
             {

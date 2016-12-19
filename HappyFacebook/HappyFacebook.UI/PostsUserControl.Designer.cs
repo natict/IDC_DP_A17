@@ -57,6 +57,8 @@
             this.label_FriendsCount = new System.Windows.Forms.Label();
             this.label_Friends = new System.Windows.Forms.Label();
             this.button_Logout = new System.Windows.Forms.Button();
+            this.label_Events = new System.Windows.Forms.Label();
+            this.label_EventsCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_PostSentPhoto)).BeginInit();
@@ -322,10 +324,31 @@
             this.button_Logout.UseVisualStyleBackColor = true;
             this.button_Logout.Click += new System.EventHandler(this.button_Logout_Click);
             // 
+            // label_Events
+            // 
+            this.label_Events.AutoSize = true;
+            this.label_Events.Location = new System.Drawing.Point(35, 301);
+            this.label_Events.Name = "label_Events";
+            this.label_Events.Size = new System.Drawing.Size(43, 13);
+            this.label_Events.TabIndex = 61;
+            this.label_Events.Text = "Events:";
+            // 
+            // label_EventsCount
+            // 
+            this.label_EventsCount.AutoSize = true;
+            this.label_EventsCount.Location = new System.Drawing.Point(76, 301);
+            this.label_EventsCount.Name = "label_EventsCount";
+            this.label_EventsCount.Size = new System.Drawing.Size(13, 13);
+            this.label_EventsCount.TabIndex = 62;
+            this.label_EventsCount.Text = "0";
+            this.label_EventsCount.MouseHover += new System.EventHandler(this.label_EventsCount_MouseHover);
+            // 
             // PostsUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label_EventsCount);
+            this.Controls.Add(this.label_Events);
             this.Controls.Add(this.button_Logout);
             this.Controls.Add(this.label_FriendsCount);
             this.Controls.Add(this.label_Friends);
@@ -388,5 +411,7 @@
         private System.Windows.Forms.Label label_FriendsCount;
         private System.Windows.Forms.Label label_Friends;
         private System.Windows.Forms.Button button_Logout;
+        private System.Windows.Forms.Label label_Events;
+        private System.Windows.Forms.Label label_EventsCount;
     }
 }

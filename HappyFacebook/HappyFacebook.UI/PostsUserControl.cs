@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using HappyFaceBook.BL;
 using System.Collections.Concurrent;
+using System.Runtime.CompilerServices;
 
 namespace BasicFacebookFeatures
 {
@@ -21,7 +22,12 @@ namespace BasicFacebookFeatures
         /// </summary>
         private SentimentClient m_SentimentClient;
 
+        /// <summary>
+        /// Use this prefix to randomly search for Gifs 
+        /// </summary>
         private const string GiphyPrefix = @"\giphy";
+
+        private string m_EventsText;
 
         public PostsUserControl()
         {
@@ -31,21 +37,34 @@ namespace BasicFacebookFeatures
         }
 
         /// <summary>
-        /// Initialize posts user control
+        /// Initialize posts user control asynchronously
         /// </summary>
         public async Task Initialize()
         {
             // Load my picture and detials
-            string url = HappyFacebookManager.Instance.GetLoggedInUserPictureUrl();
+            string url = await HappyFacebookManager.Instance.GetLoggedInUserPictureUrlAsync();
             picture_myPictureBox.LoadAsync(url);
-            label_MyName.Text = HappyFacebookManager.Instance.GetLoggedInUserName();
-            label_FriendsCount.Text = HappyFacebookManager.Instance.GetFriends().Count.ToString();
+            label_MyName.Text = await HappyFacebookManager.Instance.GetLoggedInUserNameAsync();
+            label_FriendsCount.Text = (await HappyFacebookManager.Instance.GetFriendsAsync()).Count.ToString();
+            label_EventsCount.Text = (await HappyFacebookManager.Instance.GetEventsAsync()).Count.ToString();
 
             // Load my post
             List<FacebookEntity> posts = await loadMyPosts();
 
             // Load my active friends
             await setActiveFriends(posts);
+
+            // load events
+            await loadEventsText();
+        }
+        
+        private async Task loadEventsText()
+        {
+            List<FacebookEntity> events = await HappyFacebookManager.Instance.GetEventsAsync();
+            if (events != null)
+            {
+                m_EventsText = string.Join(Environment.NewLine, events.Select(l => l.Name));
+            }
         }
 
         /// <summary>
@@ -54,7 +73,7 @@ namespace BasicFacebookFeatures
         /// <returns></returns>
         private async Task<List<FacebookEntity>> loadMyPosts()
         {
-            List<FacebookEntity> posts = await HappyFacebookManager.Instance.GetUserPosts();
+            List<FacebookEntity> posts = await HappyFacebookManager.Instance.GetUserPostsAsync();
             dataGridView_MyPosts.DataSource = posts;
             dataGridView_MyPosts.Columns[0].Width = 120;
             dataGridView_MyPosts.Columns[1].Width = 70;
@@ -178,18 +197,18 @@ namespace BasicFacebookFeatures
                     DialogResult res = MessageBox.Show("Do you want to post it?", "Interesting...", MessageBoxButtons.YesNo);
                     if (res == DialogResult.Yes)
                     {
-                        await HappyFacebookManager.Instance.PostPictureURL(url, searchFor);
+                        await HappyFacebookManager.Instance.PostPictureURLAsync(url, searchFor);
                         label_PostSuccess.Text = "Gif Posted successfully!";
                     }
                 }
                 else if (openFileDialogPostPhoto.FileName != String.Empty)
                 {
-                    await HappyFacebookManager.Instance.PostPicture(openFileDialogPostPhoto.FileName, richTextBox_PostMessage.Text);
+                    await HappyFacebookManager.Instance.PostPictureAsync(openFileDialogPostPhoto.FileName, richTextBox_PostMessage.Text);
                     label_PostSuccess.Text = "Picture Posted successfully!";
                 }
                 else
                 {
-                    await HappyFacebookManager.Instance.PostStatus(richTextBox_PostMessage.Text);
+                    await HappyFacebookManager.Instance.PostStatusAsync(richTextBox_PostMessage.Text);
                     label_PostSuccess.Text = "Message Posted successfully!";
                 }
 
@@ -254,7 +273,7 @@ namespace BasicFacebookFeatures
                 {
                     label_PostDelete.Text = "Deleting...";
                     FacebookEntity selectedPost = dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
-                    await HappyFacebookManager.Instance.DeleteItem(selectedPost?.Item);
+                    await HappyFacebookManager.Instance.DeleteItemAsync(selectedPost?.Item);
                     await loadMyPosts();
                     label_PostDelete.Text = $"Post deleted successfully";
                 }
@@ -265,23 +284,50 @@ namespace BasicFacebookFeatures
             }
         }
 
+        private void button_Logout_Click(object sender, EventArgs e)
+        {
+            HappyFacebookManager.Instance.Logout();
+        }
+
+        private async void label_EventsCount_MouseHover(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(m_EventsText))
+            {
+                toolTip_Likes.Show(m_EventsText, label_EventsCount);
+            }
+            else
+            {
+                toolTip_Likes.Hide(label_EventsCount);
+            }
+        }
+
         private void label_LikesCount_MouseHover(object sender, EventArgs e)
         {
-            FacebookEntity selectedPost = dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
-          
-            toolTip_Likes.Show(string.Join(Environment.NewLine, selectedPost?.Item.LikedBy.Select(l=> l.Name)), label_LikesCount);
+            displayPostTooltip((selectedPost => string.Join(Environment.NewLine, selectedPost?.Item.LikedBy.Select(l => l.Name))), label_LikesCount);
         }
 
         private void label_CommentsCount_MouseHover(object sender, EventArgs e)
         {
-            //FacebookEntity selectedPost = dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
-
-            //toolTip_Likes.Show(string.Join(Environment.NewLine, selectedPost?.Item.Comments[0].Comments[0].Comments.LikedBy.Select(l => l.Name)), label_LikesCount);
+            displayPostTooltip(selectedPost => string.Join(Environment.NewLine, selectedPost?.Item.Comments.Select(c => $"{c.From.Name}  {c.Message}")), label_CommentsCount);
         }
 
-        private void button_Logout_Click(object sender, EventArgs e)
+
+        private void displayPostTooltip(Func<FacebookEntity, string> getText, IWin32Window element)
         {
-            HappyFacebookManager.Instance.Logout();
+            FacebookEntity selectedPost = dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
+
+            if (selectedPost != null)
+            {
+                string text = getText(selectedPost);
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    toolTip_Likes.Show(text, element);
+                }
+                else
+                {
+                    toolTip_Likes.Hide(element);
+                }
+            }
         }
     }
 }
