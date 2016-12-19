@@ -228,8 +228,7 @@ namespace BasicFacebookFeatures
             try
             {
                 pictureBox_SelectedPostPicture.Image = null;
-                var row = dataGridView_MyPosts.CurrentRow.DataBoundItem;
-                FacebookEntity selectedPost = row as FacebookEntity;
+                FacebookEntity selectedPost = getCurrentRow();
                 richTextBox_SelectedPostDetails.Text = selectedPost.Name;
 
                 if (selectedPost.PictureUrl != null)
@@ -272,7 +271,7 @@ namespace BasicFacebookFeatures
                 if (res == DialogResult.Yes)
                 {
                     label_PostDelete.Text = "Deleting...";
-                    FacebookEntity selectedPost = dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
+                    FacebookEntity selectedPost = getCurrentRow();
                     await HappyFacebookManager.Instance.DeleteItemAsync(selectedPost?.Item);
                     await loadMyPosts();
                     label_PostDelete.Text = $"Post deleted successfully";
@@ -282,6 +281,11 @@ namespace BasicFacebookFeatures
             {
                 label_PostDelete.Text = $"Post delete failed: {ex.Message}";
             }
+        }
+
+        private FacebookEntity getCurrentRow()
+        {
+            return dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
         }
 
         private void button_Logout_Click(object sender, EventArgs e)
@@ -314,7 +318,7 @@ namespace BasicFacebookFeatures
 
         private void displayPostTooltip(Func<FacebookEntity, string> getText, IWin32Window element)
         {
-            FacebookEntity selectedPost = dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
+            FacebookEntity selectedPost = getCurrentRow();
 
             if (selectedPost != null)
             {
