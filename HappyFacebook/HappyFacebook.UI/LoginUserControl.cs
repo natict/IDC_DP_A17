@@ -5,7 +5,7 @@ using HappyFaceBook.BL.Exceptions;
 
 namespace BasicFacebookFeatures
 {
-    public partial class LoginUserControl : UserControl
+    internal partial class LoginUserControl : UserControl
     {
         private IFacebookApiClient m_FacebookApiClient;
 

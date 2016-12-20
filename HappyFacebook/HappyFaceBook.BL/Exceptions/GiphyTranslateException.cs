@@ -2,7 +2,7 @@
 
 namespace HappyFaceBook.BL.Exceptions
 {
-    internal class GiphyTranslateException : Exception
+    public class GiphyTranslateException : Exception
     {
         public GiphyTranslateException()
         {

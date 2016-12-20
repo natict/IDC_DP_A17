@@ -10,7 +10,7 @@ using HappyFaceBook.BL.Exceptions;
 
 namespace HappyFaceBook.BL
 {
-    public class GiphyClient: IGiphyClient
+    public class GiphyClient : IGiphyClient
     {
         private const string k_DemoApiKey = "dc6zaTOxFJmzC";
         private const string k_ImageUrlXPath = "//data/images/original/url";

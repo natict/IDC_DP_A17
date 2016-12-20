@@ -9,7 +9,7 @@ namespace HappyFaceBook.BL.Exceptions
     /// <summary>
     /// Represents an exception while logging in to facebook
     /// </summary>
-    public class FacebookLoginException: Exception
+    public class FacebookLoginException : Exception
     {
         public FacebookLoginException()
         {

@@ -9,13 +9,8 @@ using HappyFaceBook.BL.Exceptions;
 
 namespace HappyFaceBook.BL
 {
-    public class FacebookApiClient: IFacebookApiClient
+    public class FacebookApiClient : IFacebookApiClient
     {
-        /// <summary>
-        /// Current logged in user.
-        /// </summary>
-        private User m_LoggedInUser;
-
         /// <summary>
         /// Instance of the manager
         /// </summary>
@@ -25,6 +20,11 @@ namespace HappyFaceBook.BL
         /// An object to allow locking the instance creation
         /// </summary>
         private static object s_LockContext = new object();
+
+        /// <summary>
+        /// Current logged in user.
+        /// </summary>
+        private User m_LoggedInUser;
 
         private FacebookApiClient()
         {
@@ -60,7 +60,8 @@ namespace HappyFaceBook.BL
         /// </summary>
         public void LoginAndInit()
         {
-           LoginResult result = FacebookService.Login("120866478407900", /// (desig patter's)
+           LoginResult result = FacebookService.Login(
+                "120866478407900",
                 "public_profile",
                 "user_education_history",
                 "user_birthday",
@@ -74,7 +75,7 @@ namespace HappyFaceBook.BL
                 "publish_actions",
                 "user_events",
                 "user_games_activity",
-                //"user_groups" (This permission is only available for apps using Graph API version v2.3 or older.)
+                //// "user_groups" (This permission is only available for apps using Graph API version v2.3 or older.)
                 "user_hometown",
                 "user_likes",
                 "user_location",
@@ -84,28 +85,24 @@ namespace HappyFaceBook.BL
                 "user_relationships",
                 "user_relationship_details",
                 "user_religion_politics",
-
-                //"user_status" (This permission is only available for apps using Graph API version v2.3 or older.)
+                //// "user_status" (This permission is only available for apps using Graph API version v2.3 or older.)
                 "user_tagged_places",
                 "user_videos",
                 "user_website",
                 "user_work_history",
                 "read_custom_friendlists",
-
-                // "read_mailbox", (This permission is only available for apps using Graph API version v2.3 or older.)
+                //// "read_mailbox", (This permission is only available for apps using Graph API version v2.3 or older.)
                 "read_page_mailboxes",
-                // "read_stream", (This permission is only available for apps using Graph API version v2.3 or older.)
-                // "manage_notifications", (This permission is only available for apps using Graph API version v2.3 or older.)
+                //// "read_stream", (This permission is only available for apps using Graph API version v2.3 or older.)
+                //// "manage_notifications", (This permission is only available for apps using Graph API version v2.3 or older.)
                 "manage_pages",
                 "publish_pages",
                 "publish_actions",
-
-                "rsvp_event"
-                );
-            // These are NOT the complete list of permissions. Other permissions for example:
-            // "user_birthday", "user_education_history", "user_hometown", "user_likes","user_location","user_relationships","user_relationship_details","user_religion_politics", "user_videos", "user_website", "user_work_history", "email","read_insights","rsvp_event","manage_pages"
-            // The documentation regarding facebook login and permissions can be found here: 
-            // https://developers.facebook.com/docs/facebook-login/permissions#reference
+                "rsvp_event");
+            //// These are NOT the complete list of permissions. Other permissions for example:
+            //// "user_birthday", "user_education_history", "user_hometown", "user_likes","user_location","user_relationships","user_relationship_details","user_religion_politics", "user_videos", "user_website", "user_work_history", "email","read_insights","rsvp_event","manage_pages"
+            //// The documentation regarding facebook login and permissions can be found here: 
+            //// https://developers.facebook.com/docs/facebook-login/permissions#reference
 
             if (!string.IsNullOrEmpty(result.AccessToken))
             {
@@ -247,10 +244,9 @@ namespace HappyFaceBook.BL
                 foreach (User friend in m_LoggedInUser.Friends)
                 {
                     friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
-                    friends.Add(new FacebookEntity() {Name = friend.Name, PictureUrl = friend.PictureNormalURL});
+                    friends.Add(new FacebookEntity() { Name = friend.Name, PictureUrl = friend.PictureNormalURL });
                 }
             });
-
             return friends;
         }
 
@@ -296,7 +292,7 @@ namespace HappyFaceBook.BL
             List<FacebookEntity> pages = new List<FacebookEntity>();
             foreach (Page page in m_LoggedInUser.LikedPages)
             {
-                pages.Add(new FacebookEntity() { Name = page.Name});
+                pages.Add(new FacebookEntity() { Name = page.Name });
             }
 
             return pages;

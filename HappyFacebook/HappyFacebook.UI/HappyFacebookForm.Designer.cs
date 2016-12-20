@@ -1,6 +1,6 @@
 ﻿namespace BasicFacebookFeatures
 {
-    partial class HappyFacebookForm
+    internal partial class HappyFacebookForm
     {
         /// <summary>
         /// Required designer variable.
@@ -17,6 +17,7 @@
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -66,4 +67,3 @@
         private LoginUserControl loginUserControl;
     }
 }
-

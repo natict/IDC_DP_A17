@@ -9,7 +9,7 @@ using HappyFaceBook.BL.Exceptions;
 
 namespace BasicFacebookFeatures
 {
-    public partial class HappyFacebookForm : Form
+    internal partial class HappyFacebookForm : Form
     {
         public HappyFacebookForm()
         {

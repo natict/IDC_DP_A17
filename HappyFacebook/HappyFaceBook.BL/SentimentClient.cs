@@ -4,7 +4,7 @@ using HappyFaceBook.BL.Exceptions;
 
 namespace HappyFaceBook.BL
 {
-    public class SentimentClient: ISentimentClient
+    public class SentimentClient : ISentimentClient
     {
         private const string k_DemoApiKey = "da568b9d617a4d36a757e0c5b3fab9a9";
         private const string k_SenitimentAnalysisUrl = "https://api.dandelion.eu/datatxt/sent/v1";

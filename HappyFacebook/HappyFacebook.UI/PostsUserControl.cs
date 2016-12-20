@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using HappyFaceBook.BL;
-using System.Collections.Concurrent;
 
 namespace BasicFacebookFeatures
 {
-    public partial class PostsUserControl : UserControl
+    internal partial class PostsUserControl : UserControl
     {
+        /// <summary>
+        /// Use this prefix to randomly search for Gifs 
+        /// </summary>
+        private const string GiphyPrefix = @"\giphy";
+
         /// <summary>
         /// Retreives a random gif which suites your phrase
         /// </summary>
@@ -25,11 +30,6 @@ namespace BasicFacebookFeatures
         /// Facebook API client
         /// </summary>
         private IFacebookApiClient m_FacebookApiClient;
-
-        /// <summary>
-        /// Use this prefix to randomly search for Gifs 
-        /// </summary>
-        private const string GiphyPrefix = @"\giphy";
 
         private string m_EventsText;
 
@@ -100,38 +100,38 @@ namespace BasicFacebookFeatures
             await Task.Run(() =>
             {
                 // for all posts
-                Parallel.ForEach(i_Posts, (post) =>
-                {
-                    // All likes on post
-                    Parallel.ForEach(post.Item.LikedBy, (like) =>
+                Parallel.ForEach(
+                    i_Posts,
+                    (post) =>
                     {
-                        updateImpactCount(like, likesDictionary);
-                    });
+                        // All likes on post
+                        Parallel.ForEach(post.Item.LikedBy, (like) => { updateImpactCount(like, likesDictionary); });
 
-                    // All comments in post
-                    Parallel.ForEach(post.Item.Comments, (comment) =>
-                    {
-                        updateImpactCount(comment.From, likesDictionary);
-
-                        // All likes for comment
-                        Parallel.ForEach(comment.LikedBy, (commentLike) =>
-                        {
-                            updateImpactCount(commentLike, likesDictionary);
-                        });
-
-                        // All comments for comment
-                        Parallel.ForEach(comment.Comments, (innerComment) =>
-                        {
-                            updateImpactCount(innerComment.From, likesDictionary);
-
-                            // All likes for coment in comment
-                            foreach (var innerCommentLike in innerComment.LikedBy)
+                        // All comments in post
+                        Parallel.ForEach(
+                            post.Item.Comments,
+                            (comment) =>
                             {
-                                updateImpactCount(innerCommentLike, likesDictionary);
-                            }
-                        });
+                                updateImpactCount(comment.From, likesDictionary);
+
+                                // All likes for comment
+                                Parallel.ForEach(comment.LikedBy, (commentLike) => { updateImpactCount(commentLike, likesDictionary); });
+
+                                // All comments for comment
+                                Parallel.ForEach(
+                                    comment.Comments,
+                                    (innerComment) =>
+                                    {
+                                        updateImpactCount(innerComment.From, likesDictionary);
+
+                                        // All likes for coment in comment
+                                        foreach (var innerCommentLike in innerComment.LikedBy)
+                                        {
+                                            updateImpactCount(innerCommentLike, likesDictionary);
+                                        }
+                                    });
+                            });
                     });
-                });
             });
 
             // Sort and set to data grid.
@@ -168,7 +168,7 @@ namespace BasicFacebookFeatures
         private async void buttonAddPhoto_Click(object sender, EventArgs e)
         {
             DialogResult result = openFileDialogPostPhoto.ShowDialog();
-            if (result == DialogResult.OK) // Test result.
+            if (result == DialogResult.OK) 
             {
                 await Task.Run(() => pictureBox_PostSentPhoto.LoadAsync(openFileDialogPostPhoto.FileName));
                 button_ClearPostPhoto.Visible = true;
@@ -206,7 +206,7 @@ namespace BasicFacebookFeatures
                         label_PostSuccess.Text = "Gif Posted successfully!";
                     }
                 }
-                else if (openFileDialogPostPhoto.FileName != String.Empty)
+                else if (openFileDialogPostPhoto.FileName != string.Empty)
                 {
                     await m_FacebookApiClient.PostPictureAsync(openFileDialogPostPhoto.FileName, richTextBox_PostMessage.Text);
                     label_PostSuccess.Text = "Picture Posted successfully!";
@@ -217,7 +217,7 @@ namespace BasicFacebookFeatures
                     label_PostSuccess.Text = "Message Posted successfully!";
                 }
 
-                openFileDialogPostPhoto.FileName = String.Empty;
+                openFileDialogPostPhoto.FileName = string.Empty;
                 richTextBox_PostMessage.Text = $"Write something... {Environment.NewLine}{Environment.NewLine}Use \"{GiphyPrefix}\" prefix to match a gif to ypour post";
                 pictureBox_PostSentPhoto.Image = null;
                 await loadMyPosts();
@@ -298,7 +298,7 @@ namespace BasicFacebookFeatures
             m_FacebookApiClient.Logout();
         }
 
-        private async void label_EventsCount_MouseHover(object sender, EventArgs e)
+        private void label_EventsCount_MouseHover(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(m_EventsText))
             {
@@ -312,7 +312,7 @@ namespace BasicFacebookFeatures
 
         private void label_LikesCount_MouseHover(object sender, EventArgs e)
         {
-            displayPostTooltip((selectedPost => string.Join(Environment.NewLine, selectedPost?.Item.LikedBy.Select(l => l.Name))), label_LikesCount);
+            displayPostTooltip(selectedPost => string.Join(Environment.NewLine, selectedPost?.Item.LikedBy.Select(l => l.Name)), label_LikesCount);
         }
 
         private void label_CommentsCount_MouseHover(object sender, EventArgs e)
