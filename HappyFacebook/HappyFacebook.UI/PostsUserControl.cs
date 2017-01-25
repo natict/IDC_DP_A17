@@ -79,7 +79,7 @@ namespace BasicFacebookFeatures
         private async Task<List<FacebookEntity>> loadMyPosts()
         {
             List<FacebookEntity> posts = await m_FacebookApiClient.GetUserPostsAsync();
-            dataGridView_MyPosts.DataSource = posts;
+            facebookEntityBindingSource.DataSource = posts;
             dataGridView_MyPosts.Columns[0].Width = 120;
             dataGridView_MyPosts.Columns[1].Width = 70;
             dataGridView_MyPosts.Columns[2].Width = 70;
@@ -225,29 +225,6 @@ namespace BasicFacebookFeatures
             catch (Exception ex)
             {
                 label_PostSuccess.Text = $"Status Post Failed! {ex.Message}";
-            }
-        }
-
-        private void dataGridView_MyPosts_SelectionChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                pictureBox_SelectedPostPicture.Image = null;
-                FacebookEntity selectedPost = getCurrentRow();
-                richTextBox_SelectedPostDetails.Text = selectedPost.Name;
-
-                if (selectedPost.PictureUrl != null)
-                {
-                    pictureBox_SelectedPostPicture.LoadAsync(selectedPost.PictureUrl);
-                }
-
-                label_LikesCount.Text = selectedPost.Likes.ToString();
-                label_CommentsCount.Text = selectedPost.Comments.ToString();
-                label_PostDelete.Text = string.Empty;
-            }
-            catch (Exception ex)
-            {
-                richTextBox_SelectedPostDetails.Text = $"Error loading message: {ex.Message}";
             }
         }
 

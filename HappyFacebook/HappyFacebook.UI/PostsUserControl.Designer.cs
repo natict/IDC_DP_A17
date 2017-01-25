@@ -30,6 +30,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.Label commentsLabel;
+            System.Windows.Forms.Label likesLabel;
             this.buttonPostMessage = new System.Windows.Forms.Button();
             this.picture_myPictureBox = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -39,18 +41,23 @@
             this.pictureBox_PostSentPhoto = new System.Windows.Forms.PictureBox();
             this.buttonAddPhoto = new System.Windows.Forms.Button();
             this.richTextBox_PostMessage = new System.Windows.Forms.RichTextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nameLabel1 = new System.Windows.Forms.Label();
+            this.facebookEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.pictureUrlPictureBox = new System.Windows.Forms.PictureBox();
+            this.label_CommentsCount = new System.Windows.Forms.Label();
+            this.label_LikesCount = new System.Windows.Forms.Label();
             this.openFileDialogPostPhoto = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox_SelectedPostPicture = new System.Windows.Forms.PictureBox();
-            this.richTextBox_SelectedPostDetails = new System.Windows.Forms.RichTextBox();
             this.dataGridView_MyPosts = new System.Windows.Forms.DataGridView();
+            this.createdTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.likesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.commentsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fromDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timer_Posts = new System.Windows.Forms.Timer(this.components);
             this.button_DeletePost = new System.Windows.Forms.Button();
             this.label_PostDelete = new System.Windows.Forms.Label();
-            this.label_Likes = new System.Windows.Forms.Label();
-            this.label_LikesCount = new System.Windows.Forms.Label();
-            this.label_Comments = new System.Windows.Forms.Label();
-            this.label_CommentsCount = new System.Windows.Forms.Label();
             this.toolTip_Likes = new System.Windows.Forms.ToolTip(this.components);
             this.dataGridView_MostActive = new System.Windows.Forms.DataGridView();
             this.label_ActiveFriends = new System.Windows.Forms.Label();
@@ -60,13 +67,35 @@
             this.button_Logout = new System.Windows.Forms.Button();
             this.label_Events = new System.Windows.Forms.Label();
             this.label_EventsCount = new System.Windows.Forms.Label();
+            commentsLabel = new System.Windows.Forms.Label();
+            likesLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_PostSentPhoto)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SelectedPostPicture)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.facebookEntityBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureUrlPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_MyPosts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_MostActive)).BeginInit();
             this.SuspendLayout();
+            // 
+            // commentsLabel
+            // 
+            commentsLabel.AutoSize = true;
+            commentsLabel.Location = new System.Drawing.Point(18, 96);
+            commentsLabel.Name = "commentsLabel";
+            commentsLabel.Size = new System.Drawing.Size(59, 13);
+            commentsLabel.TabIndex = 0;
+            commentsLabel.Text = "Comments:";
+            // 
+            // likesLabel
+            // 
+            likesLabel.AutoSize = true;
+            likesLabel.Location = new System.Drawing.Point(203, 96);
+            likesLabel.Name = "likesLabel";
+            likesLabel.Size = new System.Drawing.Size(35, 13);
+            likesLabel.TabIndex = 6;
+            likesLabel.Text = "Likes:";
             // 
             // buttonPostMessage
             // 
@@ -160,6 +189,62 @@
             this.richTextBox_PostMessage.Text = "Write something... \n\nUse \"\\giphy\" prefix to match a gif to ypour post";
             this.richTextBox_PostMessage.Click += new System.EventHandler(this.richTextBox_PostMessage_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.nameLabel1);
+            this.groupBox1.Controls.Add(this.pictureUrlPictureBox);
+            this.groupBox1.Controls.Add(commentsLabel);
+            this.groupBox1.Controls.Add(this.label_CommentsCount);
+            this.groupBox1.Controls.Add(likesLabel);
+            this.groupBox1.Controls.Add(this.label_LikesCount);
+            this.groupBox1.Location = new System.Drawing.Point(784, 412);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(314, 277);
+            this.groupBox1.TabIndex = 63;
+            this.groupBox1.TabStop = false;
+            // 
+            // nameLabel1
+            // 
+            this.nameLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.facebookEntityBindingSource, "Name", true));
+            this.nameLabel1.Location = new System.Drawing.Point(6, 16);
+            this.nameLabel1.Name = "nameLabel1";
+            this.nameLabel1.Size = new System.Drawing.Size(302, 64);
+            this.nameLabel1.TabIndex = 10;
+            // 
+            // facebookEntityBindingSource
+            // 
+            this.facebookEntityBindingSource.AllowNew = false;
+            this.facebookEntityBindingSource.DataSource = typeof(HappyFaceBook.BL.FacebookEntity);
+            // 
+            // pictureUrlPictureBox
+            // 
+            this.pictureUrlPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("ImageLocation", this.facebookEntityBindingSource, "PictureUrl", true));
+            this.pictureUrlPictureBox.InitialImage = null;
+            this.pictureUrlPictureBox.Location = new System.Drawing.Point(9, 122);
+            this.pictureUrlPictureBox.Name = "pictureUrlPictureBox";
+            this.pictureUrlPictureBox.Size = new System.Drawing.Size(299, 143);
+            this.pictureUrlPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureUrlPictureBox.TabIndex = 9;
+            this.pictureUrlPictureBox.TabStop = false;
+            // 
+            // label_CommentsCount
+            // 
+            this.label_CommentsCount.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.facebookEntityBindingSource, "Comments", true));
+            this.label_CommentsCount.Location = new System.Drawing.Point(83, 96);
+            this.label_CommentsCount.Name = "label_CommentsCount";
+            this.label_CommentsCount.Size = new System.Drawing.Size(68, 23);
+            this.label_CommentsCount.TabIndex = 1;
+            this.label_CommentsCount.Text = "0";
+            // 
+            // label_LikesCount
+            // 
+            this.label_LikesCount.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.facebookEntityBindingSource, "Likes", true));
+            this.label_LikesCount.Location = new System.Drawing.Point(244, 96);
+            this.label_LikesCount.Name = "label_LikesCount";
+            this.label_LikesCount.Size = new System.Drawing.Size(64, 23);
+            this.label_LikesCount.TabIndex = 7;
+            this.label_LikesCount.Text = "0";
+            // 
             // openFileDialogPostPhoto
             // 
             this.openFileDialogPostPhoto.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif;" +
@@ -175,32 +260,59 @@
             this.label1.TabIndex = 45;
             this.label1.Text = "My last posts";
             // 
-            // pictureBox_SelectedPostPicture
-            // 
-            this.pictureBox_SelectedPostPicture.Location = new System.Drawing.Point(882, 547);
-            this.pictureBox_SelectedPostPicture.Name = "pictureBox_SelectedPostPicture";
-            this.pictureBox_SelectedPostPicture.Size = new System.Drawing.Size(305, 130);
-            this.pictureBox_SelectedPostPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox_SelectedPostPicture.TabIndex = 45;
-            this.pictureBox_SelectedPostPicture.TabStop = false;
-            // 
-            // richTextBox_SelectedPostDetails
-            // 
-            this.richTextBox_SelectedPostDetails.Location = new System.Drawing.Point(882, 412);
-            this.richTextBox_SelectedPostDetails.Name = "richTextBox_SelectedPostDetails";
-            this.richTextBox_SelectedPostDetails.Size = new System.Drawing.Size(305, 85);
-            this.richTextBox_SelectedPostDetails.TabIndex = 46;
-            this.richTextBox_SelectedPostDetails.Text = "Write something...";
-            // 
             // dataGridView_MyPosts
             // 
+            this.dataGridView_MyPosts.AllowUserToAddRows = false;
+            this.dataGridView_MyPosts.AllowUserToDeleteRows = false;
+            this.dataGridView_MyPosts.AutoGenerateColumns = false;
             this.dataGridView_MyPosts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_MyPosts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.createdTimeDataGridViewTextBoxColumn,
+            this.likesDataGridViewTextBoxColumn,
+            this.commentsDataGridViewTextBoxColumn,
+            this.fromDataGridViewTextBoxColumn,
+            this.nameDataGridViewTextBoxColumn});
+            this.dataGridView_MyPosts.DataSource = this.facebookEntityBindingSource;
             this.dataGridView_MyPosts.Location = new System.Drawing.Point(26, 412);
             this.dataGridView_MyPosts.Name = "dataGridView_MyPosts";
             this.dataGridView_MyPosts.ReadOnly = true;
-            this.dataGridView_MyPosts.Size = new System.Drawing.Size(821, 313);
+            this.dataGridView_MyPosts.Size = new System.Drawing.Size(746, 313);
             this.dataGridView_MyPosts.TabIndex = 48;
-            this.dataGridView_MyPosts.SelectionChanged += new System.EventHandler(this.dataGridView_MyPosts_SelectionChanged);
+            // 
+            // createdTimeDataGridViewTextBoxColumn
+            // 
+            this.createdTimeDataGridViewTextBoxColumn.DataPropertyName = "CreatedTime";
+            this.createdTimeDataGridViewTextBoxColumn.HeaderText = "CreatedTime";
+            this.createdTimeDataGridViewTextBoxColumn.Name = "createdTimeDataGridViewTextBoxColumn";
+            this.createdTimeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // likesDataGridViewTextBoxColumn
+            // 
+            this.likesDataGridViewTextBoxColumn.DataPropertyName = "Likes";
+            this.likesDataGridViewTextBoxColumn.HeaderText = "Likes";
+            this.likesDataGridViewTextBoxColumn.Name = "likesDataGridViewTextBoxColumn";
+            this.likesDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // commentsDataGridViewTextBoxColumn
+            // 
+            this.commentsDataGridViewTextBoxColumn.DataPropertyName = "Comments";
+            this.commentsDataGridViewTextBoxColumn.HeaderText = "Comments";
+            this.commentsDataGridViewTextBoxColumn.Name = "commentsDataGridViewTextBoxColumn";
+            this.commentsDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // fromDataGridViewTextBoxColumn
+            // 
+            this.fromDataGridViewTextBoxColumn.DataPropertyName = "From";
+            this.fromDataGridViewTextBoxColumn.HeaderText = "From";
+            this.fromDataGridViewTextBoxColumn.Name = "fromDataGridViewTextBoxColumn";
+            this.fromDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // timer_Posts
             // 
@@ -210,7 +322,7 @@
             // 
             // button_DeletePost
             // 
-            this.button_DeletePost.Location = new System.Drawing.Point(882, 695);
+            this.button_DeletePost.Location = new System.Drawing.Point(793, 695);
             this.button_DeletePost.Name = "button_DeletePost";
             this.button_DeletePost.Size = new System.Drawing.Size(92, 30);
             this.button_DeletePost.TabIndex = 49;
@@ -226,44 +338,6 @@
             this.label_PostDelete.Size = new System.Drawing.Size(0, 13);
             this.label_PostDelete.TabIndex = 50;
             // 
-            // label_Likes
-            // 
-            this.label_Likes.AutoSize = true;
-            this.label_Likes.Location = new System.Drawing.Point(882, 514);
-            this.label_Likes.Name = "label_Likes";
-            this.label_Likes.Size = new System.Drawing.Size(35, 13);
-            this.label_Likes.TabIndex = 51;
-            this.label_Likes.Text = "Likes:";
-            // 
-            // label_LikesCount
-            // 
-            this.label_LikesCount.AutoSize = true;
-            this.label_LikesCount.Location = new System.Drawing.Point(923, 514);
-            this.label_LikesCount.Name = "label_LikesCount";
-            this.label_LikesCount.Size = new System.Drawing.Size(13, 13);
-            this.label_LikesCount.TabIndex = 52;
-            this.label_LikesCount.Text = "0";
-            this.label_LikesCount.MouseHover += new System.EventHandler(this.label_LikesCount_MouseHover);
-            // 
-            // label_Comments
-            // 
-            this.label_Comments.AutoSize = true;
-            this.label_Comments.Location = new System.Drawing.Point(1049, 514);
-            this.label_Comments.Name = "label_Comments";
-            this.label_Comments.Size = new System.Drawing.Size(59, 13);
-            this.label_Comments.TabIndex = 53;
-            this.label_Comments.Text = "Comments:";
-            // 
-            // label_CommentsCount
-            // 
-            this.label_CommentsCount.AutoSize = true;
-            this.label_CommentsCount.Location = new System.Drawing.Point(1114, 514);
-            this.label_CommentsCount.Name = "label_CommentsCount";
-            this.label_CommentsCount.Size = new System.Drawing.Size(13, 13);
-            this.label_CommentsCount.TabIndex = 54;
-            this.label_CommentsCount.Text = "0";
-            this.label_CommentsCount.MouseHover += new System.EventHandler(this.label_CommentsCount_MouseHover);
-            // 
             // toolTip_Likes
             // 
             this.toolTip_Likes.AutoPopDelay = 10000;
@@ -273,7 +347,7 @@
             // dataGridView_MostActive
             // 
             this.dataGridView_MostActive.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_MostActive.Location = new System.Drawing.Point(873, 80);
+            this.dataGridView_MostActive.Location = new System.Drawing.Point(784, 80);
             this.dataGridView_MostActive.Name = "dataGridView_MostActive";
             this.dataGridView_MostActive.ReadOnly = true;
             this.dataGridView_MostActive.Size = new System.Drawing.Size(314, 313);
@@ -348,6 +422,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label_EventsCount);
             this.Controls.Add(this.label_Events);
             this.Controls.Add(this.button_Logout);
@@ -356,25 +431,22 @@
             this.Controls.Add(this.label_MyName);
             this.Controls.Add(this.label_ActiveFriends);
             this.Controls.Add(this.dataGridView_MostActive);
-            this.Controls.Add(this.label_CommentsCount);
-            this.Controls.Add(this.label_Comments);
-            this.Controls.Add(this.label_LikesCount);
-            this.Controls.Add(this.label_Likes);
             this.Controls.Add(this.label_PostDelete);
             this.Controls.Add(this.button_DeletePost);
             this.Controls.Add(this.dataGridView_MyPosts);
-            this.Controls.Add(this.richTextBox_SelectedPostDetails);
-            this.Controls.Add(this.pictureBox_SelectedPostPicture);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.picture_myPictureBox);
             this.Name = "PostsUserControl";
-            this.Size = new System.Drawing.Size(1233, 747);
+            this.Size = new System.Drawing.Size(1201, 747);
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_PostSentPhoto)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_SelectedPostPicture)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.facebookEntityBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureUrlPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_MyPosts)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_MostActive)).EndInit();
             this.ResumeLayout(false);
@@ -392,18 +464,12 @@
         private System.Windows.Forms.RichTextBox richTextBox_PostMessage;
         private System.Windows.Forms.OpenFileDialog openFileDialogPostPhoto;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox_SelectedPostPicture;
-        private System.Windows.Forms.RichTextBox richTextBox_SelectedPostDetails;
         private System.Windows.Forms.DataGridView dataGridView_MyPosts;
         private System.Windows.Forms.Timer timer_Posts;
         private System.Windows.Forms.Label label_PostSuccess;
         private System.Windows.Forms.Button button_ClearPostPhoto;
         private System.Windows.Forms.Button button_DeletePost;
         private System.Windows.Forms.Label label_PostDelete;
-        private System.Windows.Forms.Label label_Likes;
-        private System.Windows.Forms.Label label_LikesCount;
-        private System.Windows.Forms.Label label_Comments;
-        private System.Windows.Forms.Label label_CommentsCount;
         private System.Windows.Forms.ToolTip toolTip_Likes;
         private System.Windows.Forms.DataGridView dataGridView_MostActive;
         private System.Windows.Forms.Label label_ActiveFriends;
@@ -414,5 +480,16 @@
         private System.Windows.Forms.Button button_Logout;
         private System.Windows.Forms.Label label_Events;
         private System.Windows.Forms.Label label_EventsCount;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label_CommentsCount;
+        private System.Windows.Forms.BindingSource facebookEntityBindingSource;
+        private System.Windows.Forms.Label label_LikesCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn createdTimeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn likesDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn commentsDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fromDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.PictureBox pictureUrlPictureBox;
+        private System.Windows.Forms.Label nameLabel1;
     }
 }

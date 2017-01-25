@@ -19,7 +19,6 @@ namespace HappyFaceBook.BL
 
         public string Name { get; set; }
 
-        [System.ComponentModel.Browsable(false)]
         public string PictureUrl { get; set; }
 
         [System.ComponentModel.Browsable(false)]
