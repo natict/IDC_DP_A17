@@ -42,7 +42,6 @@
             this.buttonAddPhoto = new System.Windows.Forms.Button();
             this.richTextBox_PostMessage = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.nameLabel1 = new System.Windows.Forms.Label();
             this.facebookEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pictureUrlPictureBox = new System.Windows.Forms.PictureBox();
             this.label_CommentsCount = new System.Windows.Forms.Label();
@@ -67,6 +66,7 @@
             this.button_Logout = new System.Windows.Forms.Button();
             this.label_Events = new System.Windows.Forms.Label();
             this.label_EventsCount = new System.Windows.Forms.Label();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
             commentsLabel = new System.Windows.Forms.Label();
             likesLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).BeginInit();
@@ -191,7 +191,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.nameLabel1);
+            this.groupBox1.Controls.Add(this.nameTextBox);
             this.groupBox1.Controls.Add(this.pictureUrlPictureBox);
             this.groupBox1.Controls.Add(commentsLabel);
             this.groupBox1.Controls.Add(this.label_CommentsCount);
@@ -202,14 +202,6 @@
             this.groupBox1.Size = new System.Drawing.Size(314, 277);
             this.groupBox1.TabIndex = 63;
             this.groupBox1.TabStop = false;
-            // 
-            // nameLabel1
-            // 
-            this.nameLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.facebookEntityBindingSource, "Name", true));
-            this.nameLabel1.Location = new System.Drawing.Point(6, 16);
-            this.nameLabel1.Name = "nameLabel1";
-            this.nameLabel1.Size = new System.Drawing.Size(302, 64);
-            this.nameLabel1.TabIndex = 10;
             // 
             // facebookEntityBindingSource
             // 
@@ -418,6 +410,15 @@
             this.label_EventsCount.Text = "0";
             this.label_EventsCount.MouseHover += new System.EventHandler(this.label_EventsCount_MouseHover);
             // 
+            // nameTextBox
+            // 
+            this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.facebookEntityBindingSource, "Name", true));
+            this.nameTextBox.Location = new System.Drawing.Point(9, 19);
+            this.nameTextBox.Multiline = true;
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(299, 74);
+            this.nameTextBox.TabIndex = 10;
+            // 
             // PostsUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -438,7 +439,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.picture_myPictureBox);
             this.Name = "PostsUserControl";
-            this.Size = new System.Drawing.Size(1201, 747);
+            this.Size = new System.Drawing.Size(1112, 747);
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -490,6 +491,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn fromDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.PictureBox pictureUrlPictureBox;
-        private System.Windows.Forms.Label nameLabel1;
+        private System.Windows.Forms.TextBox nameTextBox;
     }
 }
