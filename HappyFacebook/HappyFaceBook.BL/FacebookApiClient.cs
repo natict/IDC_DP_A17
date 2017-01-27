@@ -154,39 +154,45 @@ namespace HappyFaceBook.BL
 
             foreach (Post post in posts)
             {
-                string message = string.Empty;
-                if (post.Message != null)
-                {
-                    message = post.Message;
-                }
-                else if (post.Caption != null)
-                {
-                    message = post.Caption;
-                }
-                else
-                {
-                    message = $"[{post.Type}]";
-                }
-
-                string pictureUrl = string.Empty;
-                if (post.PictureURL != null && !post.PictureURL.Contains(@"/safe_image"))
-                {
-                    pictureUrl = post.PictureURL;
-                }
-                else
-                {
-                    pictureUrl = post.Link;
-                }
-
-                postsList.Add(new FacebookEntity
-                {
-                    Name = message,
-                    PictureUrl = pictureUrl,
-                    Item = post
-                });
+                IFacebookEntity facebookEntitiry = postToFacebookEntity(post);
+                postsList.Add(facebookEntitiry);
             }
 
             return postsList;
+        }
+
+        private static IFacebookEntity postToFacebookEntity(Post post)
+        {
+            string message = string.Empty;
+            if (post.Message != null)
+            {
+                message = post.Message;
+            }
+            else if (post.Caption != null)
+            {
+                message = post.Caption;
+            }
+            else
+            {
+                message = $"[{post.Type}]";
+            }
+
+            string pictureUrl = string.Empty;
+            if (post.PictureURL != null && !post.PictureURL.Contains(@"/safe_image"))
+            {
+                pictureUrl = post.PictureURL;
+            }
+            else
+            {
+                pictureUrl = post.Link;
+            }
+
+            return new FacebookEntity
+            {
+                Name = message,
+                PictureUrl = pictureUrl,
+                Item = post
+            };
         }
 
         /// <summary>
