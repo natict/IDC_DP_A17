@@ -26,11 +26,6 @@ namespace BasicFacebookFeatures
         /// </summary>
         private ISentimentClient m_SentimentClient;
 
-        /// <summary>
-        /// Facebook API client
-        /// </summary>
-        private IFacebookApiClient m_FacebookApiClient;
-
         private string m_EventsText;
 
         public PostsUserControl()
@@ -41,31 +36,30 @@ namespace BasicFacebookFeatures
         /// <summary>
         /// Initialize posts user control asynchronously
         /// </summary>
-        public async Task Initialize(IGiphyClient i_GiffyClient, ISentimentClient i_SentimentClient, IFacebookApiClient i_FacebookApiClient)
+        public async Task Initialize(IGiphyClient i_GiffyClient, ISentimentClient i_SentimentClient)
         {
             // Load my picture and detials
             m_GiphyClient = i_GiffyClient;
             m_SentimentClient = i_SentimentClient;
-            m_FacebookApiClient = i_FacebookApiClient;
-            string url = await m_FacebookApiClient.GetLoggedInUserPictureUrlAsync();
+            string url = await FacebookApiClient.Instance.GetLoggedInUserPictureUrlAsync();
             picture_myPictureBox.LoadAsync(url);
-            label_MyName.Text = await m_FacebookApiClient.GetLoggedInUserNameAsync();
-            label_FriendsCount.Text = (await m_FacebookApiClient.GetFriendsAsync()).Count.ToString();
-            label_EventsCount.Text = (await m_FacebookApiClient.GetEventsAsync()).Count.ToString();
+            label_MyName.Text = await FacebookApiClient.Instance.GetLoggedInUserNameAsync();
+            label_FriendsCount.Text = (await FacebookApiClient.Instance.GetFriendsAsync()).Count.ToString();
+            label_EventsCount.Text = (await FacebookApiClient.Instance.GetEventsAsync()).Count.ToString();
 
             // Load my post
             List<FacebookEntity> posts = await loadMyPosts();
 
             // Load my active friends
-            await setActiveFriends(posts);
+            await setActiveFriendsAsync(posts);
 
             // load events
-            await loadEventsText();
+            await loadEventsTextAsync();
         }
         
-        private async Task loadEventsText()
+        private async Task loadEventsTextAsync()
         {
-            List<FacebookEntity> events = await m_FacebookApiClient.GetEventsAsync();
+            List<FacebookEntity> events = await FacebookApiClient.Instance.GetEventsAsync();
             if (events != null)
             {
                 m_EventsText = string.Join(Environment.NewLine, events.Select(l => l.Name));
@@ -78,7 +72,7 @@ namespace BasicFacebookFeatures
         /// <returns></returns>
         private async Task<List<FacebookEntity>> loadMyPosts()
         {
-            List<FacebookEntity> posts = await m_FacebookApiClient.GetUserPostsAsync();
+            List<FacebookEntity> posts = await FacebookApiClient.Instance.GetUserPostsAsync();
             facebookEntityBindingSource.DataSource = posts;
             dataGridView_MyPosts.Columns[0].Width = 120;
             dataGridView_MyPosts.Columns[1].Width = 70;
@@ -93,7 +87,7 @@ namespace BasicFacebookFeatures
         /// Calculted the number of activities (likes\comments) for each friend on my wall
         /// </summary>
         /// <param name="i_Posts">The list of my posts</param>
-        private async Task setActiveFriends(List<FacebookEntity> i_Posts)
+        private async Task setActiveFriendsAsync(List<FacebookEntity> i_Posts)
         {
             label_ActiveFriends.Text = "Calculating friends activity on your wall...";
             ConcurrentDictionary<string, int> likesDictionary = new ConcurrentDictionary<string, int>();
@@ -202,18 +196,18 @@ namespace BasicFacebookFeatures
                     DialogResult res = MessageBox.Show("Do you want to post it?", "Interesting...", MessageBoxButtons.YesNo);
                     if (res == DialogResult.Yes)
                     {
-                        await m_FacebookApiClient.PostPictureURLAsync(url, searchFor);
+                        await FacebookApiClient.Instance.PostPictureURLAsync(url, searchFor);
                         label_PostSuccess.Text = "Gif Posted successfully!";
                     }
                 }
                 else if (openFileDialogPostPhoto.FileName != string.Empty)
                 {
-                    await m_FacebookApiClient.PostPictureAsync(openFileDialogPostPhoto.FileName, richTextBox_PostMessage.Text);
+                    await FacebookApiClient.Instance.PostPictureAsync(openFileDialogPostPhoto.FileName, richTextBox_PostMessage.Text);
                     label_PostSuccess.Text = "Picture Posted successfully!";
                 }
                 else
                 {
-                    await m_FacebookApiClient.PostStatusAsync(richTextBox_PostMessage.Text);
+                    await FacebookApiClient.Instance.PostStatusAsync(richTextBox_PostMessage.Text);
                     label_PostSuccess.Text = "Message Posted successfully!";
                 }
 
@@ -254,7 +248,7 @@ namespace BasicFacebookFeatures
                 {
                     label_PostDelete.Text = "Deleting...";
                     FacebookEntity selectedPost = getCurrentRow();
-                    await m_FacebookApiClient.DeleteItemAsync(selectedPost?.Item);
+                    await FacebookApiClient.Instance.DeleteItemAsync(selectedPost?.Item);
                     await loadMyPosts();
                     label_PostDelete.Text = $"Post deleted successfully";
                 }
@@ -272,7 +266,7 @@ namespace BasicFacebookFeatures
 
         private void button_Logout_Click(object sender, EventArgs e)
         {
-            m_FacebookApiClient.Logout();
+            FacebookApiClient.Instance.Logout();
         }
 
         private void label_EventsCount_MouseHover(object sender, EventArgs e)

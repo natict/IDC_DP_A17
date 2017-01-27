@@ -7,8 +7,6 @@ namespace BasicFacebookFeatures
 {
     internal partial class LoginUserControl : UserControl
     {
-        private IFacebookApiClient m_FacebookApiClient;
-
         public event EventHandler LoginCompletedSucceffully;
 
         public LoginUserControl()
@@ -16,20 +14,11 @@ namespace BasicFacebookFeatures
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Initialize login user control asynchronously
-        /// </summary>
-        public void Initialize(IFacebookApiClient i_FacebookApiClient)
-        {
-            // Set facebook client API
-            m_FacebookApiClient = i_FacebookApiClient;
-        }
-
         private void button_Login_Click(object sender, EventArgs e)
         {
             try
             {
-                m_FacebookApiClient.LoginAndInit();
+                FacebookApiClient.Instance.LoginAndInit();
                 LoginCompletedSucceffully?.Invoke(this, EventArgs.Empty);
             }
             catch (FacebookLoginException ex)
