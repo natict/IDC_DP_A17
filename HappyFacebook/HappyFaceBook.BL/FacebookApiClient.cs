@@ -145,9 +145,9 @@ namespace HappyFaceBook.BL
         /// Get the logged in user list of posts
         /// </summary>
         /// <returns>List of posts on the users wall</returns>
-        public async Task<List<FacebookEntity>> GetUserPostsAsync()
+        public async Task<List<IFacebookEntity>> GetUserPostsAsync()
         {
-            List<FacebookEntity> postsList = new List<FacebookEntity>();
+            List<IFacebookEntity> postsList = new List<IFacebookEntity>();
 
             FacebookObjectCollection<Post> posts = null;
             await Task.Run(() => posts = m_LoggedInUser.Posts);
@@ -236,9 +236,9 @@ namespace HappyFaceBook.BL
         /// Get the logged in user's friends list async
         /// </summary>
         /// <returns>List of friends</returns>
-        public async Task<List<FacebookEntity>> GetFriendsAsync()
+        public async Task<List<IFacebookEntity>> GetFriendsAsync()
         {
-            List<FacebookEntity> friends = new List<FacebookEntity>();
+            List<IFacebookEntity> friends = new List<IFacebookEntity>();
             await Task.Run(() =>
             {
                 foreach (User friend in m_LoggedInUser.Friends)
@@ -254,9 +254,9 @@ namespace HappyFaceBook.BL
         /// Get the logged in user's events list async
         /// </summary>
         /// <returns>Events list</returns>
-        public async Task<List<FacebookEntity>> GetEventsAsync()
+        public async Task<List<IFacebookEntity>> GetEventsAsync()
         {
-            List<FacebookEntity> events = new List<FacebookEntity>();
+            List<IFacebookEntity> events = new List<IFacebookEntity>();
             await Task.Run(() =>
             {
                 foreach (Event evnt in m_LoggedInUser.Events)
@@ -272,9 +272,9 @@ namespace HappyFaceBook.BL
         /// Get the logged in user's checkins list async
         /// </summary>
         /// <returns>Checkins list</returns>
-        public List<FacebookEntity> GetCheckins()
+        public List<IFacebookEntity> GetCheckins()
         {
-            List<FacebookEntity> checkins = new List<FacebookEntity>();
+            List<IFacebookEntity> checkins = new List<IFacebookEntity>();
             foreach (Checkin checkin in m_LoggedInUser.Checkins)
             {
                 checkins.Add(new FacebookEntity() { Name = checkin.Place.Name });
@@ -287,9 +287,9 @@ namespace HappyFaceBook.BL
         /// Get the logged in user's liked pages list async
         /// </summary>
         /// <returns>Liked pages list</returns>
-        public List<FacebookEntity> GetLikedPages()
+        public List<IFacebookEntity> GetLikedPages()
         {
-            List<FacebookEntity> pages = new List<FacebookEntity>();
+            List<IFacebookEntity> pages = new List<IFacebookEntity>();
             foreach (Page page in m_LoggedInUser.LikedPages)
             {
                 pages.Add(new FacebookEntity() { Name = page.Name });

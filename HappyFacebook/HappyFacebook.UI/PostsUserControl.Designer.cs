@@ -206,7 +206,7 @@
             // facebookEntityBindingSource
             // 
             this.facebookEntityBindingSource.AllowNew = false;
-            this.facebookEntityBindingSource.DataSource = typeof(HappyFaceBook.BL.FacebookEntity);
+            this.facebookEntityBindingSource.DataSource = typeof(HappyFaceBook.BL.IFacebookEntity);
             // 
             // pictureUrlPictureBox
             // 

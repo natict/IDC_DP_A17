@@ -7,7 +7,7 @@ using FacebookWrapper.ObjectModel;
 
 namespace HappyFaceBook.BL
 {
-    public class FacebookEntity
+    public class FacebookEntity : IFacebookEntity
     {
         public DateTime? CreatedTime { get; set; }
 

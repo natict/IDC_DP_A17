@@ -35,7 +35,7 @@ namespace HappyFaceBook.BL
         /// Get the logged in user list of posts
         /// </summary>
         /// <returns>List of posts on the users wall</returns>
-        Task<List<FacebookEntity>> GetUserPostsAsync();
+        Task<List<IFacebookEntity>> GetUserPostsAsync();
 
         /// <summary>
         /// Posts a status async
@@ -63,25 +63,25 @@ namespace HappyFaceBook.BL
         /// Get the logged in user's friends list async
         /// </summary>
         /// <returns>List of friends</returns>
-        Task<List<FacebookEntity>> GetFriendsAsync();
+        Task<List<IFacebookEntity>> GetFriendsAsync();
 
         /// <summary>
         /// Get the logged in user's events list async
         /// </summary>
         /// <returns>Events list</returns>
-        Task<List<FacebookEntity>> GetEventsAsync();
+        Task<List<IFacebookEntity>> GetEventsAsync();
 
         /// <summary>
         /// Get the logged in user's checkins list async
         /// </summary>
         /// <returns>Checkins list</returns>
-        List<FacebookEntity> GetCheckins();
+        List<IFacebookEntity> GetCheckins();
 
         /// <summary>
         /// Get the logged in user's liked pages list async
         /// </summary>
         /// <returns>Liked pages list</returns>
-        List<FacebookEntity> GetLikedPages();
+        List<IFacebookEntity> GetLikedPages();
 
         /// <summary>
         /// Delete a posted item aync.

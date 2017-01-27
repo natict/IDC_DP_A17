@@ -48,7 +48,7 @@ namespace BasicFacebookFeatures
             label_EventsCount.Text = (await FacebookApiClient.Instance.GetEventsAsync()).Count.ToString();
 
             // Load my post
-            List<FacebookEntity> posts = await loadMyPosts();
+            List<IFacebookEntity> posts = await loadMyPosts();
 
             // Load my active friends
             await setActiveFriendsAsync(posts);
@@ -59,7 +59,7 @@ namespace BasicFacebookFeatures
         
         private async Task loadEventsTextAsync()
         {
-            List<FacebookEntity> events = await FacebookApiClient.Instance.GetEventsAsync();
+            List<IFacebookEntity> events = await FacebookApiClient.Instance.GetEventsAsync();
             if (events != null)
             {
                 m_EventsText = string.Join(Environment.NewLine, events.Select(l => l.Name));
@@ -70,9 +70,9 @@ namespace BasicFacebookFeatures
         /// Load posts to data grid
         /// </summary>
         /// <returns></returns>
-        private async Task<List<FacebookEntity>> loadMyPosts()
+        private async Task<List<IFacebookEntity>> loadMyPosts()
         {
-            List<FacebookEntity> posts = await FacebookApiClient.Instance.GetUserPostsAsync();
+            List<IFacebookEntity> posts = await FacebookApiClient.Instance.GetUserPostsAsync();
             facebookEntityBindingSource.DataSource = posts;
             dataGridView_MyPosts.Columns[0].Width = 120;
             dataGridView_MyPosts.Columns[1].Width = 70;
@@ -87,7 +87,7 @@ namespace BasicFacebookFeatures
         /// Calculted the number of activities (likes\comments) for each friend on my wall
         /// </summary>
         /// <param name="i_Posts">The list of my posts</param>
-        private async Task setActiveFriendsAsync(List<FacebookEntity> i_Posts)
+        private async Task setActiveFriendsAsync(List<IFacebookEntity> i_Posts)
         {
             label_ActiveFriends.Text = "Calculating friends activity on your wall...";
             ConcurrentDictionary<string, int> likesDictionary = new ConcurrentDictionary<string, int>();
@@ -247,7 +247,7 @@ namespace BasicFacebookFeatures
                 if (res == DialogResult.Yes)
                 {
                     label_PostDelete.Text = "Deleting...";
-                    FacebookEntity selectedPost = getCurrentRow();
+                    IFacebookEntity selectedPost = getCurrentRow();
                     await FacebookApiClient.Instance.DeleteItemAsync(selectedPost?.Item);
                     await loadMyPosts();
                     label_PostDelete.Text = $"Post deleted successfully";
@@ -259,9 +259,9 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private FacebookEntity getCurrentRow()
+        private IFacebookEntity getCurrentRow()
         {
-            return dataGridView_MyPosts.CurrentRow?.DataBoundItem as FacebookEntity;
+            return dataGridView_MyPosts.CurrentRow?.DataBoundItem as IFacebookEntity;
         }
 
         private void button_Logout_Click(object sender, EventArgs e)
@@ -291,9 +291,9 @@ namespace BasicFacebookFeatures
             displayPostTooltip(selectedPost => string.Join(Environment.NewLine, selectedPost?.Item.Comments.Select(c => $"{c.From.Name}  {c.Message}")), label_CommentsCount);
         }
 
-        private void displayPostTooltip(Func<FacebookEntity, string> getText, IWin32Window element)
+        private void displayPostTooltip(Func<IFacebookEntity, string> getText, IWin32Window element)
         {
-            FacebookEntity selectedPost = getCurrentRow();
+            IFacebookEntity selectedPost = getCurrentRow();
 
             if (selectedPost != null)
             {

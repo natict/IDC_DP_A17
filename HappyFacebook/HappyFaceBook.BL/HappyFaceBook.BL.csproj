@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="eSentiment.cs" />
     <Compile Include="Exceptions\FacebookLoginException.cs" />
+    <Compile Include="IFacebookEntity.cs" />
     <Compile Include="IFacebookApiClient .cs" />
     <Compile Include="FacebookApiExtensions.cs" />
     <Compile Include="FacebookEntity.cs" />
