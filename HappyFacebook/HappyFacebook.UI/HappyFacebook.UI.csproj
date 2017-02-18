@@ -8,8 +8,8 @@
     <ProjectGuid>{AF90A25E-B4FB-434C-9260-C02B56C2AA9D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BasicFacebookFeatures</RootNamespace>
-    <AssemblyName>FBBasicFacebookFeatures</AssemblyName>
+    <RootNamespace>HappyFacebook.UI</RootNamespace>
+    <AssemblyName>HappyFacebook.UI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -78,6 +78,11 @@
     <Compile Include="LoginUserControl.Designer.cs">
       <DependentUpon>LoginUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="PostHandlers\GiphyPostHandler.cs" />
+    <Compile Include="PostHandlers\PostHandlerBase.cs" />
+    <Compile Include="PostHandlers\PostRequest.cs" />
+    <Compile Include="PostHandlers\PublishPostHandler.cs" />
+    <Compile Include="PostHandlers\SentimentPostHandler.cs" />
     <Compile Include="PostsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

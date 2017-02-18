@@ -6,25 +6,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using HappyFaceBook.BL;
+using HappyFaceBook.UI.PostHandlers;
 
 namespace BasicFacebookFeatures
 {
     internal partial class PostsUserControl : UserControl
     {
-        /// <summary>
-        /// Use this prefix to randomly search for Gifs 
-        /// </summary>
-        private const string GiphyPrefix = @"\giphy";
 
         /// <summary>
-        /// Retreives a random gif which suites your phrase
+        /// Posts handler (chain of responsibility)
         /// </summary>
-        private IGiphyClient m_GiphyClient;
-
-        /// <summary>
-        /// Analyzes the sentiment context of your post, and can help you keep positive
-        /// </summary>
-        private ISentimentClient m_SentimentClient;
+        private PostHandlerBase m_PostsHandlersChain;
 
         private string m_EventsText;
 
@@ -36,11 +28,14 @@ namespace BasicFacebookFeatures
         /// <summary>
         /// Initialize posts user control asynchronously
         /// </summary>
+        /// <param name="i_GiffyClient">Retrieves a random gif which suites your phrase</param>
+        /// <param name="i_SentimentClient">Analyzes the sentiment context of your post, and can help you keep positive</param>
+        /// <returns></returns>
         public async Task Initialize(IGiphyClient i_GiffyClient, ISentimentClient i_SentimentClient)
         {
+            m_PostsHandlersChain = intializePostsPublishChain(i_GiffyClient, i_SentimentClient);
+
             // Load my picture and detials
-            m_GiphyClient = i_GiffyClient;
-            m_SentimentClient = i_SentimentClient;
             string url = await FacebookApiClient.Instance.GetLoggedInUserPictureUrlAsync();
             picture_myPictureBox.LoadAsync(url);
             label_MyName.Text = await FacebookApiClient.Instance.GetLoggedInUserNameAsync();
@@ -56,7 +51,22 @@ namespace BasicFacebookFeatures
             // load events
             await loadEventsTextAsync();
         }
-        
+
+        /// <summary>
+        /// Initialize post handlers (chain of responsibility)
+        /// </summary>
+        /// <returns></returns>
+        private PostHandlerBase intializePostsPublishChain(IGiphyClient i_GiffyClient, ISentimentClient i_SentimentClient)
+        {
+            SentimentPostHandler sentimentHandler = new SentimentPostHandler(i_SentimentClient);
+            GiphyPostHandler giffyHandler = new GiphyPostHandler(i_GiffyClient, pictureBox_PostSentPhoto);
+            PublishPostHandler publishPostHandler = new PublishPostHandler();
+            sentimentHandler.SetSuccessor(giffyHandler);
+            giffyHandler.SetSuccessor(publishPostHandler);
+
+            return sentimentHandler;
+        }
+
         private async Task loadEventsTextAsync()
         {
             List<IFacebookEntity> events = await FacebookApiClient.Instance.GetEventsAsync();
@@ -176,43 +186,17 @@ namespace BasicFacebookFeatures
             try
             {
                 // Check post sentiment
-                if (checkBox_BePositive.Checked)
-                {
-                    eSentiment sentiment = m_SentimentClient.GetSentiment(richTextBox_PostMessage.Text);
-                    if (sentiment == eSentiment.Negative)
-                    {
-                        MessageBox.Show("Be more positive and try again!");
-                        return;
-                    }
-                }
+                PostRequest request = new PostRequest();
+                request.ShouldStayPositive = checkBox_BePositive.Checked;
+                request.Message = richTextBox_PostMessage.Text;
+                request.PictureUrl = openFileDialogPostPhoto.FileName;
 
-                // Search for Gif
-                if (richTextBox_PostMessage.Text.ToLower().StartsWith(GiphyPrefix))
-                {
-                    string searchFor = richTextBox_PostMessage.Text.Substring(GiphyPrefix.Length);
-                    string url = m_GiphyClient.Translate(searchFor);
-                    pictureBox_PostSentPhoto.Load(url);
+                await m_PostsHandlersChain.ProcessRequest(request);
+                label_PostSuccess.Text = request.RequestResult;
 
-                    DialogResult res = MessageBox.Show("Do you want to post it?", "Interesting...", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        await FacebookApiClient.Instance.PostPictureURLAsync(url, searchFor);
-                        label_PostSuccess.Text = "Gif Posted successfully!";
-                    }
-                }
-                else if (openFileDialogPostPhoto.FileName != string.Empty)
-                {
-                    await FacebookApiClient.Instance.PostPictureAsync(openFileDialogPostPhoto.FileName, richTextBox_PostMessage.Text);
-                    label_PostSuccess.Text = "Picture Posted successfully!";
-                }
-                else
-                {
-                    await FacebookApiClient.Instance.PostStatusAsync(richTextBox_PostMessage.Text);
-                    label_PostSuccess.Text = "Message Posted successfully!";
-                }
 
                 openFileDialogPostPhoto.FileName = string.Empty;
-                richTextBox_PostMessage.Text = $"Write something... {Environment.NewLine}{Environment.NewLine}Use \"{GiphyPrefix}\" prefix to match a gif to ypour post";
+                richTextBox_PostMessage.Text = $"Write something... {Environment.NewLine}{Environment.NewLine}Use \"{GiphyPostHandler.GiphyPrefix}\" prefix to match a gif to ypour post";
                 pictureBox_PostSentPhoto.Image = null;
                 await loadMyPosts();
             }
