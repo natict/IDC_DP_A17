@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using FacebookWrapper.ObjectModel;
-using FacebookWrapper;
 using HappyFaceBook.BL;
-using HappyFaceBook.BL.Exceptions;
 
-namespace BasicFacebookFeatures
+namespace HappyFacebook.UI
 {
     internal partial class HappyFacebookForm : Form
     {

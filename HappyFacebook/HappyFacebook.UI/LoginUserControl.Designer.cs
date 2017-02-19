@@ -1,4 +1,4 @@
-﻿namespace BasicFacebookFeatures
+﻿namespace HappyFacebook.UI
 {
     internal partial class LoginUserControl
     {

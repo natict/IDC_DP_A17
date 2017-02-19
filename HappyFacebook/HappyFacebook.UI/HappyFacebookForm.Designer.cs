@@ -1,4 +1,4 @@
-﻿namespace BasicFacebookFeatures
+﻿namespace HappyFacebook.UI
 {
     internal partial class HappyFacebookForm
     {
@@ -29,8 +29,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.loginUserControl = new BasicFacebookFeatures.LoginUserControl();
-            this.postsUserControl = new BasicFacebookFeatures.PostsUserControl();
+            this.loginUserControl = new LoginUserControl();
+            this.postsUserControl = new PostsUserControl();
             this.SuspendLayout();
             // 
             // loginUserControl

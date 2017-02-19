@@ -1,4 +1,4 @@
-﻿namespace BasicFacebookFeatures
+﻿namespace HappyFacebook.UI
 {
     internal partial class PostsUserControl
     {
@@ -42,6 +42,7 @@
             this.buttonAddPhoto = new System.Windows.Forms.Button();
             this.richTextBox_PostMessage = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
             this.facebookEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pictureUrlPictureBox = new System.Windows.Forms.PictureBox();
             this.label_CommentsCount = new System.Windows.Forms.Label();
@@ -66,7 +67,8 @@
             this.button_Logout = new System.Windows.Forms.Button();
             this.label_Events = new System.Windows.Forms.Label();
             this.label_EventsCount = new System.Windows.Forms.Label();
-            this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.comboBoxPostsFilter = new System.Windows.Forms.ComboBox();
+            this.labelPostsFilter = new System.Windows.Forms.Label();
             commentsLabel = new System.Windows.Forms.Label();
             likesLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).BeginInit();
@@ -203,6 +205,15 @@
             this.groupBox1.TabIndex = 63;
             this.groupBox1.TabStop = false;
             // 
+            // nameTextBox
+            // 
+            this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.facebookEntityBindingSource, "Name", true));
+            this.nameTextBox.Location = new System.Drawing.Point(9, 19);
+            this.nameTextBox.Multiline = true;
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(299, 74);
+            this.nameTextBox.TabIndex = 10;
+            // 
             // facebookEntityBindingSource
             // 
             this.facebookEntityBindingSource.AllowNew = false;
@@ -246,7 +257,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 396);
+            this.label1.Location = new System.Drawing.Point(26, 391);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 13);
             this.label1.TabIndex = 45;
@@ -410,19 +421,35 @@
             this.label_EventsCount.Text = "0";
             this.label_EventsCount.MouseHover += new System.EventHandler(this.label_EventsCount_MouseHover);
             // 
-            // nameTextBox
+            // comboBoxPostsFilter
             // 
-            this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.facebookEntityBindingSource, "Name", true));
-            this.nameTextBox.Location = new System.Drawing.Point(9, 19);
-            this.nameTextBox.Multiline = true;
-            this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(299, 74);
-            this.nameTextBox.TabIndex = 10;
+            this.comboBoxPostsFilter.FormattingEnabled = true;
+            this.comboBoxPostsFilter.Items.AddRange(new object[] {
+            "All",
+            "With Likes",
+            "With Comments",
+            "Most Recent"});
+            this.comboBoxPostsFilter.Location = new System.Drawing.Point(207, 388);
+            this.comboBoxPostsFilter.Name = "comboBoxPostsFilter";
+            this.comboBoxPostsFilter.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxPostsFilter.TabIndex = 64;
+            this.comboBoxPostsFilter.SelectedIndexChanged += new System.EventHandler(this.comboBoxPostsFilter_SelectedIndexChanged);
+            // 
+            // labelPostsFilter
+            // 
+            this.labelPostsFilter.AutoSize = true;
+            this.labelPostsFilter.Location = new System.Drawing.Point(133, 391);
+            this.labelPostsFilter.Name = "labelPostsFilter";
+            this.labelPostsFilter.Size = new System.Drawing.Size(68, 13);
+            this.labelPostsFilter.TabIndex = 65;
+            this.labelPostsFilter.Text = "My last posts";
             // 
             // PostsUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.labelPostsFilter);
+            this.Controls.Add(this.comboBoxPostsFilter);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label_EventsCount);
             this.Controls.Add(this.label_Events);
@@ -440,6 +467,7 @@
             this.Controls.Add(this.picture_myPictureBox);
             this.Name = "PostsUserControl";
             this.Size = new System.Drawing.Size(1112, 747);
+            this.Load += new System.EventHandler(this.PostsUserControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -492,5 +520,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.PictureBox pictureUrlPictureBox;
         private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.ComboBox comboBoxPostsFilter;
+        private System.Windows.Forms.Label labelPostsFilter;
     }
 }

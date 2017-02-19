@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using FacebookWrapper;
 
-namespace BasicFacebookFeatures
+namespace HappyFacebook.UI
 {
     internal static class Program
     {

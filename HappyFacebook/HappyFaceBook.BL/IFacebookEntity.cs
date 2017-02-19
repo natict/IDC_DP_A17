@@ -10,7 +10,7 @@ namespace HappyFaceBook.BL
     public interface IFacebookEntity
     {
         /// <summary>
-        /// time whne the entity was created
+        /// time when the entity was created
         /// </summary>
         DateTime? CreatedTime { get; set; }
 

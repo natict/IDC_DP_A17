@@ -83,6 +83,12 @@
     <Compile Include="PostHandlers\PostRequest.cs" />
     <Compile Include="PostHandlers\PublishPostHandler.cs" />
     <Compile Include="PostHandlers\SentimentPostHandler.cs" />
+    <Compile Include="PostsFilter\ePostsFilterType.cs" />
+    <Compile Include="PostsFilter\PostsFilterBase.cs" />
+    <Compile Include="PostsFilter\PostsWithCommentsFilter.cs" />
+    <Compile Include="PostsFilter\PostsWithLikesFilter.cs" />
+    <Compile Include="PostsFilter\PostsWithNoFilter.cs" />
+    <Compile Include="PostsFilter\RecentPostsFilter.cs" />
     <Compile Include="PostsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

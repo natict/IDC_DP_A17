@@ -7,11 +7,17 @@ using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using HappyFaceBook.BL;
 using HappyFaceBook.UI.PostHandlers;
+using System.Data;
+using HappyFacebook.UI.PostsFilter;
 
-namespace BasicFacebookFeatures
+namespace HappyFacebook.UI
 {
     internal partial class PostsUserControl : UserControl
     {
+        /// <summary>
+        /// Strategy which performs a specific posts filtering
+        /// </summary>
+        private PostsFilterBase m_PostFilterBase;
 
         /// <summary>
         /// Posts handler (chain of responsibility)
@@ -84,6 +90,9 @@ namespace BasicFacebookFeatures
         {
             List<IFacebookEntity> posts = await FacebookApiClient.Instance.GetUserPostsAsync();
             facebookEntityBindingSource.DataSource = posts;
+            PostsFilterBase.SetPosts(posts, facebookEntityBindingSource);
+            comboBoxPostsFilter.SelectedIndex = 0;
+
             dataGridView_MyPosts.Columns[0].Width = 120;
             dataGridView_MyPosts.Columns[1].Width = 70;
             dataGridView_MyPosts.Columns[2].Width = 70;
@@ -291,6 +300,18 @@ namespace BasicFacebookFeatures
                     toolTip_Likes.Hide(element);
                 }
             }
+        }
+
+        private void comboBoxPostsFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ePostsFilterType type = (ePostsFilterType)comboBoxPostsFilter.SelectedIndex;
+            m_PostFilterBase = PostsFilterBase.GetPostsFilter(type);
+            m_PostFilterBase.FilterPosts();
+        }
+
+        private void PostsUserControl_Load(object sender, EventArgs e)
+        {
+            comboBoxPostsFilter.DataSource = Enum.GetValues(typeof(ePostsFilterType));
         }
     }
 }

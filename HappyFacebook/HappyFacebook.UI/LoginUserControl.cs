@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using HappyFaceBook.BL;
 using HappyFaceBook.BL.Exceptions;
 
-namespace BasicFacebookFeatures
+namespace HappyFacebook.UI
 {
     internal partial class LoginUserControl : UserControl
     {
