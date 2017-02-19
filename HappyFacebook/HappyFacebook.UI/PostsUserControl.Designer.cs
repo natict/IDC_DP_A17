@@ -69,6 +69,8 @@
             this.label_EventsCount = new System.Windows.Forms.Label();
             this.comboBoxPostsFilter = new System.Windows.Forms.ComboBox();
             this.labelPostsFilter = new System.Windows.Forms.Label();
+            this.radioButtonByLikes = new System.Windows.Forms.RadioButton();
+            this.radioButtonByComments = new System.Windows.Forms.RadioButton();
             commentsLabel = new System.Windows.Forms.Label();
             likesLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picture_myPictureBox)).BeginInit();
@@ -359,11 +361,11 @@
             // label_ActiveFriends
             // 
             this.label_ActiveFriends.AutoSize = true;
-            this.label_ActiveFriends.Location = new System.Drawing.Point(870, 64);
+            this.label_ActiveFriends.Location = new System.Drawing.Point(882, 31);
             this.label_ActiveFriends.Name = "label_ActiveFriends";
-            this.label_ActiveFriends.Size = new System.Drawing.Size(211, 13);
+            this.label_ActiveFriends.Size = new System.Drawing.Size(97, 13);
             this.label_ActiveFriends.TabIndex = 56;
-            this.label_ActiveFriends.Text = "Most Active friends (Most comments & Likes)";
+            this.label_ActiveFriends.Text = "Most Active friends";
             // 
             // label_MyName
             // 
@@ -444,10 +446,35 @@
             this.labelPostsFilter.TabIndex = 65;
             this.labelPostsFilter.Text = "My last posts";
             // 
+            // radioButtonByLikes
+            // 
+            this.radioButtonByLikes.AutoSize = true;
+            this.radioButtonByLikes.Checked = true;
+            this.radioButtonByLikes.Location = new System.Drawing.Point(814, 57);
+            this.radioButtonByLikes.Name = "radioButtonByLikes";
+            this.radioButtonByLikes.Size = new System.Drawing.Size(65, 17);
+            this.radioButtonByLikes.TabIndex = 66;
+            this.radioButtonByLikes.TabStop = true;
+            this.radioButtonByLikes.Text = "By Likes";
+            this.radioButtonByLikes.UseVisualStyleBackColor = true;
+            this.radioButtonByLikes.CheckedChanged += new System.EventHandler(this.radioButtonByLikes_CheckedChanged);
+            // 
+            // radioButtonByComments
+            // 
+            this.radioButtonByComments.AutoSize = true;
+            this.radioButtonByComments.Location = new System.Drawing.Point(990, 57);
+            this.radioButtonByComments.Name = "radioButtonByComments";
+            this.radioButtonByComments.Size = new System.Drawing.Size(89, 17);
+            this.radioButtonByComments.TabIndex = 67;
+            this.radioButtonByComments.Text = "By Comments";
+            this.radioButtonByComments.UseVisualStyleBackColor = true;
+            // 
             // PostsUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.radioButtonByComments);
+            this.Controls.Add(this.radioButtonByLikes);
             this.Controls.Add(this.labelPostsFilter);
             this.Controls.Add(this.comboBoxPostsFilter);
             this.Controls.Add(this.groupBox1);
@@ -522,5 +549,7 @@
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.ComboBox comboBoxPostsFilter;
         private System.Windows.Forms.Label labelPostsFilter;
+        private System.Windows.Forms.RadioButton radioButtonByLikes;
+        private System.Windows.Forms.RadioButton radioButtonByComments;
     }
 }

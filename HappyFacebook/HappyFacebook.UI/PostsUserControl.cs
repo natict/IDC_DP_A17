@@ -8,6 +8,7 @@ using FacebookWrapper.ObjectModel;
 using HappyFaceBook.BL;
 using HappyFaceBook.UI.PostHandlers;
 using System.Data;
+using HappyFacebook.UI.BestFriendAlgorithm;
 using HappyFacebook.UI.PostsFilter;
 
 namespace HappyFacebook.UI
@@ -15,14 +16,21 @@ namespace HappyFacebook.UI
     internal partial class PostsUserControl : UserControl
     {
         /// <summary>
+        /// Posts handler (chain of responsibility)
+        /// </summary>
+        private PostHandlerBase m_PostsHandlersChain;
+
+        /// <summary>
         /// Strategy which performs a specific posts filtering
         /// </summary>
         private PostsFilterBase m_PostFilterBase;
 
         /// <summary>
-        /// Posts handler (chain of responsibility)
+        /// Analyses your fiends activity on your wall (Template method)
         /// </summary>
-        private PostHandlerBase m_PostsHandlersChain;
+        private FriendsActivityAnalyzer m_FriendsActivityAnalyzer;
+
+        private List<IFacebookEntity> m_Posts;
 
         private string m_EventsText;
 
@@ -49,10 +57,10 @@ namespace HappyFacebook.UI
             label_EventsCount.Text = (await FacebookApiClient.Instance.GetEventsAsync()).Count.ToString();
 
             // Load my post
-            List<IFacebookEntity> posts = await loadMyPosts();
+            await loadMyPosts();
 
             // Load my active friends
-            await setActiveFriendsAsync(posts);
+            await setActiveFriendsAsync();
 
             // load events
             await loadEventsTextAsync();
@@ -86,11 +94,11 @@ namespace HappyFacebook.UI
         /// Load posts to data grid
         /// </summary>
         /// <returns></returns>
-        private async Task<List<IFacebookEntity>> loadMyPosts()
+        private async Task loadMyPosts()
         {
-            List<IFacebookEntity> posts = await FacebookApiClient.Instance.GetUserPostsAsync();
-            facebookEntityBindingSource.DataSource = posts;
-            PostsFilterBase.SetPosts(posts, facebookEntityBindingSource);
+            m_Posts = await FacebookApiClient.Instance.GetUserPostsAsync();
+            facebookEntityBindingSource.DataSource = m_Posts;
+            PostsFilterBase.SetPosts(m_Posts, facebookEntityBindingSource);
             comboBoxPostsFilter.SelectedIndex = 0;
 
             dataGridView_MyPosts.Columns[0].Width = 120;
@@ -98,85 +106,31 @@ namespace HappyFacebook.UI
             dataGridView_MyPosts.Columns[2].Width = 70;
             dataGridView_MyPosts.Columns[3].Width = 120;
             dataGridView_MyPosts.Columns[4].Width = 400;
-
-            return posts;
         }
 
         /// <summary>
-        /// Calculted the number of activities (likes\comments) for each friend on my wall
+        /// Calculated the number of activities (likes\comments) for each friend on my wall
         /// </summary>
         /// <param name="i_Posts">The list of my posts</param>
-        private async Task setActiveFriendsAsync(List<IFacebookEntity> i_Posts)
+        private async Task setActiveFriendsAsync()
         {
             label_ActiveFriends.Text = "Calculating friends activity on your wall...";
-            ConcurrentDictionary<string, int> likesDictionary = new ConcurrentDictionary<string, int>();
-            await Task.Run(() =>
+
+            if (radioButtonByLikes.Checked)
             {
-                // for all posts
-                Parallel.ForEach(
-                    i_Posts,
-                    (post) =>
-                    {
-                        // All likes on post
-                        Parallel.ForEach(post.Item.LikedBy, (like) => { updateImpactCount(like, likesDictionary); });
+                m_FriendsActivityAnalyzer = new FriendsLikeAnalyzer();
+            }
+            else
+            {
+                m_FriendsActivityAnalyzer = new FriendsCommentsAnalyzer();
+            }
 
-                        // All comments in post
-                        Parallel.ForEach(
-                            post.Item.Comments,
-                            (comment) =>
-                            {
-                                updateImpactCount(comment.From, likesDictionary);
-
-                                // All likes for comment
-                                Parallel.ForEach(comment.LikedBy, (commentLike) => { updateImpactCount(commentLike, likesDictionary); });
-
-                                // All comments for comment
-                                Parallel.ForEach(
-                                    comment.Comments,
-                                    (innerComment) =>
-                                    {
-                                        updateImpactCount(innerComment.From, likesDictionary);
-
-                                        // All likes for coment in comment
-                                        foreach (var innerCommentLike in innerComment.LikedBy)
-                                        {
-                                            updateImpactCount(innerCommentLike, likesDictionary);
-                                        }
-                                    });
-                            });
-                    });
-            });
-
-            // Sort and set to data grid.
-            List<KeyValuePair<string, int>> friendsActivityList = likesDictionary.Select(kv => new KeyValuePair<string, int>(kv.Key.GetUserName(), kv.Value)).ToList();
-            friendsActivityList.Sort((pair1, pair2) => -pair1.Value.CompareTo(pair2.Value));
-            dataGridView_MostActive.DataSource = friendsActivityList;
+            dataGridView_MostActive.DataSource = await m_FriendsActivityAnalyzer.Analayze(m_Posts);
 
             label_ActiveFriends.Text = "Most active Friends on your wall:";
         }
 
-        /// <summary>
-        /// Thread safe update of friend activity count on my wall.
-        /// </summary>
-        /// <param name="i_User">The user which performed an activity on my wall</param>
-        /// <param name="i_FriendsActivityDictionary">Dictionary which contains the activity count of my friend on my wall</param>
-        private void updateImpactCount(User i_User, ConcurrentDictionary<string, int> i_FriendsActivityDictionary)
-        {
-            var userId = i_User.GetUserId();
 
-            if (!i_FriendsActivityDictionary.ContainsKey(userId))
-            {
-                lock (i_FriendsActivityDictionary)
-                {
-                    if (!i_FriendsActivityDictionary.ContainsKey(userId))
-                    {
-                        i_FriendsActivityDictionary[userId] = 0;
-                    }
-                }
-            }
-
-            i_FriendsActivityDictionary[userId] += 1;
-        }
 
         private async void buttonAddPhoto_Click(object sender, EventArgs e)
         {
@@ -312,6 +266,16 @@ namespace HappyFacebook.UI
         private void PostsUserControl_Load(object sender, EventArgs e)
         {
             comboBoxPostsFilter.DataSource = Enum.GetValues(typeof(ePostsFilterType));
+        }
+
+        private void radioButtonByLikes_CheckedChanged(object sender, EventArgs e)
+        {
+            if (m_Posts == null)
+            {
+                return;
+            }
+
+            setActiveFriendsAsync();
         }
     }
 }

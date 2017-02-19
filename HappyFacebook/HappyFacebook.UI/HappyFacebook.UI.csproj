@@ -66,6 +66,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BestFriendAlgorithm\FriendsActivityAnalyzer.cs" />
+    <Compile Include="BestFriendAlgorithm\FriendsCommentsAnalyzer.cs" />
+    <Compile Include="BestFriendAlgorithm\FriendsLikeAnalyzer.cs" />
     <Compile Include="HappyFacebookForm.cs">
       <SubType>Form</SubType>
     </Compile>
